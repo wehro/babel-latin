@@ -3,19 +3,29 @@
 %% driver files from the doc files in this package when run through
 %% LaTeX or TeX.
 %%
-%% Copyright 1989-2000 Johannes L. Braams and any individual authors
-%% listed elsewhere in this file.  All rights reserved.
-%% 
-%% This file is part of the Babel system, release 3.7.
+%% Copyright (C) 1989-2008 by Johannes L. Braams
+%% Copyright (C) 2009-2020 by Claudio Beccari
+%% Copyright (C) 2021      by Keno Wehr
+%% All rights reserved.
+%%
+%% This file is part of the babel-latin package.
 %% ---------------------------------------------------
-%% 
-%% It may be distributed under the terms of the LaTeX Project Public
-%% License, as described in lppl.txt in the base LaTeX distribution.
-%% Either version 1.1 or, at your option, any later version.
+%%
+%% It may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2003/12/01 or later.
+%%
+%% This work has the LPPL maintenance status "maintained".
+%%
+%% The Current Maintainer of this work is Keno Wehr.
 %%
 %% --------------- start of docstrip commands ------------------
 %%
-\def\filedate{2014/05/27}
+\def\filedate{2021/05/02}
 \def\batchfile{latin.ins}
 \input docstrip.tex
 
@@ -36,46 +46,75 @@
 
 \declarepreamble\mainpreamble
 
-This is a generated file.
+Copyright (C) 1989-2008 by Johannes L. Braams
+Copyright (C) 2009-2020 by Claudio Beccari
+Copyright (C) 2021      by Keno Wehr
+All rights reserved.
 
-Copyright 1989-2000 Johannes L. Braams and any individual authors
-listed elsewhere in this file.  All rights reserved.
+This file is part of the babel-latin package.
+----------------------------------------------
 
-This file is part of the Babel system release 3.7.
---------------------------------------------------
+It may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either version 1.3
+of this license or (at your option) any later version.
+The latest version of this license is in
+  http://www.latex-project.org/lppl.txt
+and version 1.3 or later is part of all distributions of LaTeX
+version 2003/12/01 or later.
 
-It may be distributed under the terms of the LaTeX Project Public
-License, as described in lppl.txt in the base LaTeX distribution.
-Either version 1.1 or, at your option, any later version.
-\endpreamble
+This work has the LPPL maintenance status "maintained".
 
-\declarepreamble\fdpreamble
-This is a generated file.
+The Current Maintainer of this work is Keno Wehr.
 
-Copyright 2000 Johannes L. Braams and any individual authors
-listed elsewhere in this file.  All rights reserved.
-
-This file is part of the Babel system, release 3.7.
----------------------------------------------------
-
-It may be distributed under the terms of the LaTeX Project Public
-License, as described in lppl.txt in the base LaTeX distribution.
-Either version 1.1 or, at your option, any later version.
-
-In particular, permission is granted to customize the declarations in
-this file to serve the needs of your installation.
-
-However, NO PERMISSION is granted to distribute a modified version
-of this file under its original name.
+Please report errors to: https://github.com/wehro/babel-latin/issues
 
 \endpreamble
 
 \keepsilent
 
+\usedir{tex/generic/babel-latin}
 \usepreamble\mainpreamble
-\generate{\file{latin.ldf}{\from{latin.dtx}{code}}
+
+\generate{\file{classiclatin.ldf}{\from{latin.dtx}{classic}}
+          \file{ecclesiasticlatin.ldf}{\from{latin.dtx}{ecclesiastic}}
+          \file{latin.ldf}{\from{latin.dtx}{latin}}
+          \file{medievallatin.ldf}{\from{latin.dtx}{medieval}}
           }
-\usepreamble\fdpreamble
+
+\def\MetaPrefix{--}
+
+\declarepreamble\luapreamble
+
+The original version of the following Lua code has been written for the
+polyglossia package by É. Roux and others. The code has been adapted for
+the babel-latin package by K. Wehr.
+
+Copyright (C) 2021      by Keno Wehr
+All rights reserved.
+
+This file is part of the babel-latin package.
+----------------------------------------------
+
+It may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either version 1.3
+of this license or (at your option) any later version.
+The latest version of this license is in
+  http://www.latex-project.org/lppl.txt
+and version 1.3 or later is part of all distributions of LaTeX
+version 2003/12/01 or later.
+
+This work has the LPPL maintenance status "maintained".
+
+The Current Maintainer of this work is Keno Wehr.
+
+Please report errors to: https://github.com/wehro/babel-latin/issues
+
+\endpreamble
+
+\usepreamble\luapreamble
+\nopostamble
+
+\generate{\file{ecclesiasticlatin.lua}{\from{latin.dtx}{lua}}}
 
 \ifToplevel{
 \Msg{***********************************************************}
@@ -83,13 +122,14 @@ of this file under its original name.
 \Msg{* To finish the installation you have to move the following}
 \Msg{* files into a directory searched by TeX:}
 \Msg{*}
-\Msg{* \space\space All *.def, *.fd, *.ldf, *.sty}
+\Msg{* \space\space classiclatin.ldf, ecclesiasticlatin.ldf,}
+\Msg{* \space\space ecclesiasticlatin.lua, latin.ldf, medievallatin.ldf}
 \Msg{*}
-\Msg{* To produce the documentation run the files ending with}
-\Msg{* '.dtx' and `.fdd' through LaTeX.}
+\Msg{* To produce the documentation run the file latin.dtx}
+\Msg{* through LaTeX.}
 \Msg{*}
 \Msg{* Happy TeXing}
 \Msg{***********************************************************}
 }
- 
-\endinput
+
+\endbatchfile

@@ -1,828 +1,2095 @@
-% \CheckSum{510}
+% \iffalse meta-comment
+%
+% This file is part of the babel-latin package. It provides the source code
+% for the Latin language definition file. The original version of this file
+% was written by Claudio Beccari and includes contributions by Krzysztof
+% Konrad Żelechowski. It was modified and made compatible with the babel
+% system by J.L. Braams.
+%
+% Copyright (C) 1989-2008 by Johannes L. Braams
+% Copyright (C) 2009-2020 by Claudio Beccari
+% Copyright (C) 2021      by Keno Wehr
+% All rights reserved.
+%
+% This file is part of the babel-latin package.
+% ---------------------------------------------------
+%
+% It may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2003/12/01 or later.
+%
+% This work has the LPPL maintenance status "maintained".
+%
+% The Current Maintainer of this work is Keno Wehr.
+%
+% \fi
+% \CheckSum{1004}
 % \iffalse
-%    Tell the \LaTeX\ system who we are and write an entry on the
-%    transcript.
+%    Tell the LaTeX system who we are and write an entry on the transcript.
 %<*driver>
 \ProvidesFile{latin.dtx}
-%</driver>
-%<code>\ProvidesLanguage{latin}
-%<*code>
-        [2015/08/20 v.3.5 Latin support from the babel system]
-%</code>
-%% File `babel-latin.dtx'
-%% Babel package for LaTeX2e
-%% Copyright (C) 1989 - 2008 by Johannes Braams, TeXniek
-%% Copyright (C) 2009 - 2015 by Claudio Beccari
-%
-%% Please report errors to: Claudio Beccari 
-%%                          claudio.beccari at gmail.com
-%
-%    This file is part of the babel system, it provides the source
-%    code for the Latin language description file.
-%    The original version of this file was written by
-%    Claudio Beccari, (claudio.beccari at gmail.com) and includes contributions
-%    by Krzysztof Konrad \.Zelechowski, (\texttt{kkz@alfa.mimuw.edu.pl}). It was
-%    modified and made compatible with the babel system by J.L. Braams
-%<*driver>
 \documentclass{ltxdoc}
-\newcommand*\TeXhax{\TeX hax}
-\newcommand*\babel{\textsf{babel}}
-\newcommand*\langvar{$\langle \it lang \rangle$}
-\newcommand*\note[1]{}
-\newcommand*\Lopt[1]{\textsf{#1}}
+\usepackage[british]{babel}
+\usepackage{fontspec}
+\usepackage{booktabs}
+\usepackage{metalogo}
+\usepackage[colorlinks=true,
+  allcolors=black,
+  bookmarksnumbered=true,
+  pdfencoding=auto,
+  pdftitle={The babel-latin package},
+  pdfsubject={Manual of the babel-latin package},
+  pdfkeywords={latex babel latin},
+  pdfauthor={K. Wehr}]{hyperref}
+\newcommand*\package[1]{\textsf{#1}}
+\newcommand*\babel{\package{babel}}
+\newcommand*\babellatin{\package{babel-latin}}
+\newcommand*\lang[1]{\texttt{#1}}
+\newcommand*\hyphpat[1]{\texttt{#1}}
+\newcommand*\modifier[1]{\texttt{#1}}
 \newcommand*\file[1]{\texttt{#1}}
-\providecommand*\pkg[1]{\textsf{#1}}
+\newcommand*\unicode[1]{\texttt{U+#1}}
+\newenvironment{shorthands}{%
+  \begin{list}{}{%
+    \settowidth\labelwidth{MM}%
+    \setlength\leftmargin{\labelwidth}%
+    \addtolength\leftmargin{\labelsep}%
+    \addtolength\leftmargin{1em}%
+    \renewcommand*\makelabel[1]{##1\hfil}%
+  }%
+}{%
+  \end{list}%
+}
+\setmainfont{Libertinus Serif}
+\setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
+\setlogokern{La}{-0,25em}
+\setlogokern{aT}{-0,07em}
+\setlogokern{eL}{-0,05em}
+\title{Babel support for the Latin language}
+\author{Claudio Beccari\and Keno Wehr\thanks{Current maintainer. Please report
+errors to \url{https://github.com/wehro/babel-latin/issues}.}}
+\date{v.\,4.0-dev\quad\today}
 \begin{document}
 \DocInput{latin.dtx}
 \end{document}
 %</driver>
-%\fi
+% \fi
 % \GetFileInfo{latin.dtx}
+% \RecordChanges
 %
-% \changes{latin-0.99}{1999/12/06}{First version, from italian.dtx (CB)}
-% \changes{latin-0.99}{1999/12/06}{Added shorthands for breve, macron,
-%   and etymological hyphenation (CB)}
-% \changes{latin-1.2}{2000/01/31}{Added suggestions from Krzysztof 
+% \changes{0.99}{1999/12/06}{First version, from italian.dtx (CB)}
+% \changes{1.2}{2000/01/31}{Added suggestions from Krzysztof
 %     Konrad \.Zelechowski (CB)}
-% \changes{latin-2.0}{2000/02/10}{Completely new etymological
-%     hyphenation (CB)}
-% \changes{latin-2.0a}{2000/10/15}{Revised by JB}
-% \changes{latin-2.0b}{2000/12/13}{Simplified shorthands for
-%     etymological hyphenation; modified breve and macro shorthands; 
-%     language attribute medieval declared}
-% \changes{latin-2.0c}{2001/06/04}{Restored caret and equals sign
-%     category codes before exiting}
-% \changes{latin-2.0d}{2001/06/04}{Restored caret and equals sign
-%     category codes before exiting}
-% \changes{latin-2.0e}{2003/04/11}{Introduced the language attribute 
+% \changes{2.0a}{2000/10/15}{Revised by JB}
+% \changes{4.0}{2021/05/02}{Complete revision by KW}
+% \changes{4.0}{2021/05/02}{Make ecclesiastic Latin work with \XeLaTeX{} and
+%     \LuaLaTeX}
+%
+%    \maketitle
+%    \begin{abstract}
+%      \noindent This manual documents the \babellatin{} package, which defines
+%      all language-specific macros for the \babel{} languages \lang{latin},
+%      \lang{classiclatin}, \lang{medievallatin}, and \lang{ecclesiasticlatin}.
+%      These languages are usable with pdf\LaTeX, \XeLaTeX, and \LuaLaTeX. The
+%      \lang{latin} language is even usable with plain \TeX{} (with some
+%      restrictions).
+%    \end{abstract}
+%    \begin{center}
+%      \fbox{See section \ref{legacymodifiers} on how to update from outdated
+%      modifiers.}
+%    \end{center}
+%    \tableofcontents
+%    \section{Language variants}
+% \changes{4.0}{2021/05/02}{New \babel{} languages \lang{classiclatin},
+%     \lang{medievallatin}, and \lang{ecclesiasticlatin}, replacing the
+%     respective modifiers}
+%    Latin has been the most important language of European intellectual life
+%    for a long time. Throughout the centuries, many different styles of Latin
+%    have been in use concerning wording, spelling, punctuation, and
+%    hyphenation. The typographical conventions of an edition of a Latin
+%    classic are quite different from those of a liturgical book, even if both
+%    have been printed in the 20th century. And even the same Latin text may
+%    look quite differently depending on the preferences of the editor and the
+%    typographical customs of his country. Latin is supranational, but its
+%    typography is not.
+%
+%    To fit all needs, the \babellatin{} package defines four different language
+%    variants of Latin, i.\,e., four different \babel{} languages.
+%    Table \ref{tab:latin-spelling} shows some differences between the language
+%    variants.
+%    \begin{table}
+%      \centering
+%      \begin{tabular}{llll}
+%      \toprule
+%      \lang{latin} & \lang{classiclatin} & \lang{medievallatin} &
+%      \lang{ecclesiasticlatin} \\
+%      \midrule
+%      Novembris & Nouembris & Nouembris & Novembris \\
+%      Praefatio & Praefatio & Præfatio & Præfatio \\
+%      \addlinespace\multicolumn{4}{@{}l}{\cmd{\MakeUppercase\{Iulius\}}
+%      yields:} \\
+%      IULIUS & IVLIVS & IVLIVS & IULIUS \\
+%      \bottomrule
+%      \end{tabular}
+%      \caption{\label{tab:latin-spelling}Spelling differences between the
+%      Latin language variants}
+%    \end{table}
+%    It is no problem to use different variants of Latin within the same
+%    document. If you need classical and modern Latin, just say
+%    \begin{quote}
+%      |\usepackage[classiclatin,latin]{babel}|
+%    \end{quote}
+%    and switch the language using the commands described in the \babel{}
+%    manual.
+%    \paragraph{The \lang{latin} language -- modern Latin}
+%    This language variant is intended for the modern usage of Latin; with this
+%    we mean the kind of Latin that is used as an official language in the
+%    State of Vatican City and in the teaching of Latin in modern schools.
+%    Typically, the following alphabet is used:
+%    \begin{center}
+%      \setlength\tabcolsep{2pt}
+%      \begin{tabular}{*{24}c}
+%        a&b&c&d&e&f&g&h&i&k&l&m&n&o&p&q&r&s&t&u&v&x&y&z\\
+%        A&B&C&D&E&F&G&H&I&K&L&M&N&O&P&Q&R&S&T&U&V&X&Y&Z
+%      \end{tabular}
+%    \end{center}
+%    \paragraph{The \lang{classiclatin} language -- classical Latin}
+%    This language variant is intended for typesetting Latin texts more or less
+%    according to the ancient usage of Latin. However, the use of lower-case
+%    letters, which are not of ancient origin, is not excluded. The following
+%    alphabet is used:
+%    \begin{center}
+%      \setlength\tabcolsep{2pt}
+%      \begin{tabular}{*{23}c}
+%        a&b&c&d&e&f&g&h&i&k&l&m&n&o&p&q&r&s&t&u&x&y&z\\
+%        A&B&C&D&E&F&G&H&I&K&L&M&N&O&P&Q&R&S&T&V&X&Y&Z
+%      \end{tabular}
+%    \end{center}
+%    Note that `V' corresponds to `u' in lower case. This habit came up in the
+%    Middle Ages and is still in use in many text editions. It must be noted
+%    that \babellatin{} does not make any spelling correction in order to use
+%    only `u' in lower case and only `V' in upper case: if the input text is
+%    wrongly typed in, it remains as such; this means it's the typesetter's
+%    responsibility to correctly input the source text to be typeset; in spite
+%    of this, when the transformation from lower to upper case is performed
+%    (such as, for example, while typesetting headers with some document
+%    classes) the correct capitalization is performed and `u' is capitalized to
+%    `V'; the reverse takes place when transforming to lower case.
+%    \paragraph{The \lang{medievallatin} language -- medieval/humanist Latin}
+%    The spelling is similar to the classical one, but the ligatures \ae, \AE,
+%    \oe, and \OE{} are used for the respective (former) diphthongs. Again, it
+%    is the typesetter's responsibility to input the text to be typeset in a
+%    correct way. The following alphabet is used:
+%    \begin{center}
+%      \setlength\tabcolsep{2pt}
+%      \begin{tabular}{*{25}c}
+%        a&\ae&b&c&d&e&f&g&h&i&k&l&m&n&o&\oe&p&q&r&s&t&u&x&y&z\\
+%        A&\AE&B&C&D&E&F&G&H&I&K&L&M&N&O&\OE&P&Q&R&S&T&V&X&Y&Z
+%      \end{tabular}
+%    \end{center}
+%    As far as the current maintainer can judge it, the consequent use of `\ae'
+%    and `\oe' ligatures came up in 15th century manuscripts in Italy. So this
+%    language variant rather reflects the Latin of the humanist/Renaissance
+%    period than that of the Middle Ages. However, we stick to the
+%    \emph{medieval} name chosen in earlier versions of \babellatin.
+%    \paragraph{The \lang{ecclesiasticlatin} language -- ecclesiastic Latin}
+%    Ecclesiastic Latin is a spelling variety of modern Latin, which is used
+%    above all in liturgical books of the Roman Catholic Church, where the
+%    ligatures \ae{} and \oe{} are widely used and where acute accents are used
+%    in order to mark the tonic vowel of words with more than two syllables to
+%    make sure the correct stress. The following alphabet is used:
+%    \begin{center}
+%      \setlength\tabcolsep{2pt}
+%      \begin{tabular}{*{26}c}
+%        a&\ae&b&c&d&e&f&g&h&i&k&l&m&n&o&\oe&p&q&r&s&t&u&v&x&y&z\\
+%        A&\AE&B&C&D&E&F&G&H&I&K&L&M&N&O&\OE&P&Q&R&S&T&U&V&X&Y&Z
+%      \end{tabular}
+%    \end{center}
+%    This language variant also contains a certain degree of ``Frenchization''
+%    of spaces around some punctuation marks and guillemets: 1/12 of a quad is
+%    inserted before `!', `?', `:', `;', `»', and `›' as well as after `«' and
+%    `‹'. The spacing of guillemets does not work with pdf\TeX{} except when
+%    using the shorthands |"<| and |">| (see section \ref{shorthands}).
+%
+%    \vspace{1.5\bigskipamount}
+%    \noindent For what concerns \babel\ and typesetting with \TeX, the
+%    differences between the language variants reveal themselves in the strings
+%    used to name, for example, the ``Preface'', that becomes ``Praefatio'' or
+%    ``Pr\ae fatio'', respectively. Hyphenation rules are also different, cf.
+%    section \ref{hyphenation}.
+%
+%    The name strings for chapters, figures, tables, et cetera, have been
+%    suggested by prof. Raffaella Tabacco, a latinist of the University of
+%    Vercelli, Italy, to whom we address our warmest thanks. The names
+%    suggested by Krzysztof Konrad \.Zelechowski, when different, are used as
+%    the names for the medieval variety, since he made a word and spelling
+%    choice more suited for this variety.
+%
+%    \section{Modifiers}
+% \changes{4.0}{2021/05/02}{New modifiers \modifier{usej},
+%     \modifier{lowercasemonth}, and \modifier{ecclesiasticfootnotes}}
+%    The four language variants described above do not cover all variations of
+%    Latin typography. Additionally there are several \emph{modifiers}:
+%    \modifier{usej}, \modifier{lowercasemonth}, \modifier{withprosodicmarks},
+%    and \modifier{ecclesiasticfootnotes}. The meaning of these modifiers is
+%    explained below.
+%
+%    To apply a modifier you have to append it (prefixed with a dot) to the
+%    language name when loading \babel:
+%    \begin{quote}
+%      |\usepackage[ecclesiasticlatin.lowercasemonth]{babel}|
+%    \end{quote}
+%    If you need two modifiers or more, just concatenate them in arbitrary
+%    order:
+%    \begin{quote}
+%      |\usepackage[latin.usej.withprosodicmarks]{babel}|
+%    \end{quote}
+%
+%    \subsection{The letter \emph{j}}
+%    The letter \emph{j} is not of ancient origin. In early modern times, it
+%    was used to distinguish the consonantic \emph{i} from the vocalic
+%    \emph{i}. In liturgical books \emph{j} was in use until the 1960s.
+%    Nowadays, the use of \emph{j} has disappeared from most Latin
+%    publications. This is why \babellatin{} does not use \emph{j} in
+%    predefined terms by default. Use the \modifier{usej} modifier if you
+%    prefer \emph{Januarii} and \emph{Maji} to \emph{Ianuarii} and
+%    \emph{Maii}.
+%
+%    \subsection{Case of month names}
+%    Traditionally, Latin month names are capitalized: \emph{Ianuarii,
+%    Februarii, Martii, \ldots} (We state the genitive forms here as this is
+%    what we need for Latin dates.) So \babellatin{} capitalizes the month
+%    names for all four language variants. However, in recent liturgical books
+%    month names are written in lower case (as in Romance languages). Use the
+%    \modifier{lowercasemonth} modifier if you prefer not to capitalize the
+%    month names printed by the \cs{today} command: \emph{ianuarii, februarii,
+%    martii, \ldots}
+%
+%    \subsection{Shorthands for prosodic marks\label{prosodic}}
+% \changes{0.99}{1999/12/06}{Added shorthands for breve and macron}
+% \changes{2.0b}{2000/12/13}{Modified breve and macro shorthands}
+% \changes{2.0e}{2003/04/11}{Introduced the language attribute
 %     `withprosodicmarks'; modified use of breve and macron shorthands
 %      in order to avoid possible conflicts with other packages}
-% \changes{latin-2.0i}{2008/02/17}{Corrected the \cs{@clubpenalty} problem}
-% \changes{latin-2.0j}{2010/01/03}{Corrected sectioning}
-% \changes{latin-2.0k}{2014/02/18}{subsections turned into subsections*}
-%^^A --------------------------------
-% \changes{latin-3.0}{2014/06/01}{Added modifier for classical spelling
+% \changes{4.0}{2021/05/02}{New shorthands for diphthongs with macron}
+%    Textbooks, grammars, and dictionaries often use letters with prosodic
+%    marks (macrons and breves) like ‘\=a’ and ‘\u{a}’ to mark long
+%    and short vowels. On modern systems, the required characters can be input
+%    directly thanks to Unicode. For backwards compatibility and as an perhaps
+%    more comfortable alternative even today, \babellatin{} provides shorthands
+%    for prosodic marks if you load the language with the
+%    \modifier{withprosodicmarks} modifier.
+%
+%    Note that these shorthands may interfere with other packages. The active
+%    |=| character used for macrons will cause problems with commands using
+%    |key=value| interfaces, such as the command
+%    |\includegraphics[scale=2]{...}|. Therefore, the shorthands are disabled
+%    by default. You have to use dedicated commands to turn them on and off.
+%    Use \cs{ProsodicMarksOn} to enable them an \cs{ProsodicMarksOff} to
+%    disable them again. To get “G\u{a}ll\u{i}\u{a} \u{e}st \u{o}mn\u{i}s
+%    d\=iv\=is\u{a} \u{i}n p\u{a}rt\=es tr\=es”, type:
+%    \begin{quote}
+%      \cs{ProsodicMarksOn}\\
+%      |G^all^i^a ^est ^omn^is d=iv=is^a ^in p^art=es tr=es|\\
+%      \cs{ProsodicMarksOff}
+%    \end{quote}
+%
+%    The following shorthands are available:
+%    \begin{shorthands}
+%      \item[|=a|] for \=a (a with macron), also available for \=e, \=i, \=o,
+%        \=u, and \=y
+%      \item[|=A|] for \=A (A with macron), also available for \=E, \=I, \=O,
+%        \=U, \=V, and \=Y. Note that a macron above the letter V is only
+%        displayed if your font supports the Unicode character \unicode{0304}
+%        (\emph{combining macron}).
+%      \item[|=ae|] for a͞e (ae diphthong with macron, for \lang{latin} and
+%        \lang{classiclatin} with \XeLaTeX{} and \LuaLaTeX) or \={\ae} (ae
+%        ligature with macron, for \lang{medievallatin} and
+%        \lang{ecclesiasticlatin}), respectively; also available for a͞u, e͞u,
+%        and o͞e/\=\oe. Note that macrons above diphthongs are only displayed if
+%        your font supports the Unicode character \unicode{035E}
+%        (\emph{combining double macron}).\footnote{A good choice for a font
+%        supporting the combining double macron might be \emph{Libertinus
+%        Serif}, the font of this manual.}
+%      \item[|=Ae|] for A͞e (Ae diphthong with macron, for \lang{latin} and
+%        \lang{classiclatin} with \XeLaTeX{} and \LuaLaTeX) or \={\AE} (AE
+%        ligature with macron, for \lang{medievallatin} and
+%        \lang{ecclesiasticlatin}), respectively; also available for A͞u, E͞u,
+%        and O͞e/\=\OE.
+%      \item[|=AE|] for A͞E (AE diphthong with macron, for \lang{latin} and
+%        \lang{classiclatin} with \XeLaTeX{} and \LuaLaTeX) or \={\AE} (AE
+%        ligature with macron, for \lang{medievallatin} and
+%        \lang{ecclesiasticlatin}), respectively; also available for A͞U, E͞U,
+%        and O͞E/\=\OE.
+%      \item[|\textasciicircum a|] for ă (a with breve), also available for
+%        ĕ, ĭ, ŏ, ŭ, and y̆. Note that a breve above the letter y is only
+%        displayed if your font supports the Unicode character \unicode{0306}
+%        (\emph{combining breve}).
+%      \item[|\textasciicircum A|] Ă (A with breve), also available for Ĕ, Ĭ,
+%        Ŏ, Ŭ, V̆, and Y̆. Note that breves above the letters V and Y are only
+%        displayed if your font supports the Unicode character \unicode{0306}
+%        (\emph{combining breve}).
+%    \end{shorthands}
+%    Note the incompatibilities described in sections \ref{turkish} and
+%    \ref{esperanto}.
+%
+%    \subsection{Ecclesiastic footnotes}
+%    The \package{ecclesiastic} package, an outdated extension of former
+%    versions of \babellatin, typeset footnotes with ordinary instead of
+%    superior numbers and without indentation.
+%
+%    As many ecclesiastic documents and liturgical books use footnotes that are
+%    very similar to the ordinary \LaTeX{} ones, we do not use this footnote
+%    style as default even for the \lang{ecclesiasticlatin} language variant.
+%    But you may use the \modifier{ecclesiasticfootnotes} modifier (with any
+%    variant of Latin) if you prefer that footnote style.
+%
+%    Note that this modifier affects the entire document. It can only be
+%    applied to the document's main language.
+%
+%    \subsection{Legacy modifiers\label{legacymodifiers}}
+% \changes{2.0b}{2000/12/13}{Language attribute medieval declared}
+% \changes{3.0}{2014/06/01}{Added modifier for classical spelling
 %     and hyphenation}
-% \changes{latin-3.0}{2014/06/01}{Restored the subsection numbering}
-% \changes{latin-3.5}{2015/08/17}{Added the modifier for the ecclesiastic
+% \changes{3.5}{2015/08/17}{Added the modifier for the ecclesiastic
 %     Latin variety}
+% \changes{4.0}{2021/05/02}{Deprecate the \modifier{classic},
+%     \modifier{medieval}, and \modifier{ecclesiastic} modifiers}
+%    \babellatin{} defined only one single \babel{} language up to v.\,3.5.
+%    Language variants used to be accessible via modifiers. This approach has
+%    proved to be disadvantageous concerning compatibility with other
+%    language-specific packages like \package{biblatex}. That's why v.\,4.0
+%    introduced the \lang{classiclatin}, \lang{medievallatin}, and
+%    \lang{ecclesiasticlatin} languages.
 %
-%  \section{The Latin language}
+%    The legacy modifiers \modifier{classic}, \modifier{medieval}, and
+%    \modifier{ecclesiastic} are still available and backwards compatibility is
+%    made sure. However, a warning is issued if you use one of these modifiers.
+%    They may be dropped from \babellatin{} in a future version.
 %
-%    The file \file{\filename}\footnote{The file described in this
-%    section has version number \fileversion\ and was last revised on
-%    \filedate. The original author is Claudio Beccari.} defines all the
-%    language-specific macros for the Latin language  including the classical
-%    spelling and hyphenation and the special ecclesiastic spelling.
+%    For maximum compatibility, replace
+%    \begin{itemize}
+%      \item |\usepackage[latin.classic]{babel}| by
+%        |\usepackage[classiclatin]{babel}|,
+%      \item |\usepackage[latin.medieval]{babel}| by
+%        |\usepackage[medievallatin]{babel}|,
+%      \item |\usepackage[latin.ecclesiastic]{babel}| by\\
+%        |\usepackage[ecclesiasticlatin.ecclesiasticfootnotes,activeacute]{babel}|.
+%    \end{itemize}
 %
-%    Without modifiers or attributes, this file describes the modern usage
-%    of Latin; with this we mean the kind of Latin that is used as an official
-%    language in the State of Vatican City, and in the teaching of Latin in
-%    modern schools. This  file description language accepts several modifiers,
-%    in order to be adapted to other situations.
-%\begin{enumerate}\csname c@enumi\endcsname=-1
-%^^A
-%\item Modern spelling and hyphenation; this is the default setting.
-%^^A
-%\item Medieval spelling and hyphenation: in this spelling the lower and
-% upper case alphabets become the following:\\
-%\makebox[\linewidth]{\tabcolsep=2pt
-%\begin{tabular}{*{26}c}
-% a&\ae&b&c&d&e&f&g&h&i&k&l&m&n&o&\oe&p&q&r&s&t&u&x&y&z \\
-% A&\AE&B&C&D&E&F&G&H&I&K&L&M&N&O&\OE&P&Q&R&S&T&V&X&Y&Z 
-%\end{tabular}}
-% It must be noted that this file description language does not make
-% any spelling correction in order to use only `u' in lower case and only
-% `V' in upper case: if the input text is wrongly typed in, it remains as
-% such; this means it's the typesetter's responsibility to correctly input
-% the source text to be typeset; in spite of this, when the transformation
-% from lower to upper case is performed (such as, for example, while
-% typesetting headers with some classes) the correct capitalisation is
-% performed and `u' is capitalised to `V'; the reverse takes place when
-% transforming to lowercase.
-%^^A
-%\item Classical Latin and classical hyphenation; the spelling is similar
-% to the medieval one, except for the ligatures \ae, \AE, \oe\ and \OE\
-% that are missing; again it is the typesetter's responsibility to input the
-% text to be typeset in a correct way; while the hyphenation patterns for
-% modern and medieval Latin form a non contrasting set of patterns, this
-% is impossible with classical Latin and a different pattern set has been
-% prepared as explained below.
-%^^A
-%\item Modern spelling with prosodic marks: this is to be used mainly
-% in modern grammars and dictionaries. Its settings can be turned on and
-% off according to the user needs.
-%^^A
-% \item Ecclesiastic Latin is a spelling variety of modern Latin; it is
-% taken care by the external module |ecclesiastic.sty|, that is being loaded
-% by this language description file at the right moment, that is when \babel\
-% has been completely read together with all the options and modifiers.
-% This special spelling of modern Latin is used in theological
-% and devotional books of the Roman Catholic clergy where ligatures \ae\
-% and \oe\ are widely used and where acute accents are used in order to
-% mark the tonic vowel of many words so as to allows clergy with different
-% backgrounds and mother languages to recite their community prayers with
-% the same rhythmic scheme.
-% This ecclesiastic Latin spelling contains also other differences, including
-% a certain degree of ``frenchisation'' of spaces around some punctuation
-% marks and guillemots, and the typesetting style of footnotes.
-% When this spelling is chosen, its features are
-% irrevocable, especially those that concern spacing. And this is the main
-% reason why we decided not to include the ecclesiastic style  modifications
-% into the language description file, thus avoiding to mess up any setting
-% for the other Latin typesetting styles.
-%^^A
-%\end{enumerate}
-%
-%    Package \babel\ is not directly concerned with hyphenation; nevertheless
-%    in this case it is necessary to switch the hyphenation rules to those
-%    of another language, |classiclatin|, that must be available
-%    while creating the format files so that this language description
-%    file can chose between the modern and medieval hyphenation rules or
-%    the classical ones.
-%
-%    In summary modern and medieval Latin hyphenation rules are similar
-%    to those of current Italian, except that the patterns must include
-%    also some consonant groups that do not exist in Italian; furthermore
-%    with medieval spelling there are many more vocalic groups than in
-%    Italian, because of the widespread use of the letter `u' that often
-%    actually plays the r\^ole of a consonant.
-%
-%    The rules for classical Latin are taken from Raffaello Farina and Nino
-%    Marinone's guide \emph{Metodologia} published by Societ\`a Editrice
-%    Internazionale, Torino, 1979.
-%    In spite of the publication date of this guide the
-%    hyphenation rules did not change in the meanwhile, since the Classical
-%    Latin Language is sort of frozen during the past, say, twenty
-%    centuries. Yes, it is true that the original writings in Classical
-%    Latin were not hyphenated, and the hyphenation rules were established
-%    at the beginning of the Renaissance, when mechanical typography
-%    required suitable justification. Therefore such rules are sort of a
-%    compromise  between the procedures used by the various proto-typographers
-%    and the scholars' of these disciplines. Nevertheless the rules given
-%    by Farina and Marinone are generally shared among modern
-%    scholars and are sort of official at both universities of Torino
-%    and Vercelli; in the latter University they are adopted by the working
-%    group that founded the DigilibLT laboratory; I acknowledge their
-%    contribution in letting me become aware of the problem, and therefore
-%    to create this update by adding the classical Latin support for the
-%    \pkg{babel} package, with its special hyphenation rules.
-%
-%    In order to implement the above described styles of typesetting,
-%    four modifiers/attributes have to be defined: |medieval|, |withprosodicmarks|,
-%    |classic|, and |ecclesiastic|. They can be used in any order so that
-%    several combinations are possible, although, generally speaking, just
-%    the isolated four described ones have a real meaning.
-%   
-%    Among these modifiers only |withprosodicmarks| can be turned on and off;
-%    the others are sort of global; for example, once |classic| is specified,
-%    there is no easy way to revert to modern spelling and hypehenation; the
-%    same holds true for the other modifiers, except |withprosodicmarks|.
-%
-%    The typesetting style |withprosodicmarks| is
-%    defined in order to use special shorthands for inserting breves
-%    and macrons while typesetting grammars, dictionaries, teaching
-%    texts, and the like, where prosodic marks are important for the
-%    complete information on the words or the verses. The shorthands,
-%    listed in table~\ref{t:lashrtct} and described in
-%    subsection~\ref{s:shrtcts}, may interfere with other packages;
-%    therefore by default this style is turned off and no interference
-%    is introduced. If this style is used and interference is
-%    experienced, there are special commands for turning on and off
-%    its specific shorthand commands.
-%
-%    For what concerns \babel\ and typesetting with \LaTeX, the
-%    differences between the spelling styles reveal themselves
-%    in the strings used to name, for example, the ``Preface'' that
-%    becomes ``Praefatio'' or ``Pr\ae fatio'' respectively.
-%    Hyphenation rules are also different, but the hyphenation pattern
-%    file \file{hyph-la.tex} takes care of the modern and medieval versions
-%    of the language, while \file{hyph-la-x-classic.tex} takes care of the
-%    classical hyphenation. The user should not attempt to modify these files,
-%    because they are not dealt with by \babel\ they are used only during the
-%    creation of format files. If some errors or modifications are required
-%    or suggested, it is necessary to ask their  maintainer.
-%
-%    The name strings for chapters, figures, tables, et cetera, have been 
-%    suggested by prof. Raffaella Tabacco, a latinist of the 
-%    University of Vercelli, Italy, to whom we address our warmest 
-%    thanks. The names suggested by Krzysztof Konrad \.Zelechowski,
-%    when different, are used as the names for the medieval variety, 
-%    since he made a word and spelling choice more suited for this 
-%    variety.
-%
-%    For this language some shorthands are defined according to 
-%    table~\ref{t:lashrtct}; all of them are supposed to work with
-%    all spelling styles, except where the opposite is explicitly
-%    stated.
-%    \begin{table}[htb]\centering
-%    \begin{tabular}{cp{80mm}}
-%    |^i|   & inserts the breve accent as \u{\i}; valid also for the
-%             other lowercase vowels, but it does not operate on the
-%             medieval ligatures \ae\ and \oe\ because they are naturally long.\\
-%    |=a|   & inserts the macron accent as \=a; valid also for the
-%             other lowercase vowels, but it does not operate on the
-%             medieval ligatures \ae\ and \oe\ because they are naturally long.\\
-%    |"|    & inserts a compound word mark where hyphenation is legal;
-%             the next character must not be either a non-letter token
-%             or an accented letter (for foreign names). With the ecclesiastic
-%             spelling it eases the insertion of the ligatures \ae\ and \oe\
-%             by simply typing \texttt{\string"ae} and \texttt{\string"oe}
-%             without the need of curly brackets or spaces after the character
-%             macros |\ae| and |\oe|.\\
-%    \texttt{\string"\string|}
-%           & inserts a compound word mark, but operates also when the next token
-%             is not a letter or it is an accented character.
-%    \end{tabular}
-%    \caption[]{Shorthands defined for the Latin language. The 
-%               characters \texttt{\string^} and \texttt{\string=} are
-%               active only when the language attribute
-%               \texttt{withprosodicmarks} has been declared,
-%               otherwise they are disabled; see 
-%               subsection~\ref{s:shrtcts} at page~\pageref{s:shrtcts}
-%               for more details.}%
-%    \label{t:lashrtct}
+%    \section{Hyphenation\label{hyphenation}}
+% \changes{4.0}{2021/05/02}{Document activation of the
+%     \hyphpat{liturgicallatin} hyphenation patterns}
+%    There are three different sets of hyphenation patterns for Latin,
+%    reflecting three different styles of hyphenation: \emph{classical},
+%    \emph{modern}, and \emph{liturgical}. Separate documention for these
+%    hyphenation styles is available on the
+%    Internet.\footnote{\url{https://github.com/gregorio-project/hyphen-la/blob/master/doc/README.md\#hyphenation-styles}}
+%    Each of the four Latin language variants has its default hyphenation style
+%    as indicated by table \ref{tab:latin-hyphenation}. Use the
+%    \cs{babelprovide} command with the |hyphenrules| option if the default
+%    style does not fit your needs.
+%    \begin{table}
+%      \centering
+%      \begin{tabular}{lll}
+%      \toprule
+%      \emph{Language variant} & \emph{Hyphenation style} &
+%      \emph{Name of patterns} \\
+%      \midrule
+%      \lang{latin} & modern & \hyphpat{latin} \\
+%      \lang{classiclatin} & classical & \hyphpat{classiclatin} \\
+%      \lang{medievallatin} & modern & \hyphpat{latin} \\
+%      \lang{ecclesiasticlatin} & modern & \hyphpat{latin} \\
+%      -- & liturgical & \hyphpat{liturgicallatin} \\
+%      \bottomrule
+%      \end{tabular}
+%      \caption{\label{tab:latin-hyphenation}Latin hyphenation styles}
 %    \end{table}
 %
-% The user should attentively remember that this file describes an option
-% for the \pkg{babel} package; it works as expected when a document containing 
-% a text in part or completely in Latin is being processed with |pdfLaTeX|
-% and 8-bit encoded fonts that contain at most 256 glyphs. \babel\ can be
-% used also with |XeLaTeX| and possibly by |LuaLaTeX|, may be with reduced
-% functionalities; expect anomalous results if you typeset your document
-% with this language option and |XeLaTeX|. If you need the functionalities
-% provided by |XeLaTeX| or |LuaLaTeX|, then use |polyglossia| in place of
-% \babel\ and set the Latin desired functionalities with suitable values to
-% the |variant| keyword to the Latin language specifications; The valid values
-% have the same names as this \babel\ module modifiers, i.e.\ |medieval|,
-% |classic|, |ecclesiastic|; with |XeLaTeX| and |LuaLaTeX| that use OpenType
-% fonts, the |withprosodicmaks| functionality is not required as the required
-% glyphs can be directly input with a UNICODE input encoding. Actually with
-% such an encoding this modifier is not necessary even with |pdfLaTeX|, but
-% it eases input when one is using a vintage computer or operating system; backwards compatibility is therefore maintained.
+%    To typeset a liturgical book in the recent “Solesmes style” say
+%    \begin{quote}
+%      |\usepackage[ecclesiasticlatin.lowercasemonth]{babel}| \\
+%      |\babelprovide[hyphenrules=liturgicallatin]{ecclesiasticlatin}|
+%    \end{quote}
+%    The typical commands for a Latin text edition in the German-speaking
+%    world will be
+%    \begin{quote}
+%      |\usepackage[latin]{babel}| \\
+%      |\babelprovide[hyphenrules=classiclatin]{latin}|
+%    \end{quote}
+%    Note that the liturgical hyphenation patterns are the default of none of
+%    the language variants. To use them, you have to load them explicitly in
+%    any case.
+%
+%    \section{Shorthands\label{shorthands}}
+% \changes{0.99}{1999/12/06}{Added shorthands for etymological hyphenation}
+% \changes{2.0b}{2000/12/13}{Simplified shorthands for
+%     etymological hyphenation}
+% \changes{4.0}{2021/05/02}{Additional shorthands for guillemets and accented
+%     letters for all language variants; additional shorthands for ligatures
+%     for medieval and ecclesiastic Latin}
+%    The following shorthands are available for all variants of Latin. Note
+%    that shorthands beginning with |'| are only available if you load \babel{}
+%    with the \modifier{activeacute} option.
+%    \begin{shorthands}
+%      \item[|"<|] for « (left guillemet)
+%      \item[|">|] for » (right guillemet)
+%      \item[|"|] If no other shorthand applies, |"| before any letter
+%        character defines an optional break point allowing further break
+%        points within the same word (as opposed to the |\-| command).
+%      \item[\texttt{"\string|}] the same as |"|, but also possible before
+%        non-letter characters
+%      \item[|'a|] for á (a with acute), also available for é, í, ó, ú, ý, ǽ,
+%        and \'œ
+%      \item[|'A|] for Á (A with acute), also available for É, Í, Ó, Ú, \'V, Ý,
+%        Ǽ, and \'Œ
+%    \end{shorthands}
+%    The following shorthands are only available for the \lang{medievallatin}
+%    and the \lang{ecclesiasticlatin} languages. Again, the shorthands
+%    beginning with |'| only work with \babel's \modifier{activeacute} option.
+%    \begin{shorthands}
+%      \item[|"ae|] for æ (ae ligature), also available for œ
+%      \item[|"Ae|] for Æ (AE ligature), also available for Œ
+%      \item[|"AE|] for Æ (AE ligature), also available for Œ
+%      \item[|'ae|] for ǽ (ae ligature with acute), also available for \'œ
+%      \item[|'Ae|] for Ǽ (AE ligature with acute), also available for \'Œ
+%      \item[|'AE|] for Ǽ (AE ligature with acute), also available for \'Œ
+%    \end{shorthands}
+%    Furthermore, there are shorthands for prosodic marks; see section
+%    \ref{prosodic}.
+%    Note the incompatibility described in section \ref{unicodemath}.
+%
+%    \section{Incompatibilities with other packages}
+% \changes{4.0}{2021/05/02}{Document incompatibilities with other packages}
+%    \subsection{\package{unicode-math}\label{unicodemath}}
+%    Loading the Latin language together with the \modifier{activeacute}
+%    \babel{} option may cause error messages if the \package{unicode-math}
+%    package is loaded. Do not use \modifier{activeacute} if you need
+%    \package{unicode-math}, even if Latin is only a secondary language of your
+%    document.\footnote{See
+%    \url{https://github.com/wspr/unicode-math/issues/462} and
+%    \url{https://github.com/reutenauer/polyglossia/issues/394} for related
+%    discussions.}
+%
+%    \subsection{\package{babel-turkish}\label{turkish}}
+%    Both Turkish and Latin (when loaded with the \modifier{withprosodicmarks}
+%    modifier) make the |=| character active. However, \babellatin{} takes care
+%    the active behaviour of this character is only enabled between
+%    \cs{ProsodicMarksOn} and \cs{ProsodicMarksOff} to avoid conflicts with
+%    packages using |key=value| interfaces.
+%
+%    If you need Latin with prosodic shorthands and Turkish with active |=|
+%    character in one document, you have to say |\shorthandon{=}| before the
+%    first occurence of |=| in each Turkish text part.
+%
+%    \subsection{\package{babel-esperanto}, \package{babel-kurmanji}, and
+%    \package{babel-slovak}\label{esperanto}}
+%    Esperanto, Kurmanji, Slovak, and Latin (when loaded with the
+%    \modifier{withprosodicmarks} modifier) make the |^| character active.
+%    However, \babellatin{} takes care the active behaviour of this character
+%    is only enabled between \cs{ProsodicMarksOn} and \cs{ProsodicMarksOff} to
+%    avoid conflicts with \TeX's |^^xx| convention.
+%
+%    If you need Latin with prosodic shorthands and Esperanto/Kurmanji/Slovak
+%    with active |^| character in one document, you have to say
+%    |\shorthandon{^}| before the first occurence of |^| in each
+%    Esperanto/Kurmanji/Slovak text part.
+%
+%    \section{Plain \TeX}
+% \changes{4.0}{2021/05/02}{Basic support for plain \TeX}
+%    According to the \babel{} manual, the recommended way to load the Latin
+%    language in plain \TeX{} is:
+%    \begin{quote}
+%    |\input latin.sty|\\
+%    |\begindocument|
+%    \end{quote}
+%    The modifiers \modifier{usej} and \modifier{lowercasemonth} may be
+%    accessed by means of the \cs{languageattribute} command:
+%    \begin{quote}
+%    |\input latin.sty|\\
+%    |\languageattribute{latin}{usej,lowercasemonth}|\\
+%    |\begindocument|
+%    \end{quote}
+%
+%    \babel{} does not provide |sty| files for \lang{classiclatin},
+%    \lang{medievallatin}, and \lang{ecclesiasticlatin}. It should be possible
+%    to create them locally if needed.
+%
+%    Note that no Latin shorthands are available in plain \TeX.
 % \StopEventually{}
-%
+% \iffalse
+%<*latin>
+% \fi
 %    \section{The code}
-%
+% \changes{4.0}{2021/05/02}{Keep the default values of \cs{clubpenalty},
+%     \cs{@clubpenalty}, \cs{widowpenalty}, and \cs{finalhyphendemerits}
+%     for Latin}
+% \changes{4.0}{2021/05/20}{Remove commands \cs{LatinMarksOn} and
+%     \cs{LatinMarksOff}}
+%    We identify the language definition file.
+%    \begin{macrocode}
+\ProvidesLanguage{latin}[2021-05-02 v4.0-dev Latin support from the babel system]
+%    \end{macrocode}
 %    The macro |\LdfInit| takes care of preventing that this file is
-%    loaded more than once, checking the category code of the
-%    \texttt{@} sign, etc.
-%\iffalse
-%<*code>
-%\fi
+%    loaded more than once with the same option, checking the category
+%    code of the \texttt{@} sign, etc.
+%    \cs{CurrentOption} is the language requested by the user, i.\,e.,
+%    \lang{latin}, \lang{classiclatin}, \lang{medievallatin}, or
+%    \lang{ecclesiasticlatin}.
 %    \begin{macrocode}
-\LdfInit{latin}{captionslatin}
+\LdfInit\CurrentOption{captions\CurrentOption}
 %    \end{macrocode}
-%
-%    Never load this file as if it was a |.sty| file by means of the
-%    |\usepackage| command; this practice is deprecated. We check for
-%    the existence of |\l@latin| to see whether we have to do something here.
-%
+%    For tests, we need variables containing three possible values of the
+%    language name.
 %    \begin{macrocode}
-\ifx\undefined\l@latin
-    \@nopatterns{Latin}
-    \adddialect\l@latin0\fi
+\def\babellatin@classic{classiclatin}
+\def\babellatin@medieval{medievallatin}
+\def\babellatin@ecclesiastic{ecclesiasticlatin}
 %    \end{macrocode}
-%
-%
-%    Now we declare the |medieval| language attribute.
-%    \begin{macrocode}
-\bbl@declare@ttribute{latin}{medieval}{%
-  \addto\captionslatin{\def\prefacename{Pr{\ae}fatio}}%
-  \expandafter\addto\expandafter\extraslatin
-  \expandafter{\extrasmedievallatin}%
-  }
-%    \end{macrocode}
-%
-%    The  typesetting style |withprosodicmarks| is defined here:
-%    \begin{macrocode}
-\bbl@declare@ttribute{latin}{withprosodicmarks}{%
-  \expandafter\addto\expandafter\extraslatin
-  \expandafter{\extraswithprosodicmarks}%
-  }
-%    \end{macrocode}
-%
-% The `classic' typesetting style is described here: notice that the general 
-% typesetting rules are identical with those of modern Latin, the default
-% one, but the hyphenation rules are different; therefore we just change
-% the meaning of counter |\l@latin| so that it points to the language
-% counter of classical Latin. In order to avoid a fatal error we test if
-% language |classiclatin| has its patterns already loaded, otherwise we issue
-% a warning and keep going with the default modern hyphenation
-%    \begin{macrocode}
-\bbl@declare@ttribute{latin}{classic}{%
-  \expandafter\addto\expandafter\extraslatin
-  \expandafter{\extrasclassic}%
-  }
-\ifx\l@classiclatin\undefined
-  \let\l@classiclatin\l@latin
-  \PackageWarningNoLine{babel}{%
-  Attention: hyphenation patterns for language\MessageBreak
-  classiclatin have not been loaded.\MessageBreak
-  I go on using the modern Latin hyphenation patterns.\MessageBreak
-  Please, load the suitable patterns or upgrade your TeX distribution}
-\fi
-\addto\extrasclassic{\let\l@latin\l@classiclatin}
-%    \end{macrocode}
-%    It must be remembered that the |medieval| and the |withprosodicmarks|
-%    styles might be used together. They are also compatible with
-%    the |classic| attribute, but it would be unusual to typeset classical
-%    Latin with some medieval features and/or with the prosodic marks that were
-%    unknown twenty centuries ago.
-%
-%    The next step consists in defining commands to switch to (and
-%    from) the Latin language\footnote{Most of these names were
-%    kindly suggested by Raffaella Tabacco.}.
-%
-% \begin{macro}{\captionslatin}
-%    The macro |\captionslatin| defines all strings used
-%    in the four standard document classes provided with \LaTeX.
-%    \begin{macrocode}
-\@namedef{captionslatin}{%
-  \def\prefacename{Praefatio}%
-  \def\refname{Conspectus librorum}%
-  \def\abstractname{Summarium}%
-  \def\bibname{Conspectus librorum}%
-  \def\chaptername{Caput}%
-  \def\appendixname{Additamentum}%
-  \def\contentsname{Index}%
-  \def\listfigurename{Conspectus descriptionum}%
-  \def\listtablename{Conspectus tabularum}%
-  \def\indexname{Index rerum notabilium}%
-  \def\figurename{Descriptio}%
-  \def\tablename{Tabula}%
-  \def\partname{Pars}%
-  \def\enclname{Adduntur}%   Or " Additur" ? Or simply Add.?
-  \def\ccname{Exemplar}%     Use the recipient's dative
-  \def\headtoname{\ignorespaces}% Use the recipient's dative
-  \def\pagename{Charta}%
-  \def\seename{cfr.}%
-  \def\alsoname{cfr.}% Tabacco never saw "cfr" + `atque' or similar forms
-  \def\proofname{Demonstratio}%
-  \def\glossaryname{Glossarium}%
-  }
-%    \end{macrocode}
-% \end{macro}
-%    In the above definitions there are some points that might change 
-%    in the future or that require a minimum of attention from the
-%    typesetter.
-%    \begin{enumerate}
-%    \item the \cs{enclname} is translated by a passive verb, that 
-%      literally means ``(they) are being added''; if just one 
-%      enclosure is joined to the document, the plural passive is not 
-%      suited any more; nevertheless a generic plural passive might be 
-%      incorrect but suited for most circumstances. On the opposite 
-%      ``Additur'', the corresponding singular passive, might be more 
-%      correct with one enclosure and less suited in general: what 
-%      about the abbreviation ``Add.'' that works in both cases, but
-%      certainly is less elegant?
-%    \item The \cs{headtoname} is empty and gobbles the possible 
-%      following space; in practice the typesetter should use the 
-%      dative of the recipient's name; since nowadays not all such 
-%      names can be translated into Latin, they might result 
-%      indeclinable. The clever use of a dative appellative by the 
-%      typesetter such as ``Domino'' or ``Dominae'' might solve the 
-%      problem, but the header might get too impressive. The typesetter 
-%      must make a decision on his own.
-%    \item The same holds true for the copy recipient's name in the 
-%      ``Cc'' field of \cs{ccname}.
-%    \end{enumerate}
-%
-%  \begin{macro}{\datelatin}
-%    The macro |\datelatin| redefines the command |\today| to produce
-%    Latin dates; the choice of small caps  Latin numerals for the day number is
-%    arbitrary and may be changed in the future. For medieval and classic Latin
-%    the spelling of `Novembris' should be \textit{Nouembris}. This is
-%    taken care of by using a control sequence which can be redefined
-%    when the attribute `medieval' and/or `classic' is selected.
-% \changes{latin-2.0f}{2005/03/30}{Added a comment character to
-%    prevent unwanted space}
-% \changes{latin-2.0k}{2011/02/06}{Inserted the various `November'  Latin
-%    spellings to the proper `extras' macros}
-%    \begin{macrocode}
-\addto\extraslatin{\def\november{Novembris}}
-\addto\extrasmedievallatin{\def\november{Nouembris}}
-\addto\extrasclassiclatin{\def\november{Nouembris}}
-%
-\def\datelatin{%
-  \def\today{%
-    {\check@mathfonts\fontsize\sf@size\z@\math@fontsfalse\selectfont
-      \uppercase\expandafter{\romannumeral\day}}~\ifcase\month\or
-    Ianuarii\or Februarii\or Martii\or Aprilis\or Maii\or Iunii\or
-    Iulii\or Augusti\or Septembris\or Octobris\or \november\or
-    Decembris\fi
-    \space{\uppercase\expandafter{\romannumeral\year}}}}
-%    \end{macrocode}
-%  \end{macro}
-%
-%  \begin{macro}{\latinhyphenmins}
-%    The Latin hyphenation patterns can be used with both
-%    |\lefthyphenmin| and |\righthyphenmin| set to~2.
-% \changes{latin-2.0a}{2000/10/15}{Now use \cs{providehyphenmins} to
-%    provide a default value}
+%    \subsection{Hyphenation patterns}
+%    The Latin hyphenation patterns can be used with |\lefthyphenmin|
+%    and |\righthyphenmin| set to~2.
 %    \begin{macrocode}
 \providehyphenmins{\CurrentOption}{\tw@\tw@}
 %    \end{macrocode}
-%  \end{macro}
-%
-% \begin{macro}{\extraslatin}
-% \begin{macro}{\noextraslatin}
-%    For Latin the |\clubpenalty|, |\widowpenalty| are set to 
-%    rather high values and |\finalhyphendemerits| is set to such a 
-%    high value that hyphenation is almost prohibited between the last two
-%    lines of a paragraph.
-%
+%    We define macros for testing if the required hyphenation patterns are
+%    available.
 %    \begin{macrocode}
-\addto\extraslatin{%
-  \babel@savevariable\clubpenalty
-  \babel@savevariable\@clubpenalty
-  \babel@savevariable\widowpenalty
-  \clubpenalty3000\@clubpenalty3000\widowpenalty3000}
+\def\babellatin@test@modern@patterns{%
+  \ifx\l@latin\undefined
+    \@nopatterns{latin}%
+    \adddialect\l@latin0
+  \fi}%
+\def\babellatin@test@classic@patterns{%
+  \ifx\l@classiclatin\undefined
+    \PackageWarningNoLine{babel-latin}{%
+      No hyphenation patterns were found for the\MessageBreak
+      classiclatin language. Now I will use the\MessageBreak
+      patterns for modern Latin instead}%
+    \babellatin@test@modern@patterns
+    \adddialect\l@classiclatin\l@latin
+  \fi}%
 %    \end{macrocode}
-%    Hopefully never ever break a word between the last two lines of
-%    a paragraph in Latin texts.
+%    We use the \lang{classiclatin} hyphenation patterns for classical Latin
+%    and the (modern) \lang{latin} hyphenation patterns for all other varieties
+%    of Latin.
 %    \begin{macrocode}
-\addto\extraslatin{%
-  \babel@savevariable\finalhyphendemerits
-  \finalhyphendemerits50000000}
-%    \end{macrocode}
-%  \end{macro}
-%  \end{macro}
-%
-%    With medieval and classic Latin we need the suitable correspondence between
-%    upper case V and lower case u, since in that spelling there is
-%    only one sign, and the u shape is the (uncial) version of the
-%    capital V. Everything else is identical with Latin.
-%    \begin{macrocode}
-\addto\extrasmedievallatin{%
-\babel@savevariable{\lccode`\V}%
-\babel@savevariable{\uccode`\u}%
-\lccode`\V=`\u \uccode`\u=`\V}
-\addto\extrasclassiclatin{%
-\babel@savevariable{\lccode`\V}%
-\babel@savevariable{\uccode`\u}%
-\lccode`\V=`\u \uccode`\u=`\V}
-%    \end{macrocode}
-%
-% \begin{macro}{\SetLatinLigatures}
-%    We need also the lccodes for \ae\ and \oe; since they occupy
-%    different positions in the OT1 \TeX-fontencoding compared to the
-%    T1 one, we must save the lc- and the uccodes for both encodings,
-%    but we specify the new lc- and uccodes separately as it appears
-%    natural not to change encoding while typesetting the same
-%    language. The encoding is assumed to be set before starting to
-%    use the Latin language, so that if Latin is the default language,
-%    the font encoding must be chosen before requiring the \babel\
-%    package with the |latin| option, in any case before any
-%    |\selectlanguage| or |\foreignlanguage| command.
-%
-%    All this fuss is made in order to allow the use of the medieval
-%    ligatures \ae\ and \oe\ while typesetting with the medieval
-%    spelling; I have my doubts that the medieval spelling should be
-%    used at all in modern books, reports, and the like; the uncial
-%    `u' shape of the lower case `v' and the above ligatures were
-%    fancy styles of the copyists who were able to write faster with
-%    those rounded glyphs; with typesetting there is no question of
-%    handling a quill penn\dots\ Moreover in medieval times it was very
-%    frequent to close such ligatures to the corresponding sound,
-%    therefore instead of writing \ae\ or \oe\ they would often simply
-%    write `e'. Since my (CB) opinion may be wrong, I managed to set
-%    up the instruments and it is up to the typesetter to use them or not. 
-%
-%    \begin{macrocode}
-\addto\extrasmedievallatin{%
-  \babel@savevariable{\lccode`\^^e6}% T1   \ae
-  \babel@savevariable{\uccode`\^^e6}% T1   \ae
-  \babel@savevariable{\lccode`\^^c6}% T1   \AE
-  \babel@savevariable{\lccode`\^^f7}% T1   \oe
-  \babel@savevariable{\uccode`\^^f7}% T1   \OE
-  \babel@savevariable{\lccode`\^^d7}% T1   \OE
-  \babel@savevariable{\lccode`\^^1a}% OT1  \ae
-  \babel@savevariable{\uccode`\^^1a}% OT1  \ae
-  \babel@savevariable{\lccode`\^^1d}% OT1  \AE
-  \babel@savevariable{\lccode`\^^1b}% OT1  \oe
-  \babel@savevariable{\uccode`\^^1b}% OT1  \OE
-  \babel@savevariable{\lccode`\^^1e}% OT1  \OE
-  \SetLatinLigatures}
-    
-\providecommand\SetLatinLigatures{%
-  \def\@tempA{T1}\ifx\@tempA\f@encoding
-    \catcode`\^^e6=11 \lccode`\^^e6=`\^^e6 \uccode`\^^e6=`\^^c6 % \ae
-    \catcode`\^^c6=11 \lccode`\^^c6=`\^^e6 % \AE
-    \catcode`\^^f7=11 \lccode`\^^f7=`\^^f7 \uccode`\^^f7=`\^^d7 % \oe
-    \catcode`\^^d7=11 \lccode`\^^d7=`\^^f7 % \OE
+\ifx\CurrentOption\babellatin@classic
+  \babellatin@test@classic@patterns
+\else
+  \ifx\CurrentOption\babellatin@ecclesiastic
+    \babellatin@test@modern@patterns
+    \adddialect\l@ecclesiasticlatin\l@latin
   \else
-    \catcode`\^^1a=11 \lccode`\^^1a=`\^^1a \uccode`\^^1a=`\^^1d % \ae
-    \catcode`\^^1d=11 \lccode`\^^1d=`\^^1a % \AE 
-    \catcode`\^^1b=11 \lccode`\^^1b=`\^^1b \uccode`\^^1b=`\^^1e % \oe
-    \catcode`\^^1e=11 \lccode`\^^1e=`\^^1b % \OE 
-  \fi
-  \let\@tempA\@undefined
-  }
-%    \end{macrocode}
-%    With the above definitions we are sure that |\MakeUppercase| 
-%    works properly and |\MakeUppercase{C{\ae}sar}| correctly yields
-%    ``C{\AE}SAR''; correspondingly |\MakeUppercase{Heluetia}|
-%    correctly yields ``HELVETIA''. 
-%    \end{macro}
-%
-% \changes{latin-2.0j}{20104/02/18}{Renamed this section to subsection}
-%    \subsection{Latin shorthands}\label{s:shrtcts}
-%    For writing dictionaries or school texts (in modern spelling
-%    only) we defined a language attribute or 
-%    typesetting style, such that a couple of other active characters are
-%    defined: |^| for marking a vowel with the breve sign, and |=| for
-%    marking a vowel with the macron sign. Please take notice that
-%    neither the OT1 font encoding, nor the T1 one for most vowels,
-%    contain directly the marked vowels, therefore hyphenation of
-%    words containing these ``accents'' may become problematic; for
-%    this reason the above active characters not only introduce the
-%    required accent, but also an unbreakable zero skip that in
-%    practice does not introduce a discretionary break, but allows
-%    breaks in the rest of the word. 
-%
-%    It must be remarked that the active characters |^| and |=| may
-%    have other meanings in other contexts. For example, besides math, 
-%    the equals sign is used by the graphic extensions for specifying
-%    keyword options for handling the graphic elements to be included
-%    in the document. At the same time, as mentioned in the previous
-%    paragraph, diacritical marking in Latin is used only for
-%    typesetting certain kinds of document, such as grammars and
-%    dictionaries. It is reasonable that the breve and macron active
-%    characters are turned on and off at will; by default
-%    they are off if the attribute |withprosodicmarks|
-%    has not been set. 
-%
-%    \begin{macro}{\ProsodicMarksOn}
-%    \begin{macro}{\ProsodicMarksOff}
-%    We begin by adding to the normal typesetting style the
-%    definitions of the new commands |\ProsodicMarksOn| and
-%    |\ProsodicMarksOff| that should produce error messages when 
-%    this style is not declared: 
-%    \begin{macrocode}
-\addto\extraslatin{\def\ProsodicMarksOn{%
-\GenericError{(latin)\@spaces\@spaces\@spaces\@spaces}%
-            {Latin language error: \string\ProsodicMarksOn\space
-            is defined by setting the\MessageBreak
-            language attribute to `withprosodicmarks'\MessageBreak
-            If you continue you are likely to encounter\MessageBreak
-            fatal errors that I can't recover}%
-            {See the Latin language description in the babel
-            documentation for explanation}{\@ehd}}}
-\addto\extraslatin{\let\ProsodicMarksOff\relax}
-%    \end{macrocode}
-%
-%    Next we temporarily set the caret and the equals sign to active
-%    characters so that they can receive their definitions:
-%    \begin{macrocode}
-\catcode`\= \active
-\catcode`\^ \active
-%    \end{macrocode}
-%    and we add the necessary declarations to the macros that are
-%    being activated when the Latin language and its typesetting
-%    styles are declared:
-%    \begin{macrocode}
-\addto\extraslatin{\languageshorthands{latin}}%
-\addto\extraswithprosodicmarks{\bbl@activate{^}}%
-\addto\extraswithprosodicmarks{\bbl@activate{=}}%
-\addto\noextraswithprosodicmarks{\bbl@deactivate{^}}%
-\addto\noextraswithprosodicmarks{\bbl@deactivate{=}}%
-\addto\extraswithprosodicmarks{\ProsodicMarks}
-%    \end{macrocode}
-%
-%    \begin{macro}{\ProsodicMarks}
-%    Next we define the  macros for the active characters
-%    \begin{macrocode}
-\def\ProsodicMarks{%
-\def\ProsodicMarksOn{\catcode`\^ 13\catcode`\= 13\relax}%
-\def\ProsodicMarksOff{\catcode`\^ 7\catcode`\= 12\relax}%
-}
-%    \end{macrocode}
-%    Notice that with the above redefinitions of the commands
-%    |\ProsodicMarksOn| and |\ProsodicMarksOff|, the operation of the
-%    newly defined shorthands may be switched on and off at will, so
-%    that even if a picture has to be inserted in the document by
-%    means of the commands and keyword options of the \pkg{graphicx}
-%    package, it suffices to switch them off before invoking the
-%    picture including command, and switched on again afterwards; or,
-%    even better, since the picture very likely is being inserted
-%    within a |figure| environment, it suffices to switch them off
-%    within the environment, being conscious that their deactivation
-%    remains local to the environment.
-% \changes{latin-2.0g}{2005/11/17}{changed \cs{allowhyphens} to
-%    \cs{bbl@allowhyphens}} 
-%    \begin{macrocode}
-\initiate@active@char{^}%
-\initiate@active@char{=}%
-\declare@shorthand{latin}{^a}{%
-    \textormath{\u{a}\bbl@allowhyphens}{\hat{a}}}%
-\declare@shorthand{latin}{^e}{%
-    \textormath{\u{e}\bbl@allowhyphens}{\hat{e}}}%
-\declare@shorthand{latin}{^i}{%
-    \textormath{\u{\i}\bbl@allowhyphens}{\hat{\imath}}}%
-\declare@shorthand{latin}{^o}{%
-    \textormath{\u{o}\bbl@allowhyphens}{\hat{o}}}%
-\declare@shorthand{latin}{^u}{%
-    \textormath{\u{u}\bbl@allowhyphens}{\hat{u}}}%
-%
-\declare@shorthand{latin}{=a}{%
-    \textormath{\={a}\bbl@allowhyphens}{\bar{a}}}%
-\declare@shorthand{latin}{=e}{%
-    \textormath{\={e}\bbl@allowhyphens}{\bar{e}}}%
-\declare@shorthand{latin}{=i}{%
-    \textormath{\={\i}\bbl@allowhyphens}{\bar{\imath}}}%
-\declare@shorthand{latin}{=o}{%
-    \textormath{\={o}\bbl@allowhyphens}{\bar{o}}}%
-\declare@shorthand{latin}{=u}{%
-    \textormath{\={u}\bbl@allowhyphens}{\bar{u}}}%
-%    \end{macrocode}
-%    Notice that the short hand definitions are given only for lower
-%    case letters; it would not be difficult to extend the set of
-%    definitions to upper case letters, but it appears of very little
-%    use in view of the kinds of document where prosodic marks are
-%    supposed to be used. Nevertheless in those rare cases when it's
-%    required to set some uppercase letters with their prosodic
-%    marks, it is always possible to use the standard \LaTeX\ commands
-%    such as  |\u{I}| for typesetting \u{I}, or |\={A}| (or |\=A|) for
-%    typesetting~\=A.
-%
-%    Finally we restore the caret and equals sign initial default
-%    category codes
-%    \begin{macrocode}
-\catcode`\= 12\relax
-\catcode`\^ 7\relax
-%    \end{macrocode}
-%    so as to avoid conflicts with other packages or other \babel\
-%    options.
-%    \end{macro}
-%    \end{macro}
-%    \end{macro}
-%
-%    \begin{macro}{\LatinMarksOn}
-%    \begin{macro}{\LatinMarksOff}
-% \changes{latin-2.0g}{2005/11/17}{Added two commands}
-% \changes{latin-2.0h}{2007/10/19}{Added missing backslash}
-%    The following commands remain defined for backwards compatibility,
-%    but they are obsolete and should not be used.
-% \changes{latin-2.0h}{2007/10/20}{Removed the setting of
-%    \cs{LatinMarksOff} from \cs{extraslatin}}
-%    \begin{macrocode}
-\addto\extraslatin{\def\LatinMarksOn{\shorthandon{^}\shorthandon{=}}}
-\addto\extraslatin{\def\LatinMarksOff{\shorthandoff{^}\shorthandoff{=}}}
-%    \end{macrocode}
-%    \end{macro}
-%    \end{macro}
-%
-%    It must be understood that by using the above prosodic marks,
-%    line breaking is somewhat impeached; since such prosodic marks
-%    are used almost exclusively in dictionaries, grammars, and poems
-%    (only in school textbooks), this shouldn't be of any importance
-%    for what concerns the quality of typesetting.
-%
-%\changes{latin-3.5}{2015/08/20}{New subsection}
-% \subsection{Ecclesiastic Latin style}
-% We declare the |ecclesiastic| attribute; its purpose is to load the
-% \pkg{ecclesiastic.sty} package, deferring this action to the moment when
-% \babel\ finishes executing; actually it sends \babel\ the information to act;
-% then \babel\ defers the package loading to the |\begin{document}| execution.
-% This implies the availability of the |\AtEndOfPackage| and |\AtBeginDocument|
-% macros which are contained in the \LaTeX\ kernel. Since
-% this file is read by \babel\ the current package at the end of which
-% the code is deferred is \babel\ itself, not simply this language description
-% file.
-%
-% Differently from other attribute settings we do not declare anything
-% in a possible |\extrasecclesiasticlatin| macro, because once the package 
-% has been read, it is impossible to pretend to delete all what the package
-% defined. Actually this |ecclesiastic| attribute simply mimics the actual
-% loading of a package by means of a |\usepackage| or |\RequirePackage| command;
-% if loading was done with one of these commands, it would be impossible to
-% unload the loaded package.
-%    \begin{macrocode}
-\bbl@declare@ttribute{latin}{ecclesiastic}{%
-\AtEndOfPackage{%
-   \AtBeginDocument{\RequirePackage{ecclesiastic}[2015/08/20]}%
-  }%
-}
-%    \end{macrocode}
-%
-% \changes{latin-2.0j}{2014/02/18}{Renamed this section to subsection}
-%    \subsection{Etymological hyphenation}
-%    In order to deal in a clean way with prefixes and compound words
-%    to be divided etymologically, the active character |"| is given 
-%    a special definition so as to behave as a discretionary break
-%    with hyphenation allowed after it. You may consider this sign as a
-%    substitute for a ``compound word mark''.
-%
-%    This is particularly useful with classical Latin because this
-%    language requires etymological hyphenation; patterns were created
-%    with etymological hyphenation in mind, but even if for certain
-%    prefixes or suffixes it works pretty well, it does not for certain
-%    other ones. For example the word `redire' should be hyphenated as
-%    `red-i-re'; but there are plenty of other words starting with the
-%    string `red' that does not play the role of a prefix; therefore
-%    it should be necessary to extract all the Latin words where `red'
-%    is a prefix, and enter the suitable patterns to hyphenate correctly
-%    only those words; in the simple case of the verb `redire' it would
-%    be necessary to enter all the words that belong to the conjugation
-%    of this verb and the declination of the present, future and past
-%    participles and gerundive  in masculine, feminine and neutral forms;
-%    the same problem takes place with prefix `trans' where sometimes it is
-%    a real prefix, such as in `transire' (hyphenation trans-i-re), and
-%    sometimes is modified with the absorption of an initial `s' of the
-%    suffix, such  as in `transubstantialis' (classical hyphenation:
-%    tran-subs-tan-tia-lis).
-
-%    Obviously this task would render the pattern file enormous, and mostly
-%    useless. The active character |"| solves the problem for isolated instances,
-%    while the hyphenations exception lists of the only forms actually used
-%    in a specific document, would do the rest.
-%
-%    Most of the code for dealing with the active |"| is already
-%    contained in the core of \babel, but we are going to use it as a
-%    single character shorthand for Latin. 
-%    \begin{macrocode}
-\initiate@active@char{"}%
-\addto\extraslatin{\bbl@activate{"}%
-}
-%    \end{macrocode}
-%
-%    A temporary macro is defined so as to take different actions in math
-%    mode and text mode: specifically in the former case the macro inserts a
-%    double quote as it should in math mode, otherwise another delayed macro
-%    comes into action.
-%    \begin{macrocode}
-\declare@shorthand{latin}{"}{%
-  \textormath{\def\lt@@next{\futurelet\lt@temp\lt@cwm}}%
-     {\def\lt@@next{''}}%
-  \lt@@next
-}%
-%    \end{macrocode}
-%    In text mode the \cs{lt@@next} control sequence is such that upon
-%    its execution a temporary variable \cs{lt@temp} is made
-%    equivalent to the next token in the input list without actually
-%    removing it. Such temporary token is then tested by the macro
-%    \cs{lt@cwm} and if it is found to be a letter token, then it
-%    introduces a compound word separator control sequence
-%    \cs{lt@allowhyphens} whose expansion introduces a discretionary
-%    hyphen and an unbreakable space; in case the token is not a
-%    letter, it is tested against the definitions of |\ae| and |\oe|,
-%    and if the test is true than such definitions are treated as
-%    letters (as they actually are), otherwise the token is tested
-%    again to find if it is the character \texttt{\string|}, in which
-%    case it is gobbled and a discretionary break is introduced. 
-% \changes{latin-2.0g}{2005/11/17}{Added a \cs{nobreak}}
-% \changes{latin-3.0}{2014/06/01}{\cs{lt@allowhyphens} rewritten so as
-%         to use the babel core command \cs{bbl@allowhyphens}}
-% \changes{latin-3.0}{2014/06/01}{Introduced the tests for the ligatures
-%         \cs{ae} and \cs{oe}}
-%    \begin{macrocode}
-\def\lt@allowhyphens{\bbl@allowhyphens\discretionary{-}{}{}\bbl@allowhyphens}
-
-\newcommand*{\lt@cwm}{\let\lt@n@xt\relax
-  \ifcat\noexpand\lt@temp a%
-    \let\lt@n@xt\lt@allowhyphens
-  \else
-    \ifx\lt@temp\ae
-        \let\lt@n@xt\lt@allowhyphens
+    \ifx\CurrentOption\babellatin@medieval
+      \babellatin@test@modern@patterns
+      \adddialect\l@medievallatin\l@latin
     \else
-        \ifx\lt@temp\oe
-           \let\lt@n@xt\lt@allowhyphens
-        \else
-           \if\noexpand\lt@temp\string|%
-              \def\lt@n@xt{\lt@allowhyphens\@gobble}%
-           \fi
-        \fi
+      \babellatin@test@modern@patterns
     \fi
   \fi
-  \lt@n@xt}%
+\fi
 %    \end{macrocode}
-%
-%    Attention: the ligature commands |\ae| and |\oe| are detected correctly
-%    if they are not included within a group. In facts an input such as
-%    |super"{\ae}quitas|\footnote{This word does not exist in
-%    ``regular'' Latin, and it is used just as an example.} gets wrongly
-%    hyphenated as \texttt{su-pe-r\ae-qui-tas} while |super"\ae{}quitas|,
-%    that uses an empty group to terminate the |\ae| control sequence, gets
-%    correctly hyphenated as \texttt{su-per-\ae-qui-tas}. If one prefers to
-%    close the |\ae| or |\oe| ligature commands within a group, then it is
-%    necessary to use the alternate etymological hyphenation command \verb+"|+
-%    as in \verb!super"|{\ae}quitas!  in order to get
-%   \texttt{su-per-{\ae}-qui-tas}.
-%    . 
-%
-%    The macro |\ldf@finish| takes care of looking for a
-%    configuration file, setting the main language to be switched on
-%    at |\begin{document}| and resetting the category code of
-%    \texttt{@} to its original value.
+%    \subsection{Latin captions}
+%    We need a conditional governing the spelling of the captions. Medieval
+%    and ecclesiastic Latin use the ligatures \ae{} and \oe, classical and
+%    modern Latin do not.
 %    \begin{macrocode}
-\ldf@finish{latin}
+\newif\ifbabellatin@useligatures
+\addto\extrasmedievallatin{\babellatin@useligaturestrue}%
+\addto\noextrasmedievallatin{\babellatin@useligaturesfalse}%
+\addto\extrasecclesiasticlatin{\babellatin@useligaturestrue}%
+\addto\noextrasecclesiasticlatin{\babellatin@useligaturesfalse}%
 %    \end{macrocode}
-%\iffalse
-%</code>
-%\fi
+%    We define the Latin captions using the commands recommended by the
+%    \babel{} manual.\footnote{Most of these names were kindly suggested by
+%    Raffaella Tabacco.}
+%    \begin{macrocode}
+\StartBabelCommands*{\CurrentOption}{captions}
+  \SetString\prefacename{\ifbabellatin@useligatures Pr\ae fatio\else Praefatio\fi}
+  \SetString\refname{Conspectus librorum}
+  \SetString\abstractname{Summarium}
+  \SetString\bibname{Conspectus librorum}
+  \SetString\chaptername{Caput}
+  \SetString\appendixname{Additamentum}
+  \SetString\contentsname{Index}
+  \SetString\listfigurename{Conspectus descriptionum}
+  \SetString\listtablename{Conspectus tabularum}
+  \SetString\indexname{Index rerum notabilium}
+  \SetString\figurename{Descriptio}
+  \SetString\tablename{Tabula}
+  \SetString\partname{Pars}
+  \SetString\enclname{Adduntur}%   Or "Additur"? Or simply Add.?
+  \SetString\ccname{Exemplar}%     Use the recipient's dative
+  \SetString\headtoname{\ignorespaces}% Use the recipient's dative
+  \SetString\pagename{Charta}
+  \SetString\seename{cfr.}
+  \SetString\alsoname{cfr.}% Tabacco never saw "cfr" + "atque" or similar forms
+  \SetString\proofname{Demonstratio}
+  \SetString\glossaryname{Glossarium}
+%    \end{macrocode}
+%    In the above definitions there are some points that might change
+%    in the future or that require a minimum of attention from the
+%    typesetter.
+%    \begin{enumerate}
+%    \item The \cs{enclname} is translated by a passive verb, that
+%      literally means ``(they) are being added''; if just one
+%      enclosure is joined to the document, the plural passive is not
+%      suited any more; nevertheless a generic plural passive might be
+%      incorrect but suited for most circumstances. On the opposite
+%      ``Additur'', the corresponding singular passive, might be more
+%      correct with one enclosure and less suited in general: what
+%      about the abbreviation ``Add.'' that works in both cases, but
+%      certainly is less elegant?
+%    \item The \cs{headtoname} is empty and gobbles the possible
+%      following space; in practice the typesetter should use the
+%      dative of the recipient's name; since nowadays not all such
+%      names can be translated into Latin, they might result
+%      indeclinable. The clever use of a dative appellative by the
+%      typesetter such as ``Domino'' or ``Dominae'' might solve the
+%      problem, but the header might get too impressive. The typesetter
+%      must make a decision on his own.
+%    \item The same holds true for the copy recipient's name in the
+%      ``Cc'' field of \cs{ccname}.
+%    \end{enumerate}
+%    \subsection{Mapping between upper and lower case}
+%    For classical and medieval Latin we need the suitable correspondence
+%    between upper-case V and lower-case u since in that spelling there is
+%    only one letter for the vowel and the consonant, and the u shape is an
+%    (uncial) variant of the capital V.
 %
+%    We use the commands recommended by the \babel{} manual.
+%    \begin{macrocode}
+\StartBabelCommands*{classiclatin,medievallatin}{}
+%    \end{macrocode}
+%    The following command takes care for the correct behaviour of the
+%    \cs{MakeUppercase} and the \cs{MakeLowercase} command. It makes sure that
+%    |\MakeUppercase{Heluetia}| yields ``HELVETIA'' and that
+%    |\MakeLowercase{LVDVS}| yields ``ludus''.
+%    \begin{macrocode}
+  \SetCase{\uccode`u=`V}{\lccode`V=`u}
+%    \end{macrocode}
+%    The following command takes care for the correct hyphenation of words
+%    written in capital letters. It makes sure that “LVDVS” is hyphenated the
+%    same way as “ludus”.
+%    \begin{macrocode}
+  \SetHyphenMap{\BabelLower{`V}{`u}}
+%    \end{macrocode}
+%    For Unicode-based engines, we also have to take into account characters
+%    with diacritics. We map ú, ū, and ŭ to V because Unicode does not define a
+%    single-character V with the respective diacritic.
+%    \begin{macrocode}
+\StartBabelCommands{classiclatin,medievallatin}{}[unicode,fontenc=TU,charset=utf8]
+  \SetCase{\uccode`u=`V \uccode`ú=`V \uccode`ū=`V \uccode`ŭ=`V}{\lccode`V=`u}
+%    \end{macrocode}
+%    According to the \babel{} manual, the last \cs{StartBabelCommands} block
+%    has to be finished by the following command.
+%    \begin{macrocode}
+\EndBabelCommands
+%    \end{macrocode}
+%    \subsection{The Latin date}
+% \changes{2.0k}{2011/02/06}{Inserted the various `November' Latin
+%     spellings to the proper `extras' macros}
+% \changes{4.0}{2021/05/02}{Do not use small caps for the day of month}
+%    We need three conditionals governing the spelling of the month names.
+%    Ecclesiastic and modern Latin use the character v, classical and medieval
+%    Latin use only u. This affects the month of November. The user may demand
+%    to use the letter j where suitable or to lowercase month names using the
+%    respective modifiers.
+%    \begin{macrocode}
+\newif\ifbabellatin@usev
+\newif\ifbabellatin@usej
+\newif\ifbabellatin@lowercasemonth
+\babellatin@usevtrue
+\addto\extrasclassiclatin{\babellatin@usevfalse}%
+\addto\noextrasclassiclatin{\babellatin@usevtrue}%
+\addto\extrasmedievallatin{\babellatin@usevfalse}%
+\addto\noextrasmedievallatin{\babellatin@usevtrue}%
+%    \end{macrocode}
+%    The Latin month names are needed in the genitive case.
+%    \begin{macrocode}
+\def\babellatin@monthname{%
+  \ifcase\month\or\ifbabellatin@usej Januarii\else Ianuarii\fi
+    \or Februarii%
+    \or Martii%
+    \or Aprilis%
+    \or\ifbabellatin@usej Maji\else Maii\fi
+    \or\ifbabellatin@usej Junii\else Iunii\fi
+    \or\ifbabellatin@usej Julii\else Iulii\fi
+    \or Augusti%
+    \or Septembris%
+    \or Octobris%
+    \or\ifbabellatin@usev Novembris\else Nouembris\fi
+    \or Decembris%
+  \fi}%
+%    \end{macrocode}
+%    Depending on the chosen language, we have to define a \cs{latindate},
+%    \cs{classiclatindate}, \cs{medievallatindate}, or
+%    \cs{ecclesiasticlatindate} command. The date format is “XXXI Decembris
+%    MMXXI”.
+%    \begin{macrocode}
+\expandafter\def\csname date\CurrentOption\endcsname{%
+  \def\today{%
+    \uppercase\expandafter{\romannumeral\day}~%
+    \ifbabellatin@lowercasemonth
+      \lowercase\expandafter{\babellatin@monthname}%
+    \else
+      \babellatin@monthname
+    \fi
+    \space
+    \uppercase\expandafter{\romannumeral\year}%
+  }%
+}%
+%    \end{macrocode}
+%    \subsection{Shorthands}
+%    We define shorthands only if the \LaTeX{} format is used because we need
+%    commands for them that are not available in plain \TeX.
+%    \begin{macrocode}
+\def\babellatin@latex{LaTeX2e}%
+\ifx\fmtname\babellatin@latex
+%    \end{macrocode}
+%    Every shorthand character needs an \cs{initiate@active@char} command,
+%    which makes the respective character active, but expanding to itself as
+%    long as no further definitions occur. The apostrophe (acute) is only made
+%    active if \babel{} has been called with the \modifier{activeacute} option.
+%    \begin{macrocode}
+  \initiate@active@char{"}%
+  \@ifpackagewith{babel}{activeacute}{\initiate@active@char{'}}{}%
+%    \end{macrocode}
+%    A peculiarity of the \babellatin{} package are shorthands of different
+%    lengths. |"| before a letter character defines an additional hyphenation
+%    point, but |"ae| is a shorthand for the ligature `æ' in medieval and
+%    ecclesiastic Latin. So the shorthands definitions are rather complex and
+%    we need expl3 syntax for them.
+%    \begin{macrocode}
+  \ExplSyntaxOn
+%    \end{macrocode}
+%    The character |"| is used as a shorthand unconditionally. In math mode it
+%    expands to itself. In text mode it is defined as a macro with one
+%    parameter. This makes it possible to read the following token, on which
+%    the actual meaning of the shorthand depends.
+%    \begin{macrocode}
+  \declare@shorthand {latin} {"}
+    {
+      \mode_if_math:TF { \token_to_str:N " } { \babellatin_apply_quotemark:N }
+    }
+%    \end{macrocode}
+%    The character |'| is used as a shorthand if the \modifier{activeacute}
+%    option is used. So we have to use a macro for the declaration, which can
+%    be called if necessary. In math mode the shorthand expands to
+%    \cs{active@math@prime} as defined in \file{latex.ltx}. In text mode it is
+%    a macro with one argument to read the following token.
+%    \begin{macrocode}
+  \cs_set_protected:Npn \babellatin@declare@apostrophe@shorthands
+    {
+      \declare@shorthand {latin} {'}
+        {
+          \mode_if_math:TF { \active@math@prime } { \babellatin_put_acute:N }
+        }
+    }
+%    \end{macrocode}
+%    The characters |=| and |^| are only used as shorthands if the
+%    \modifier{withprosodicmarks} modifier is used. So we have to use a macro
+%    for the declaration, which can be called if necessary. In math mode both
+%    shorthands expand to themselves. In text mode they are macros with one
+%    argument to read the following token.
+%    \begin{macrocode}
+  \cs_set_protected:Npn \babellatin@declare@prosodic@shorthands
+    {
+      \declare@shorthand {latin} {=}
+        {
+          \mode_if_math:TF { \token_to_str:N = } { \babellatin_put_macron:N }
+        }
+      \declare@shorthand {latin} {^}
+        {
+          \mode_if_math:TF { \token_to_str:N ^ } { \babellatin_put_breve:N }
+        }
+    }
+%    \end{macrocode}
+%    The following macro defines the behaviour of the active |"| character.
+%    The shorthands |"AE|, |"Ae|, |"ae|, |"OE|, |"Oe|, and |"oe| are used for
+%    ligatures if the current variety of Latin uses them. In other cases |"|
+%    before any letter character or before |\AE|, |\ae|, |\OE|, and |\oe|
+%    defines an additional hyphenation point. \verb:"|: defines an additional
+%    hyphenation point as well. The shorthands |"<| and |">| are used for
+%    guillemets. In other cases the active |"| character expands to itself and
+%    the token read as argument is reinserted.
+%
+%    If the argument is a braced group (e.\,g.\@ if the user has typed
+%    |"{ab}|), unexpected behaviour may occur as the conditionals
+%    |\token_if_letter:NTF| and |\babellatin_if_ligature_command:NTF| expect a
+%    single token as first argument. Therefore we need to check if the
+%    argument is a single token using the |\tl_if_single_token:nTF| command
+%    before using those conditionals.
+%    \begin{macrocode}
+  \cs_set_protected:Npn \babellatin_apply_quotemark:N #1
+    {
+      \str_case:nnF {#1}
+        {
+          {A} { \babellatin_ligature_shorthand:Nnn E { \AE }
+                  {
+                    \babellatin_ligature_shorthand:Nnn e { \AE }
+                      {
+                        \babellatin_allowhyphens: A
+                      }
+                  }
+              }
+          {a} { \babellatin_ligature_shorthand:Nnn e { \ae }
+                  {
+                    \babellatin_allowhyphens: a
+                  }
+              }
+          {O} { \babellatin_ligature_shorthand:Nnn E { \OE }
+                  {
+                    \babellatin_ligature_shorthand:Nnn e { \OE }
+                      {
+                        \babellatin_allowhyphens: O
+                      }
+                  }
+              }
+          {o} { \babellatin_ligature_shorthand:Nnn e { \oe }
+                  {
+                    \babellatin_allowhyphens: o
+                  }
+              }
+          {|} { \babellatin_allowhyphens: }
+          {<} { \babellatin@guillemetleft }
+          {>} { \babellatin@guillemetright }
+        }
+        {
+          \tl_if_single_token:nTF {#1}
+            {
+              \token_if_letter:NTF #1 { \babellatin_allowhyphens: }
+                {
+                  \babellatin_if_ligature_command:NTF #1 { \babellatin_allowhyphens: }
+                    {
+                      \token_to_str:N "
+                    }
+                }
+            }
+            {
+              \token_to_str:N "
+            }
+            #1
+        }
+    }
+%    \end{macrocode}
+%    The following macro defines the behaviour of the active |'| character.
+%    The shorthands |'AE|, |'Ae|, |'ae|, |'OE|, |'Oe|, and |'oe| are used for
+%    accented ligatures if the current variety of Latin uses them. In other
+%    cases |'| before any vowel or before |\AE|, |\ae|, |\OE|, and |\oe|
+%    defines an accented character. The character V is treated as a vowel here
+%    as it may represent the vowel U, but v is not, as it is never used for a
+%    vowel. In other cases the active |'| character expands to itself and the
+%    token read as argument is reinserted.
+%    \begin{macrocode}
+  \cs_set_protected:Npn \babellatin_put_acute:N #1
+    {
+      \str_case:nnF {#1}
+        {
+          {A} { \babellatin_ligature_shorthand:Nnn E { \'\AE }
+                  {
+                    \babellatin_ligature_shorthand:Nnn e { \'\AE } { Á }
+                  }
+              }
+          {a} { \babellatin_ligature_shorthand:Nnn e { \'\ae } { á } }
+          {E} { É }
+          {e} { é }
+          {I} { Í }
+          {i} { í }
+          {O} { \babellatin_ligature_shorthand:Nnn E { \'\OE }
+                  {
+                    \babellatin_ligature_shorthand:Nnn e { \'\OE } { Ó }
+                  }
+              }
+          {o} { \babellatin_ligature_shorthand:Nnn e { \'\oe } { ó } }
+          {U} { Ú }
+          {u} { ú }
+          {V} { \'V }
+          {Y} { \'Y }
+          {y} { \'y }
+          {Æ} { \'\AE }
+          {æ} { \'\ae }
+          {Œ} { \'\OE }
+          {œ} { \'\oe }
+        }
+        {
+          \tl_if_single_token:nTF {#1}
+            {
+              \babellatin_if_ligature_command:NTF #1 { \' }
+                {
+                  \token_to_str:N '
+                }
+            }
+            {
+              \token_to_str:N '
+            }
+          #1
+        }
+    }
+%    \end{macrocode}
+%    The following macro defines the behaviour of the active |=| character.
+%    The shorthands |=AE|, |=Ae|, |=ae|, |=AU|, |=Au|, |=au|, |=EU|, |=Eu|,
+%    |=eu|, |=OE|, |=Oe|, and |=oe| are used for diphthongs with a combining
+%    double macron (\unicode{035E}) or ligatures with a macron if the current
+%    variety of Latin uses them. In other cases |=| before any vowel puts a
+%    macron above the vowel. The character V is treated as a vowel here as it
+%    may represent the vowel U, but v is not, as it is never used for a vowel.
+%    In other cases the active |=| character expands to itself and the token
+%    read as argument is reinserted.
+%    \begin{macrocode}
+  \cs_set_protected:Npn \babellatin_put_macron:N #1
+    {
+      \str_case:nnF {#1}
+        {
+          {A} { \babellatin_ligature_macron:NNnn AE { \=\AE }
+                  {
+                    \babellatin_ligature_macron:NNnn Ae { \=\AE }
+                      {
+                        \babellatin_diphthong_macron:NNn AU
+                          {
+                            \babellatin_diphthong_macron:NNn Au { \=A }
+                          }
+                      }
+                  }
+              }
+          {a} { \babellatin_ligature_macron:NNnn ae { \=\ae }
+                  {
+                    \babellatin_diphthong_macron:NNn au { \=a }
+                  }
+              }
+          {E} { \babellatin_diphthong_macron:NNn EU
+                  {
+                    \babellatin_diphthong_macron:NNn Eu { \=E }
+                  }
+              }
+          {e} { \babellatin_diphthong_macron:NNn eu { \=e } }
+          {I} { \=I }
+          {i} { \=\i }
+          {O} { \babellatin_ligature_macron:NNnn OE { \=\OE }
+                  {
+                    \babellatin_ligature_macron:NNnn Oe { \=\OE } { \=O }
+                  }
+              }
+          {o} { \babellatin_ligature_macron:NNnn oe { \=\oe } { \=o } }
+          {U} { \=U }
+          {u} { \=u }
+          {V} { \=V }
+          {Y} { \=Y }
+          {y} { \=y }
+        }
+        {
+          \tl_if_single_token:nTF {#1}
+            {
+              \babellatin_if_ligature_command:NTF #1 { \= }
+                {
+                  \token_to_str:N =
+                }
+            }
+            {
+              \token_to_str:N =
+            }
+          #1
+        }
+    }
+%    \end{macrocode}
+%    The following macro defines the behaviour of the active |^| character.
+%    |^| before any vowel puts a breve above the vowel. The character V is
+%    treated as a vowel here as it may represent the vowel U, but v is not, as
+%    it is never used for a vowel. In other cases the active |^| character
+%    expands to itself and the token read as argument is reinserted.
+%    \begin{macrocode}
+  \cs_set:Npn \babellatin_put_breve:N #1
+    {
+      \str_case:nnF {#1}
+        {
+          {A} { \u{A} }
+          {a} { \u{a} }
+          {E} { \u{E} }
+          {e} { \u{e} }
+          {I} { \u{I} }
+          {i} { \u{\i} }
+          {O} { \u{O} }
+          {o} { \u{o} }
+          {U} { \u{U} }
+          {u} { \u{u} }
+          {V} { \u{V} }
+          {Y} { \u{Y} }
+          {y} { \u{y} }
+        }
+        {
+          \token_to_str:N ^
+          #1
+        }
+    }
+%    \end{macrocode}
+%    We define a macro for an additional hyphenation point that does not
+%    suppress other hyphenation points within the word. This macro is used by
+%    the |"| and the \verb:"|: shorthand.
+%    \begin{macrocode}
+  \cs_set:Npn \babellatin_allowhyphens:
+    {
+      \bbl@allowhyphens
+      \discretionary {-} {} {}
+      \bbl@allowhyphens
+    }
+%    \end{macrocode}
+%    The conditional \cs{ifbabellatin@useligatures} cannot be used within a
+%    expl3 context. So we have to define a macro testing if ligatures are
+%    enabled outside the expl3 code part. The result is stored in the variable
+%    \cs{babellatin@useligatures@bool}. We define this variable analogously to
+%    expl3's |\c_true_bool| and |\c_false_bool|.
+%    \begin{macrocode}
+  \ExplSyntaxOff
+  \def\babellatin@test@for@ligatures{%
+    \ifbabellatin@useligatures
+      \chardef\babellatin@useligatures@bool=1
+    \else
+      \chardef\babellatin@useligatures@bool=0
+    \fi
+  }%
+  \ExplSyntaxOn
+%    \end{macrocode}
+%    The following macro is intended for defining a shorthand for a ligature
+%    where useful. The first argument is the expected second character after
+%    |"| (e.\,g.\@ |e| if |"a| has been read). The second argument is the true
+%    code, that applies if this character is found (the ligature command). The
+%    third argument is the false code (some other command).
+%    \begin{macrocode}
+  \cs_set_protected:Npn \babellatin_ligature_shorthand:Nnn #1#2#3
+    {
+      \babellatin@test@for@ligatures
+      \bool_if:NTF \babellatin@useligatures@bool
+        {
+          \peek_meaning_remove:NTF #1 {#2} {#3}
+        }
+        {
+          #3
+        }
+    }
+%    \end{macrocode}
+%    The following macro is intended for defining a shorthand for a diphthong
+%    with a combining double macron (\unicode{035E}). The first argument is the
+%    first character of the diphthong, which has already been read. The second
+%    argument is the second character of the diphthong, which is expected to be
+%    read. The third argument is the false code, that applies if the second
+%    character is not found as expected.
+%
+%    For pdf\LaTeX{} the false code applies in any case, as this engine does not
+%    support the combining double macron.
+%    \begin{macrocode}
+  \cs_set_protected:Npn \babellatin_diphthong_macron:NNn #1#2#3
+    {
+      \bool_lazy_or:nnTF { \sys_if_engine_xetex_p: } { \sys_if_engine_luatex_p: }
+        {
+          \peek_meaning:NTF #2 { #1 \char "35E \relax } {#3}
+        }
+        {
+          #3
+        }
+    }
+%    \end{macrocode}
+%    The following macro is intended for defining a shorthand for a ligature
+%    with a macron where useful. The first argument is the first character of
+%    the diphthong, which has already been read. The second argument is the
+%    expected second character of the diphthong. The third argument is the code
+%    for the ligature with the macron. The fourth argument is the false code
+%    that applies if the second character is not found.
+%    \begin{macrocode}
+  \cs_set_protected:Npn \babellatin_ligature_macron:NNnn #1#2#3#4
+    {
+      \babellatin_ligature_shorthand:Nnn #2 {#3}
+        {
+          \babellatin_diphthong_macron:NNn #1 #2 {#4}
+        }
+    }
+%    \end{macrocode}
+%    The following conditional tests if the argument is a ligature command
+%    (\cs{AE}, \cs{ae}, \cs{OE}, or \cs{oe}).
+%    \begin{macrocode}
+  \prg_set_conditional:Npnn \babellatin_if_ligature_command:N #1 {TF}
+    {
+      \token_if_eq_meaning:NNTF #1 \AE { \prg_return_true: }
+        {
+          \token_if_eq_meaning:NNTF #1 \ae { \prg_return_true: }
+            {
+              \token_if_eq_meaning:NNTF #1 \OE { \prg_return_true: }
+                {
+                  \token_if_eq_meaning:NNTF #1 \oe { \prg_return_true: }
+                    {
+                      \prg_return_false:
+                    }
+                }
+            }
+        }
+    }
+  \ExplSyntaxOff
+%    \end{macrocode}
+%    For the |"<| and the |">| shorthands we have to define the meaning of the
+%    macros used for their definition. The commands \cs{guillemetleft} and
+%    \cs{guillemetright} are provided by \babel. We will have to change this
+%    definition later on for \lang{ecclesiasticlatin} if pdf\TeX{} is used.
+%    \begin{macrocode}
+  \let\babellatin@guillemetleft\guillemetleft
+  \let\babellatin@guillemetright\guillemetright
+%    \end{macrocode}
+%    Finally, we have to add the shorthand definitions to the extras of the
+%    current language.
+%    \begin{macrocode}
+  \expandafter\addto\csname extras\CurrentOption\endcsname{%
+    \bbl@activate{"}%
+    \languageshorthands{latin}%
+  }%
+  \expandafter\addto\csname noextras\CurrentOption\endcsname{%
+    \bbl@deactivate{"}%
+  }%
+  \@ifpackagewith{babel}{activeacute}{%
+    \babellatin@declare@apostrophe@shorthands
+    \expandafter\addto\csname extras\CurrentOption\endcsname{%
+      \bbl@activate{'}%
+    }%
+    \expandafter\addto\csname noextras\CurrentOption\endcsname{%
+      \bbl@deactivate{'}%
+    }%
+  }{}%
+\fi
+%    \end{macrocode}
+%    \subsection{Ecclesiastic punctuation spacing}
+%    We define some conditionals concerning the engine used.
+%    \begin{macrocode}
+\newif\ifbabellatin@luatex
+\newif\ifbabellatin@xetex
+\ifnum\bbl@engine=1
+  \babellatin@luatextrue
+\else
+  \ifnum\bbl@engine=2
+    \babellatin@xetextrue
+  \fi
+\fi
+%    \end{macrocode}
+%    The following command defines the preparations needed for punctuation
+%    spacing in the preamble.
+%    \begin{macrocode}
+\def\babellatin@prepare@punctuation@spacing{%
+%    \end{macrocode}
+%    For \LuaTeX{} we load an additional file containing some Lua code. This
+%    file is documented in section \ref{luamodule}.
+%    \begin{macrocode}
+  \ifbabellatin@luatex
+    \directlua{require('ecclesiasticlatin')}%
+  \else
+%    \end{macrocode}
+%    The following command inserts a kern of 1/12 of a quad. This is the only
+%    amount of space used for punctuation within this package.
+%    \begin{macrocode}
+    \def\babellatin@insert@punctuation@space{%
+      \kern0.08333\fontdimen6\font
+    }%
+%    \end{macrocode}
+%    The following command inserts the same kern, removing any positive amount
+%    of space that precedes. This is needed if a closing guillemet is preceded
+%    by a space character erroneously input by the user.
+%    \begin{macrocode}
+    \def\babellatin@replace@preceding@space{%
+      \ifdim\lastskip>\z@\unskip\fi
+      \babellatin@insert@punctuation@space
+    }%
+%    \end{macrocode}
+%    The following command inserts the same kern, removing any following space
+%    character. This is needed if an opening guillemet is followed by a space
+%    character erroneously input by the user.
+%    \begin{macrocode}
+    \def\babellatin@replace@following@space{%
+      \babellatin@insert@punctuation@space
+      \ignorespaces
+    }%
+%    \end{macrocode}
+%    For \XeTeX{} the punctuation spacing will be defined based on five
+%    different character classes: one for question and exclamation marks, one
+%    for colons and semicolons, one for opening and closing guillemets,
+%    respectiveley, and one for opening brackets. Concerning spacing, brackets
+%    are treated the same way as letter characters in most cases. However, in
+%    strings like “(?)” no spacing is desired before the question mark. So we
+%    need a dedicated character class for opening brackets.
+%    \begin{macrocode}
+    \ifbabellatin@xetex
+      \newXeTeXintercharclass\babellatin@qmark@class
+      \newXeTeXintercharclass\babellatin@colon@class
+      \newXeTeXintercharclass\babellatin@oguill@class
+      \newXeTeXintercharclass\babellatin@cguill@class
+      \newXeTeXintercharclass\babellatin@obracket@class
+%    \end{macrocode}
+%    Furthermore, we need a class representing the word boundary. This class
+%    has a fixed number defined in \file{latex.ltx}.
+%    \begin{macrocode}
+      \let\babellatin@boundary@class\e@alloc@intercharclass@top
+%    \end{macrocode}
+%    A space is inserted between a question or exclamation mark and a closing
+%    guillemet.
+%    \begin{macrocode}
+      \XeTeXinterchartoks\babellatin@qmark@class\babellatin@cguill@class={%
+        \babellatin@insert@punctuation@space}%
+%    \end{macrocode}
+%    A space is inserted between a question or exclamation mark and a colon or
+%    semicolon.
+%    \begin{macrocode}
+      \XeTeXinterchartoks\babellatin@qmark@class\babellatin@colon@class={%
+        \babellatin@insert@punctuation@space}%
+%    \end{macrocode}
+%    A space is inserted between a colon or semicolon and a closing guillemet.
+%    \begin{macrocode}
+      \XeTeXinterchartoks\babellatin@colon@class\babellatin@cguill@class={%
+        \babellatin@insert@punctuation@space}%
+%    \end{macrocode}
+%    A space character after an opening guillemet is replaced by the correct
+%    amount of space.
+%    \begin{macrocode}
+      \XeTeXinterchartoks\babellatin@oguill@class\babellatin@boundary@class={%
+        \babellatin@replace@following@space}%
+%    \end{macrocode}
+%    A space is inserted between two opening guillemets.
+%    \begin{macrocode}
+      \XeTeXinterchartoks\babellatin@oguill@class\babellatin@oguill@class={%
+        \babellatin@insert@punctuation@space}%
+%    \end{macrocode}
+%    A space is inserted between an opening guillemet and any ordinary
+%    character.
+%    \begin{macrocode}
+      \XeTeXinterchartoks\babellatin@oguill@class\z@={%
+        \babellatin@insert@punctuation@space}%
+%    \end{macrocode}
+%    A space is inserted between two closing guillemets.
+%    \begin{macrocode}
+      \XeTeXinterchartoks\babellatin@cguill@class\babellatin@cguill@class={%
+        \babellatin@insert@punctuation@space}%
+%    \end{macrocode}
+%    A space is inserted between a closing guillemet and a question or
+%    exclamation mark.
+%    \begin{macrocode}
+      \XeTeXinterchartoks\babellatin@cguill@class\babellatin@qmark@class={%
+        \babellatin@insert@punctuation@space}%
+%    \end{macrocode}
+%    A space is inserted between a closing guillemet and a colon or semicolon.
+%    \begin{macrocode}
+      \XeTeXinterchartoks\babellatin@cguill@class\babellatin@colon@class={%
+        \babellatin@insert@punctuation@space}%
+%    \end{macrocode}
+%    A space character before a question or exclamation mark is replaced by the
+%    correct amount of space.
+%    \begin{macrocode}
+      \XeTeXinterchartoks\babellatin@boundary@class\babellatin@qmark@class={%
+        \babellatin@replace@preceding@space}%
+%    \end{macrocode}
+%    A space character before a colon or semicolon is replaced by the correct
+%    amount of space.
+%    \begin{macrocode}
+      \XeTeXinterchartoks\babellatin@boundary@class\babellatin@colon@class={%
+        \babellatin@replace@preceding@space}%
+%    \end{macrocode}
+%    A space character before a closing guillemet is replaced by the correct
+%    amount of space.
+%    \begin{macrocode}
+      \XeTeXinterchartoks\babellatin@boundary@class\babellatin@cguill@class={%
+        \babellatin@replace@preceding@space}%
+%    \end{macrocode}
+%    A space is inserted between any ordinary character and a question or
+%    exclamation mark.
+%    \begin{macrocode}
+      \XeTeXinterchartoks\z@\babellatin@qmark@class={%
+        \babellatin@insert@punctuation@space}%
+%    \end{macrocode}
+%    A space is inserted between any ordinary character and a colon or
+%    semicolon.
+%    \begin{macrocode}
+      \XeTeXinterchartoks\z@\babellatin@colon@class={%
+        \babellatin@insert@punctuation@space}%
+%    \end{macrocode}
+%    A space is inserted between any ordinary character and a closing
+%    guillemet.
+%    \begin{macrocode}
+      \XeTeXinterchartoks\z@\babellatin@cguill@class={%
+        \babellatin@insert@punctuation@space}%
+    \else
+%    \end{macrocode}
+%    In pdf\TeX{} active characters are needed for punctuation spacing.
+%    \begin{macrocode}
+      \initiate@active@char{;}%
+      \initiate@active@char{:}%
+      \initiate@active@char{!}%
+      \initiate@active@char{?}%
+      \declare@shorthand{latin}{;}{%
+        \ifhmode
+          \babellatin@replace@preceding@space
+          \string;%
+        \else
+          \string;%
+        \fi
+      }%
+      \declare@shorthand{latin}{:}{%
+        \ifhmode
+          \babellatin@replace@preceding@space
+          \string:%
+        \else
+          \string:%
+        \fi
+      }%
+      \declare@shorthand{latin}{!}{%
+        \ifhmode
+          \babellatin@replace@preceding@space
+          \string!%
+        \else
+          \string!%
+        \fi
+      }%
+      \declare@shorthand{latin}{?}{%
+        \ifhmode
+          \babellatin@replace@preceding@space
+          \string?%
+        \else
+          \string?%
+        \fi
+      }%
+    \fi
+  \fi
+}%
+%    \end{macrocode}
+%    We call the previously defined command for ecclesiastic Latin.
+%    \begin{macrocode}
+\ifx\CurrentOption\babellatin@ecclesiastic
+  \babellatin@prepare@punctuation@spacing
+\fi
+%    \end{macrocode}
+%    The following function actually enables the spacing of punctuation.
+%    \begin{macrocode}
+\def\babellatin@punctuation@spacing{%
+%    \end{macrocode}
+%    For \LuaTeX{} we just have to call a function of the Lua module.
+%    \begin{macrocode}
+  \ifbabellatin@luatex
+    \directlua{ecclesiasticlatin.activate_spacing()}%
+  \else
+%    \end{macrocode}
+%    For \XeTeX{} we have to enable the character classes functionality and
+%    assign the punctuation characters to the character classes.
+%    \begin{macrocode}
+    \ifbabellatin@xetex
+      \XeTeXinterchartokenstate = 1
+      \XeTeXcharclass `\! \babellatin@qmark@class
+      \XeTeXcharclass `\? \babellatin@qmark@class
+      \XeTeXcharclass `\‼ \babellatin@qmark@class
+      \XeTeXcharclass `\⁇ \babellatin@qmark@class
+      \XeTeXcharclass `\⁈ \babellatin@qmark@class
+      \XeTeXcharclass `\⁉ \babellatin@qmark@class
+      \XeTeXcharclass `\‽ \babellatin@qmark@class
+      \XeTeXcharclass `\; \babellatin@colon@class
+      \XeTeXcharclass `\: \babellatin@colon@class
+      \XeTeXcharclass `\« \babellatin@oguill@class
+      \XeTeXcharclass `\» \babellatin@cguill@class
+      \XeTeXcharclass `\‹ \babellatin@oguill@class
+      \XeTeXcharclass `\› \babellatin@cguill@class
+      \XeTeXcharclass `\( \babellatin@obracket@class
+      \XeTeXcharclass `\[ \babellatin@obracket@class
+      \XeTeXcharclass `\{ \babellatin@obracket@class
+      \XeTeXcharclass `\⟨ \babellatin@obracket@class
+    \else
+%    \end{macrocode}
+%    For pdf\TeX{} we activate the shorthands.
+%    \begin{macrocode}
+      \bbl@activate{;}%
+      \bbl@activate{:}%
+      \bbl@activate{!}%
+      \bbl@activate{?}%
+%    \end{macrocode}
+%    We also redefine the guillemet commands.
+%    \begin{macrocode}
+      \def\babellatin@guillemetleft{%
+        \guillemetleft
+        \babellatin@replace@following@space
+      }%
+      \def\babellatin@guillemetright{%
+        \babellatin@replace@preceding@space
+        \guillemetright
+      }%
+    \fi
+  \fi
+}%
+%    \end{macrocode}
+%    The following function disables the spacing of punctuation.
+%    \begin{macrocode}
+\def\babellatin@no@punctuation@spacing{%
+  \ifbabellatin@luatex
+    \directlua{ecclesiasticlatin.deactivate_spacing()}%
+  \else
+    \ifbabellatin@xetex
+      \XeTeXcharclass `\! \z@
+      \XeTeXcharclass `\? \z@
+      \XeTeXcharclass `\‼ \z@
+      \XeTeXcharclass `\⁇ \z@
+      \XeTeXcharclass `\⁈ \z@
+      \XeTeXcharclass `\⁉ \z@
+      \XeTeXcharclass `\‽ \z@
+      \XeTeXcharclass `\; \z@
+      \XeTeXcharclass `\: \z@
+      \XeTeXcharclass `\« \z@
+      \XeTeXcharclass `\» \z@
+      \XeTeXcharclass `\‹ \z@
+      \XeTeXcharclass `\› \z@
+      \XeTeXcharclass `\( \z@
+      \XeTeXcharclass `\[ \z@
+      \XeTeXcharclass `\{ \z@
+      \XeTeXcharclass `\⟨ \z@
+      \XeTeXinterchartokenstate = 0
+    \else
+      \bbl@deactivate{;}%
+      \bbl@deactivate{:}%
+      \bbl@deactivate{!}%
+      \bbl@deactivate{?}%
+      \let\babellatin@guillemetleft\guillemetleft
+      \let\babellatin@guillemetright\guillemetright
+    \fi
+  \fi
+}%
+%    \end{macrocode}
+%    Punctuation is spaced in ecclesiastic Latin only.
+%    \begin{macrocode}
+\addto\extrasecclesiasticlatin{\babellatin@punctuation@spacing}%
+\addto\noextrasecclesiasticlatin{\babellatin@no@punctuation@spacing}%
+%    \end{macrocode}
+%    \subsection{Modifiers}
+%    We define some language options accessible via modifiers.
+%    \subsubsection{Using the letter \emph{j}}
+%    The \modifier{usej} option sets the conditional \cs{ifbabellatin@usej} to
+%    true.
+%    \begin{macrocode}
+\bbl@declare@ttribute\CurrentOption{usej}{%
+  \expandafter\addto\csname extras\CurrentOption\endcsname{%
+    \babellatin@usejtrue}%
+  \expandafter\addto\csname noextras\CurrentOption\endcsname{%
+    \babellatin@usejfalse}%
+}%
+%    \end{macrocode}
+%    \subsubsection{Typesetting months in lower case}
+%    The \modifier{lowercasemonth} option sets the conditional
+%    \cs{ifbabellatin@lowercasemonth} to true.
+%    \begin{macrocode}
+\bbl@declare@ttribute\CurrentOption{lowercasemonth}{%
+  \expandafter\addto\csname extras\CurrentOption\endcsname{%
+    \babellatin@lowercasemonthtrue}%
+  \expandafter\addto\csname noextras\CurrentOption\endcsname{%
+    \babellatin@lowercasemonthfalse}%
+}%
+%    \end{macrocode}
+%    \subsubsection{Shorthands for prosodic marks}
+%    The \modifier{withprosodicmarks} option makes it possible to use
+%    shorthands like |=a| or |^a| for vowels with macrons and breves. We define
+%    it for all four language variants of Latin, but only if the \LaTeX{}
+%    format is used.
+%    \begin{macrocode}
+\ifx\fmtname\babellatin@latex
+  \bbl@declare@ttribute\CurrentOption{withprosodicmarks}{%
+%    \end{macrocode}
+%    Every shorthand character needs an \cs{initiate@active@char} command,
+%    which makes the respective character active, but expanding to itself as
+%    long as no further definitions occur. Both active characters needs to be
+%    switched off at the beginning of the document to avoid problems with
+%    commands using |key=value| interfaces (e.\,g.\@ \cs{includegraphics}) and
+%    \TeX's |^^xx| convention.
+%    \begin{macrocode}
+    \initiate@active@char{=}%
+    \initiate@active@char{^}%
+    \AtBeginDocument{%
+%    \end{macrocode}
+%    We do not use |\shorthandoff{=}| and |\shorthandoff*{^}| in the following
+%    lines because \package{babel-french} redefines the \cs{shorthandoff}
+%    command for \XeLaTeX{} and \LuaLaTeX. Instead, we use \babel's internal
+%    definition of this command.
+%    \begin{macrocode}
+      \bbl@shorthandoff\z@{=}%
+%    \end{macrocode}
+%    The following line is currently uncommented because switching |^| off and
+%    on does not work as expected.\footnote{See
+%    \url{https://github.com/latex3/babel/issues/126}.}
+%    \begin{macrocode}
+      \bbl@shorthandoff\tw@{^}%
+    }%
+    \babellatin@declare@prosodic@shorthands
+    \expandafter\addto\csname extras\CurrentOption\endcsname{%
+      \bbl@activate{=}%
+      \bbl@activate{^}%
+%    \end{macrocode}
+%    The active |=| and |^| are normally turned off to avoid problems with
+%    commands using |key=value| interfaces and \TeX's |^^xx| convention. We
+%    define the commands \cs{ProsodicMarksOn} and \cs{ProsodicMarksOff} for
+%    turning them on and off within the document. We use the starred form of
+%    \cs{shorthandoff} when turning off |^| to keep it working within math
+%    formulas.
+%    \begin{macrocode}
+      \def\ProsodicMarksOn{%
+        \shorthandon{=}%
+%    \end{macrocode}
+%    The following line is currently uncommented because switching |^| off and
+%    on does not work as expected.
+%    \begin{macrocode}
+        \shorthandon{^}%
+      }%
+      \def\ProsodicMarksOff{%
+        \shorthandoff{=}%
+%    \end{macrocode}
+%    The following line is currently uncommented because switching |^| off and
+%    on does not work as expected.
+%    \begin{macrocode}
+        \shorthandoff*{^}%
+      }%
+    }%
+    \expandafter\addto\csname noextras\CurrentOption\endcsname{%
+      \bbl@deactivate{=}%
+      \bbl@deactivate{^}%
+    }%
+  }%
+%    \end{macrocode}
+%    The \cs{ProsodicMarksOn} and \cs{ProsodicMarksOff} commands are useless
+%    without the \modifier{withprosodicmarks} modifier. They only issue
+%    warnings in this case.
+%    \begin{macrocode}
+  \expandafter\addto\csname extras\CurrentOption\endcsname{%
+    \def\ProsodicMarksOn{%
+      \PackageWarning{babel-latin}{%
+        The \protect\ProsodicMarksOn\space command is only\MessageBreak
+        available using the withprosodicmarks\MessageBreak
+        modifier}%
+    }%
+    \def\ProsodicMarksOff{%
+      \PackageWarning{babel-latin}{%
+        The \protect\ProsodicMarksOff\space command is only\MessageBreak
+        available using the withprosodicmarks\MessageBreak
+        modifier}%
+    }%
+  }%
+\fi
+%    \end{macrocode}
+%    \subsubsection{Ecclesiastic footnotes}
+%    The \modifier{ecclesiasticfootnotes} option sets the footnotes globally to
+%    the style defined by the (now outdated) \package{ecclesiastic} package.
+%    The definition takes place at the end of the package to be able to check
+%    \babel's main language. However, the \cs{CurrentOption} has lost its value
+%    at this moment, so we have to store it.
+%    \begin{macrocode}
+\bbl@declare@ttribute\CurrentOption{ecclesiasticfootnotes}{%
+  \let\babellatin@footnote@lang\CurrentOption
+  \AtEndOfPackage{%
+    \ifx\bbl@main@language\babellatin@footnote@lang
+      \let\@makefntext\babellatin@variant@footnote
+    \else
+      \PackageWarningNoLine{babel-latin}{%
+        \babellatin@footnote@lang\space is not the main language.\MessageBreak
+        The `ecclesiasticfootnotes' modifier\MessageBreak
+        is ineffective}%
+    \fi
+  }%
+}%
+%    \end{macrocode}
+%    This is the footnote style as defined by the \package{ecclesiastic}
+%    package.
+%    \begin{macrocode}
+\def\babellatin@variant@footnote#1{%
+  \parindent 1em%
+  \noindent
+  \hbox{\normalfont\@thefnmark.}%
+  \enspace #1%
+}%
+%    \end{macrocode}
+%    \subsection{Legacy modifiers and commands}
+% \changes{4.0}{2021/05/02}{Do not load the \package{ecclesiastic} package for
+%     the \modifier{ecclesiastic} modifier, use an internal implementation
+%     instead}
+%    We keep the modifiers \modifier{classic}, \modifier{medieval}, and
+%    \modifier{ecclesiastic} for backwards compatibility. We issue a warning if
+%    they are used.
+%    \begin{macrocode}
+\def\babellatin@outdated@modifier#1{%
+  \PackageWarningNoLine{babel-latin}{%
+    The `#1' modifier is outdated. Please\MessageBreak
+    consult the babel-latin manual and consider\MessageBreak
+    to load the language `#1latin' instead\MessageBreak
+    of `latin.#1'}%
+}%
+\bbl@declare@ttribute{latin}{classic}{%
+  \babellatin@outdated@modifier{classic}%
+  \addto\extraslatin{\babellatin@usevfalse}%
+  \addto\noextraslatin{\babellatin@usevtrue}%
+  \babellatin@test@classic@patterns
+  \let\l@latin\l@classiclatin
+  \StartBabelCommands*{latin}{}%
+  \SetCase{\uccode `u=`V}{\lccode `V=`u}%
+  \EndBabelCommands
+}%
+\bbl@declare@ttribute{latin}{medieval}{%
+  \babellatin@outdated@modifier{medieval}%
+  \addto\extraslatin{%
+    \babellatin@usevfalse
+    \def\prefacename{Pr\ae fatio}%
+  }%
+  \addto\noextraslatin{%
+    \babellatin@usevtrue
+  }%
+  \StartBabelCommands*{latin}{}%
+  \SetCase{\uccode `u=`V}{\lccode `V=`u}%
+  \EndBabelCommands%
+}%
+\bbl@declare@ttribute{latin}{ecclesiastic}{%
+  \babellatin@outdated@modifier{ecclesiastic}%
+  \babellatin@prepare@punctuation@spacing
+  \babellatin@ecclesiastic@outdated@commands
+%    \end{macrocode}
+%    The apostrophe character becomes active, even without \babel's
+%    \modifier{activeacute} option.
+%    \begin{macrocode}
+  \initiate@active@char{'}%
+  \babellatin@declare@apostrophe@shorthands
+  \addto\extraslatin{%
+    \bbl@activate{'}%
+    \babellatin@punctuation@spacing
+    \babellatin@useligaturestrue
+  }%
+  \addto\noextraslatin{%
+    \bbl@deactivate{'}%
+    \babellatin@no@punctuation@spacing
+    \babellatin@useligaturesfalse
+  }%
+%    \end{macrocode}
+%    We set up the footnotes like the \package{ecclesiastic} package did.
+%    \begin{macrocode}
+  \addto\extraslatin{%
+    \babel@save\@makefntext
+    \let\@makefntext\babellatin@variant@footnote
+  }%
+}%
+%    \end{macrocode}
+%    In earlier versions of \babellatin{} (up to v.\,3.5) a
+%    \cs{SetLatinLigatures} command and a \cs{ProsodicMarks} command have been
+%    defined. We retain them for backwards compatiblity, but they do nothing
+%    except issuing a warning.
+% \changes{4.0}{2021/05/02}{Declare \cs{SetLatinLigatures} and
+%     \cs{ProsodicMarks} obsolete}
+%    \begin{macrocode}
+\providecommand\SetLatinLigatures{%
+  \PackageWarning{babel-latin}{%
+    The \protect\SetLatinLigatures\space command is obsolete.\MessageBreak
+    Please remove it}}%
+\providecommand\ProsodicMarks{%
+  \PackageWarning{babel-latin}{%
+    The \protect\ProsodicMarks\space command is obsolete.\MessageBreak
+    Please remove it}}%
+%    \end{macrocode}
+%    We retain some legacy commands concerning guillemets from the
+%    \package{ecclesiastic} package, which is now outdated, but we deprecate
+%    them.
+% \changes{4.0}{2021/05/02}{Declare \cs{FrenchGuillemetsFrom},
+%     \cs{ToneGuillemets}, \cs{og}, and \cs{fg} (defined by the
+%     \package{ecclesiastic} package) obsolete}%
+%    \begin{macrocode}
+\def\babellatin@ecclesiastic@outdated@commands{%
+  \providecommand*\FrenchGuillemetsFrom[4]{%
+    \PackageWarning{babel-latin}{%
+      The \protect\FrenchGuillemetsFrom\space command is obsolete.\MessageBreak
+      Please remove it and use \protect\usepackage[T1]{fontenc}\MessageBreak
+      if compiling with pdfLaTeX}}%
+  \let\FrenchGuillemotsFrom\FrenchGuillemetsFrom
+  \providecommand\ToneGuillemets{%
+    \PackageWarning{babel-latin}{%
+      The \protect\ToneGuillemets\space command is obsolete.\MessageBreak
+      Please remove it and use \protect\usepackage[T1]{fontenc}\MessageBreak
+      if compiling with pdfLaTeX}}%
+  \expandafter\addto\csname extras\CurrentOption\endcsname{%
+    \babel@save\og
+    \babel@save\fg
+    \DeclareRobustCommand\og{%
+      \babellatin@guillemetleft
+      \PackageWarning{babel-latin}{%
+        The \protect\og\space command is obsolete.\MessageBreak
+        Please replace it by "<}}%
+    \DeclareRobustCommand\fg{%
+      \babellatin@guillemetright
+      \PackageWarning{babel-latin}{%
+        The \protect\fg\space command is obsolete.\MessageBreak
+        Please replace it by ">}}%
+  }%
+}%
+\ifx\CurrentOption\babellatin@ecclesiastic
+  \babellatin@ecclesiastic@outdated@commands
+\fi
+%    \end{macrocode}
+%    The macro |\ldf@finish| takes care of looking for a configuration file,
+%    setting the main language to be switched on at |\begin{document}| and
+%    resetting the category code of \texttt{@} to its original value.
+%    \begin{macrocode}
+\ldf@finish\CurrentOption
+%    \end{macrocode}
+% \iffalse
+%</latin>
+% \fi
+%    \babel{} expects \file{ldf} files for \lang{classiclatin},
+%    \lang{medievallatin} and \lang{ecclesiasticlatin}. These files themselves
+%    only load \file{latin.ldf}, which does the real work:
+%    \begin{macrocode}
+%<classic>\ProvidesLanguage{classiclatin}
+%<ecclesiastic>\ProvidesLanguage{ecclesiasticlatin}
+%<medieval>\ProvidesLanguage{medievallatin}
+%    \end{macrocode}
+% \iffalse
+%<*classic|ecclesiastic|medieval>
+% \fi
+%    \begin{macrocode}
+\input latin.ldf\relax
+%    \end{macrocode}
+% \iffalse
+%</classic|ecclesiastic|medieval>
+% \fi
+%    \subsection{The Lua module\label{luamodule}}
+%    In case \LuaTeX{} is used for compilation, the spacing of punctuation for
+%    ecclesiastic Latin requires some Lua code, which is stored in
+%    \file{ecclesiasticlatin.lua}. The original version of this code has been
+%    written for the \package{polyglossia} package by É. Roux and others.
+%
+% \iffalse
+%<*lua>
+% \fi
+%    The Lua module identifies itself using the command provided by
+%    \package{ltluatex}.
+%    \begin{macrocode}
+luatexbase.provides_module({
+    name        = "ecclesiasticlatin",
+    date        = "2021-05-02",
+    version     = "4.0-dev",
+    description = "babel-latin punctuation spacing for ecclesiastic Latin"
+})
+local add_to_callback     = luatexbase.add_to_callback
+local in_callback         = luatexbase.in_callback
+local new_attribute       = luatexbase.new_attribute
+local node                = node
+local insert_node_before  = node.insert_before
+local insert_node_after   = node.insert_after
+local remove_node         = node.remove
+local has_attribute       = node.has_attribute
+local node_copy           = node.copy
+local new_node            = node.new
+local end_of_math         = node.end_of_math
+local get_next            = node.getnext
+local get_prev            = node.getprev
+local get_property        = node.getproperty
+%    \end{macrocode}
+%    Node types according to |node.types()|:
+%    \begin{macrocode}
+local glue_code    = node.id"glue"
+local glyph_code   = node.id"glyph"
+local penalty_code = node.id"penalty"
+local kern_code    = node.id"kern"
+local math_code    = node.id"math"
+%    \end{macrocode}
+%    We need some node subtypes:
+%    \begin{macrocode}
+local userkern = 1
+local removable_skip = {
+    [0]  = true, -- userskip
+    [13] = true, -- spaceskip
+    [14] = true  -- xspaceskip
+}
+%    \end{macrocode}
+%    We make a new node, so that we can copy it later on:
+%    \begin{macrocode}
+local kern_node   = new_node(kern_code)
+kern_node.subtype = userkern
+local function get_kern_node(dim)
+    local n = node_copy(kern_node)
+    n.kern = dim
+    return n
+end
+%    \end{macrocode}
+%    All possible space characters according to section 6.2 of the Unicode
+%    Standard (\url{https://www.unicode.org/versions/Unicode12.0.0/ch06.pdf}):
+%    \begin{macrocode}
+local space_chars = {
+    [0x20] = true,   -- space
+    [0xA0] = true,   -- no-break space
+    [0x1680] = true, -- ogham space mark
+    [0x2000] = true, -- en quad
+    [0x2001] = true, -- em quad
+    [0x2002] = true, -- en space
+    [0x2003] = true, -- em space
+    [0x2004] = true, -- three-per-em-space
+    [0x2005] = true, -- four-per-em space
+    [0x2006] = true, -- six-per-em space
+    [0x2007] = true, -- figure space
+    [0x2008] = true, -- punctuation space
+    [0x2009] = true, -- thin space
+    [0x200A] = true, -- hair space
+    [0x202F] = true, -- narrow no-break space
+    [0x205F] = true, -- medium mathematical space
+    [0x3000] = true  -- ideographic space
+}
+%    \end{macrocode}
+%    All left bracket characters, referenced by their Unicode slot:
+%    \begin{macrocode}
+local left_bracket_chars = {
+    [0x28] = true,  -- left parenthesis
+    [0x5B] = true,  -- left square bracket
+    [0x7B] = true,  -- left curly bracket
+    [0x27E8] = true -- mathematical left angle bracket
+}
+%    \end{macrocode}
+%    All right bracket characters, referenced by their Unicode slot:
+%    \begin{macrocode}
+local right_bracket_chars = {
+    [0x29] = true,  -- right parenthesis
+    [0x5D] = true,  -- right square bracket
+    [0x7D] = true,  -- right curly bracket
+    [0x27E9] = true -- mathematical right angle bracket
+}
+%    \end{macrocode}
+%    Question and exclamation marks, referenced by their Unicode slot:
+%    \begin{macrocode}
+local question_exclamation_chars = {
+    [0x21] = true,   -- exclamation mark !
+    [0x3F] = true,   -- question mark ?
+    [0x203C] = true, -- double exclamation mark ‼
+    [0x203D] = true, -- interrobang ‽
+    [0x2047] = true, -- double question mark ⁇
+    [0x2048] = true, -- question exclamation mark ⁈
+    [0x2049] = true  -- exclamation question mark ⁉
+}
+%    \end{macrocode}
+%    Test for a horizontal space node to be removed:
+%    \begin{macrocode}
+local function somespace(n)
+    if n then
+        local id, subtype = n.id, n.subtype
+        if id == glue_code then
+%    \end{macrocode}
+%    It is dangerous to remove all type of glue.
+%    \begin{macrocode}
+            return removable_skip[subtype]
+        elseif id == kern_code then
+%    \end{macrocode}
+%    We only remove user's kern.
+%    \begin{macrocode}
+            return subtype == userkern
+        elseif id == glyph_code then
+            return space_chars[n.char]
+        end
+    end
+end
+%    \end{macrocode}
+%    Test for a left bracket:
+%    \begin{macrocode}
+local function someleftbracket(n)
+    if n then
+        local id = n.id
+        if id == glyph_code then
+            return left_bracket_chars[n.char]
+        end
+    end
+end
+%    \end{macrocode}
+%    Test for a right bracket:
+%    \begin{macrocode}
+local function somerightbracket(n)
+    if n then
+        local id = n.id
+        if id == glyph_code then
+            return right_bracket_chars[n.char]
+        end
+    end
+end
+%    \end{macrocode}
+%    Test for two question or exclamation marks:
+%    \begin{macrocode}
+local function question_exclamation_sequence(n1, n2)
+    if n1 and n2 then
+        local id1 = n1.id
+        local id2 = n2.id
+        if id1 == glyph_code and id2 == glyph_code then
+            return question_exclamation_chars[n1.char] and question_exclamation_chars[n2.char]
+        end
+    end
+end
+%    \end{macrocode}
+%    Test for a penalty node:
+%    \begin{macrocode}
+local function somepenalty(n, value)
+    if n then
+        local id = n.id
+        if id == penalty_code then
+            if value then
+                return n.penalty == value
+            else
+                return true
+            end
+        end
+    end
+end
+%    \end{macrocode}
+%    \LuaTeX{} attribute determining whether to space punctuation or not:
+%    \begin{macrocode}
+local punct_attr = new_attribute("ecclesiasticlatin_punct")
+%    \end{macrocode}
+%    Tables containing the left and right space amount (in units of a quad) of
+%    every character:
+%    \begin{macrocode}
+local left_space  = {}
+local right_space = {}
+%    \end{macrocode}
+%    Insertion of the necessary spaces to the node list:
+%    \begin{macrocode}
+local function process(head)
+    local current = head
+    while current do
+        local id = current.id
+        if id == glyph_code then
+            if has_attribute(current, punct_attr) then
+%    \end{macrocode}
+%    We try to obtain the character of the current node from its property
+%    table, which is the most reliable way as the same character may be
+%    rendered by different glyphs with different code numbers.
+%    \begin{macrocode}
+                local char = get_property(current) and get_property(current).glyph_info
+%    \end{macrocode}
+%    If the |glyph_info| property is not available, we use the node's |char|
+%    field to obtain the character, which is however only possible for numbers
+%    up to 10FFFF\textsubscript{16}.
+%    \begin{macrocode}
+                if not char and current.char <= 0x10FFFF then
+                    char = utf8.char(current.char)
+                end
+                local leftspace, rightspace
+                if char then
+                    leftspace  = left_space[char]
+                    rightspace = right_space[char]
+                end
+                if leftspace or rightspace then
+                    local fontparameters = fonts.hashes.parameters[current.font]
+                    local spacing_node
+                    if leftspace and fontparameters then
+                        local prev = get_prev(current)
+                        local space_exception = false
+                        if prev then
+%    \end{macrocode}
+%    We do not add space after left (opening) brackets and between question/exclamation marks:
+%    \begin{macrocode}
+                            space_exception = someleftbracket(prev)
+                                              or question_exclamation_sequence(prev, current)
+                            while somespace(prev) do
+                                head = remove_node(head, prev)
+                                prev = get_prev(current)
+                            end
+                            if somepenalty(prev, 10000) then
+                                head = remove_node(head, prev)
+                            end
+                        end
+                        spacing_node = get_kern_node(leftspace * fontparameters.quad)
+                        if not space_exception then
+                            head = insert_node_before(head, current, spacing_node)
+                        end
+                    end
+                    if rightspace and fontparameters then
+                        local next = get_next(current)
+                        local space_exception = false
+                        if next then
+%    \end{macrocode}
+%    We do not add space before right (closing) brackets:
+%    \begin{macrocode}
+                            space_exception = somerightbracket(next)
+                            local nextnext = get_next(next)
+                            if somepenalty(next, 10000) and somespace(nextnext) then
+                                head, next = remove_node(head, next)
+                            end
+                            while somespace(next) do
+                                head, next = remove_node(head, next)
+                            end
+                        end
+                        spacing_node = get_kern_node(rightspace * fontparameters.quad)
+                        if not space_exception then
+                            head, current = insert_node_after(head, current, spacing_node)
+                        end
+                    end
+                end
+            end
+        elseif id == math_code then
+            current = end_of_math(current)
+        end
+%    \end{macrocode}
+%    The following line does not cause an error even if |current| is |nil|.
+%    \begin{macrocode}
+        current = get_next(current)
+    end
+    return head
+end
+%    \end{macrocode}
+%    Now we define the actual amount of space for the relevant punctuation
+%    characters. For ecclesiastic Latin (and sometimes for Italian) a very
+%    small space is used for the punctuation. The ecclesiastic package, a
+%    predecessor of the current \babellatin{}, used a space of
+%    0.3|\fontdimen2|, where |\fontdimen2| is an interword space, which is
+%    typically between 1/4 and 1/3 of a quad. We choose a half of a
+%    |\thinspace| here, i.\,e., 1/12 of a quad.
+%    \begin{macrocode}
+local hairspace = 0.08333 -- 1/12
+local function space_left(char)
+    left_space[char] = hairspace
+end
+local function space_right(char, kern)
+    right_space[char] = hairspace
+end
+space_left('!')
+space_left('?')
+space_left('‼')
+space_left('⁇')
+space_left('⁈')
+space_left('⁉')
+space_left('‽') -- U+203D (interrobang)
+space_left(':')
+space_left(';')
+space_left('»')
+space_left('›')
+space_right('«')
+space_right('‹')
+%    \end{macrocode}
+%    The following functions activate and deactivate the punctuation spacing.
+%    \begin{macrocode}
+local function activate()
+    tex.setattribute(punct_attr, 1)
+    for _, callback_name in ipairs{ "pre_linebreak_filter", "hpack_filter" } do
+        if not in_callback(callback_name, "ecclesiasticlatin-punct.process") then
+            add_to_callback(callback_name, process, "ecclesiasticlatin-punct.process", 1)
+        end
+    end
+end
+local function deactivate()
+%    \end{macrocode}
+%    Though it would make compilation slightly faster, it is not possible to
+%    safely remove the process from the callback here. Imagine the following
+%    case: you start a paragraph by some spaced punctuation text, then, in the
+%    same paragraph, you change the language to something else, and thus call
+%    this function. This means that, at the end of the paragraph, the function
+%    won't be in the callback, so the beginning of the paragraph won't be
+%    processed by it. So we just unset the attribute.
+%    \begin{macrocode}
+    tex.setattribute(punct_attr, -0x7FFFFFFF) -- this value means "unset"
+end
+%    \end{macrocode}
+%    For external access to the activation and deactivation of the punctuation
+%    spacing, we define two functions with the prefix |ecclesiasticlatin|.
+%    \begin{macrocode}
+ecclesiasticlatin = ecclesiasticlatin or {}
+ecclesiasticlatin.activate_spacing   = activate
+ecclesiasticlatin.deactivate_spacing = deactivate
+%    \end{macrocode}
+% \iffalse
+%</lua>
+% \fi
+% \PrintChanges
 % \Finale
-%
 \endinput
-
