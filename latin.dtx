@@ -27,7 +27,7 @@
 % The Current Maintainer of this work is Keno Wehr.
 %
 % \fi
-% \CheckSum{1004}
+% \CheckSum{1011}
 % \iffalse
 %    Tell the LaTeX system who we are and write an entry on the transcript.
 %<*driver>
@@ -760,6 +760,11 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
   \initiate@active@char{"}%
   \@ifpackagewith{babel}{activeacute}{\initiate@active@char{'}}{}%
 %    \end{macrocode}
+%    The following command is defined by the \package{hyperref} package. We use
+%    a dummy definition if this package is not loaded.
+%    \begin{macrocode}
+  \providecommand\texorpdfstring[2]{#1}%
+%    \end{macrocode}
 %    A peculiarity of the \babellatin{} package are shorthands of different
 %    lengths. |"| before a letter character defines an additional hyphenation
 %    point, but |"ae| is a shorthand for the ligature `æ' in medieval and
@@ -775,7 +780,10 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    \begin{macrocode}
   \declare@shorthand {latin} {"}
     {
-      \mode_if_math:TF { \token_to_str:N " } { \babellatin_apply_quotemark:N }
+      \mode_if_math:TF { \token_to_str:N " }
+        {
+          \texorpdfstring { \babellatin_apply_quotemark:N } { }
+        }
     }
 %    \end{macrocode}
 %    The character |'| is used as a shorthand if the \modifier{activeacute}
@@ -788,7 +796,10 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
     {
       \declare@shorthand {latin} {'}
         {
-          \mode_if_math:TF { \active@math@prime } { \babellatin_put_acute:N }
+          \mode_if_math:TF { \active@math@prime }
+            {
+              \texorpdfstring { \babellatin_put_acute:N } { \' }
+            }
         }
     }
 %    \end{macrocode}
@@ -802,7 +813,10 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
     {
       \declare@shorthand {latin} {=}
         {
-          \mode_if_math:TF { \token_to_str:N = } { \babellatin_put_macron:N }
+          \mode_if_math:TF { \token_to_str:N = }
+            {
+              \texorpdfstring { \babellatin_put_macron:N } { \= }
+            }
         }
       \declare@shorthand {latin} {^}
         {
