@@ -27,7 +27,7 @@
 % The Current Maintainer of this work is Keno Wehr.
 %
 % \fi
-% \CheckSum{1011}
+% \CheckSum{1023}
 % \iffalse
 %    Tell the LaTeX system who we are and write an entry on the transcript.
 %<*driver>
@@ -307,24 +307,22 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %        displayed if your font supports the Unicode character \unicode{0304}
 %        (\emph{combining macron}).
 %      \item[|=ae|] for a͞e (ae diphthong with macron, for \lang{latin} and
-%        \lang{classiclatin} with \XeLaTeX{} and \LuaLaTeX) or \={\ae} (ae
-%        ligature with macron, for \lang{medievallatin} and
-%        \lang{ecclesiasticlatin}), respectively; also available for a͞u, e͞u,
-%        and o͞e/\=\oe. Note that macrons above diphthongs are only displayed if
-%        your font supports the Unicode character \unicode{035E}
-%        (\emph{combining double macron}).\footnote{A good choice for a font
-%        supporting the combining double macron might be \emph{Libertinus
-%        Serif}, the font of this manual.}
+%        \lang{classiclatin}) or \={\ae} (ae ligature with macron, for
+%        \lang{medievallatin} and \lang{ecclesiasticlatin}), respectively; also
+%        available for a͞u, e͞u, and o͞e/\=\oe. Note that macrons above diphthongs
+%        are only displayed if your font supports the Unicode character
+%        \unicode{035E} (\emph{combining double macron}), which always requires
+%        \XeLaTeX{} or \LuaLaTeX.\footnote{A good choice for a font supporting
+%        the combining double macron might be \emph{Libertinus Serif}, the font
+%        of this manual.}
 %      \item[|=Ae|] for A͞e (Ae diphthong with macron, for \lang{latin} and
-%        \lang{classiclatin} with \XeLaTeX{} and \LuaLaTeX) or \={\AE} (AE
-%        ligature with macron, for \lang{medievallatin} and
-%        \lang{ecclesiasticlatin}), respectively; also available for A͞u, E͞u,
-%        and O͞e/\=\OE.
+%        \lang{classiclatin}) or \={\AE} (AE ligature with macron, for
+%        \lang{medievallatin} and \lang{ecclesiasticlatin}), respectively; also
+%        available for A͞u, E͞u, and O͞e/\=\OE.
 %      \item[|=AE|] for A͞E (AE diphthong with macron, for \lang{latin} and
-%        \lang{classiclatin} with \XeLaTeX{} and \LuaLaTeX) or \={\AE} (AE
-%        ligature with macron, for \lang{medievallatin} and
-%        \lang{ecclesiasticlatin}), respectively; also available for A͞U, E͞U,
-%        and O͞E/\=\OE.
+%        \lang{classiclatin}) or \={\AE} (AE ligature with macron, for
+%        \lang{medievallatin} and \lang{ecclesiasticlatin}), respectively; also
+%        available for A͞U, E͞U, and O͞E/\=\OE.
 %      \item[|\textasciicircum a|] for ă (a with breve), also available for
 %        ĕ, ĭ, ŏ, ŭ, and y̆. Note that a breve above the letter y is only
 %        displayed if your font supports the Unicode character \unicode{0306}
@@ -1093,18 +1091,40 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    read. The third argument is the false code, that applies if the second
 %    character is not found as expected.
 %
-%    For pdf\LaTeX{} the false code applies in any case, as this engine does not
-%    support the combining double macron.
+%    For pdf\LaTeX{} a warning is issued if the diphthong is found as this
+%    engine does not support the combining double macron.
 %    \begin{macrocode}
   \cs_set_protected:Npn \babellatin_diphthong_macron:NNn #1#2#3
     {
-      \bool_lazy_or:nnTF { \sys_if_engine_xetex_p: } { \sys_if_engine_luatex_p: }
+      \peek_meaning:NTF #2
         {
-          \peek_meaning:NTF #2 { #1 \char "35E \relax } {#3}
+          #1
+          \bool_lazy_or:nnTF { \sys_if_engine_xetex_p: } { \sys_if_engine_luatex_p: }
+            {
+              \iffontchar \font "35E \relax
+                \char "35E \relax
+              \else
+                \msg_warning:nn {babel-latin} {no-double-macron-font}
+              \fi
+            }
+            {
+              \msg_warning:nn {babel-latin} {no-double-macron-engine}
+            }
         }
         {
           #3
         }
+    }
+  \msg_set:nnn {babel-latin} {no-double-macron-font}
+    {
+      The~combining~double~macron~(U+035E)~is~not~available~in~the~current~
+      font.~The~diphthong~is~typeset~without~macron~ \msg_line_context: .
+    }
+  \msg_set:nnn {babel-latin} {no-double-macron-engine}
+    {
+      The~combining~double~macron~(U+035E)~is~not~available~with~
+      \c_sys_engine_str . ~ The~diphthong~is~typeset~without~macron~
+      \msg_line_context: .
     }
 %    \end{macrocode}
 %    The following macro is intended for defining a shorthand for a ligature
