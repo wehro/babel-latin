@@ -332,8 +332,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %        displayed if your font supports the Unicode character \unicode{0306}
 %        (\emph{combining breve}).
 %    \end{shorthands}
-%    Note the incompatibilities described in sections \ref{turkish} and
-%    \ref{esperanto}.
+%    Note the incompatibilities described in section \ref{incompatibilities}.
 %
 %    \subsection{Ecclesiastic footnotes}
 %    The \package{ecclesiastic} package, an outdated extension of former
@@ -459,11 +458,11 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    \end{shorthands}
 %    Furthermore, there are shorthands for prosodic marks; see section
 %    \ref{prosodic}.
-%    Note the incompatibility described in section \ref{unicodemath}.
+%    Note the incompatibilities described in section \ref{incompatibilities}.
 %
-%    \section{Incompatibilities with other packages}
+%    \section{Incompatibilities with other packages\label{incompatibilities}}
 % \changes{4.0}{2021/05/02}{Document incompatibilities with other packages}
-%    \subsection{\package{unicode-math}\label{unicodemath}}
+%    \subsection{\package{unicode-math}}
 %    Loading the Latin language together with the \modifier{activeacute}
 %    \babel{} option may cause error messages if the \package{unicode-math}
 %    package is loaded. Do not use \modifier{activeacute} if you need
@@ -473,7 +472,25 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    \url{https://github.com/reutenauer/polyglossia/issues/394} for related
 %    discussions.}
 %
-%    \subsection{\package{babel-turkish}\label{turkish}}
+%    \subsection{\LuaTeX}
+%    The |"| character is made active by \babellatin; its use within the
+%    \cs{directlua} command will lead to problems (except in the preamble).
+%    Switch the shorthand off for such commands:
+%    \begin{quote}
+%      |\shorthandoff{"}|\\
+%      |\directlua{tex.print("Salve")}|\\
+%      |\shorthandon{"}|
+%    \end{quote}
+%    You may avoid the shorthand switching by using single instead of double
+%    quotes. However, note that this will not work if the
+%    \modifier{activeacute} option is used, as |'| is active in this case as
+%    well.
+%
+%    Furthermore, beware of using \cs{directlua} commands containing the |=|
+%    character between \cs{ProsodicMarksOn} and \cs{ProsodicMarksOff} if you
+%    load the Latin language with the \modifier{withprosodicmarks} modifier.
+%
+%    \subsection{\package{babel-turkish}}
 %    Both Turkish and Latin (when loaded with the \modifier{withprosodicmarks}
 %    modifier) make the |=| character active. However, \babellatin{} takes care
 %    the active behaviour of this character is only enabled between
@@ -485,7 +502,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    first occurence of |=| in each Turkish text part.
 %
 %    \subsection{\package{babel-esperanto}, \package{babel-kurmanji}, and
-%    \package{babel-slovak}\label{esperanto}}
+%    \package{babel-slovak}}
 %    Esperanto, Kurmanji, Slovak, and Latin (when loaded with the
 %    \modifier{withprosodicmarks} modifier) make the |^| character active.
 %    However, \babellatin{} takes care the active behaviour of this character
@@ -502,15 +519,15 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    According to the \babel{} manual, the recommended way to load the Latin
 %    language in plain \TeX{} is:
 %    \begin{quote}
-%    |\input latin.sty|\\
-%    |\begindocument|
+%      |\input latin.sty|\\
+%      |\begindocument|
 %    \end{quote}
 %    The modifiers \modifier{usej} and \modifier{lowercasemonth} may be
 %    accessed by means of the \cs{languageattribute} command:
 %    \begin{quote}
-%    |\input latin.sty|\\
-%    |\languageattribute{latin}{usej,lowercasemonth}|\\
-%    |\begindocument|
+%      |\input latin.sty|\\
+%      |\languageattribute{latin}{usej,lowercasemonth}|\\
+%      |\begindocument|
 %    \end{quote}
 %
 %    \babel{} does not provide |sty| files for \lang{classiclatin},
