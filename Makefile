@@ -1,4 +1,4 @@
-.PHONY: ctan, manual, tex
+.PHONY: ctan manual tex
 
 ctan: manual
 	mkdir latin
