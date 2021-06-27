@@ -85,8 +85,8 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 % \changes{1.2}{2000/01/31}{Added suggestions from Krzysztof
 %     Konrad \.Zelechowski (CB)}
 % \changes{2.0a}{2000/10/15}{Revised by JB}
-% \changes{4.0}{2021/06/26}{Complete revision by KW}
-% \changes{4.0}{2021/06/26}{Make ecclesiastic Latin work with \XeLaTeX{} and
+% \changes{4.0}{2021/06/27}{Complete revision by KW}
+% \changes{4.0}{2021/06/27}{Make ecclesiastic Latin work with \XeLaTeX{} and
 %     \LuaLaTeX}
 %
 %    \maketitle
@@ -104,7 +104,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    \end{center}
 %    \tableofcontents
 %    \section{Language variants}
-% \changes{4.0}{2021/06/26}{New \babel{} languages \lang{classiclatin},
+% \changes{4.0}{2021/06/27}{New \babel{} languages \lang{classiclatin},
 %     \lang{medievallatin}, and \lang{ecclesiasticlatin}, replacing the
 %     respective modifiers}
 %    Latin has been the most important language of European intellectual life
@@ -230,7 +230,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    choice more suited for this variety.
 %
 %    \section{Modifiers}
-% \changes{4.0}{2021/06/26}{New modifiers \modifier{usej},
+% \changes{4.0}{2021/06/27}{New modifiers \modifier{usej},
 %     \modifier{lowercasemonth}, and \modifier{ecclesiasticfootnotes}}
 %    The four language variants described above do not cover all variations of
 %    Latin typography. Additionally there are several \emph{modifiers}:
@@ -275,7 +275,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 % \changes{2.0e}{2003/04/11}{Introduced the language attribute
 %     `withprosodicmarks'; modified use of breve and macron shorthands
 %      in order to avoid possible conflicts with other packages}
-% \changes{4.0}{2021/06/26}{New shorthands for diphthongs with macron}
+% \changes{4.0}{2021/06/27}{New shorthands for diphthongs with macron}
 %    Textbooks, grammars, and dictionaries often use letters with prosodic
 %    marks (macrons and breves) like ‘\=a’ and ‘\u{a}’ to mark long
 %    and short vowels. On modern systems, the required characters can be input
@@ -354,7 +354,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %     and hyphenation}
 % \changes{3.5}{2015/08/17}{Added the modifier for the ecclesiastic
 %     Latin variety}
-% \changes{4.0}{2021/06/26}{Deprecate the \modifier{classic},
+% \changes{4.0}{2021/06/27}{Deprecate the \modifier{classic},
 %     \modifier{medieval}, and \modifier{ecclesiastic} modifiers}
 %    \babellatin{} defined only one single \babel{} language up to v.\,3.5.
 %    Language variants used to be accessible via modifiers. This approach has
@@ -383,7 +383,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    as its functionality is provided by \babellatin{} now.
 %
 %    \section{Hyphenation\label{hyphenation}}
-% \changes{4.0}{2021/06/26}{Document activation of the
+% \changes{4.0}{2021/06/27}{Document activation of the
 %     \hyphpat{liturgicallatin} hyphenation patterns}
 %    There are three different sets of hyphenation patterns for Latin,
 %    reflecting three different styles of hyphenation: \emph{classical},
@@ -430,7 +430,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 % \changes{0.99}{1999/12/06}{Added shorthands for etymological hyphenation}
 % \changes{2.0b}{2000/12/13}{Simplified shorthands for
 %     etymological hyphenation}
-% \changes{4.0}{2021/06/26}{Additional shorthands for guillemets and accented
+% \changes{4.0}{2021/06/27}{Additional shorthands for guillemets and accented
 %     letters for all language variants; additional shorthands for ligatures
 %     for medieval and ecclesiastic Latin}
 %    The following shorthands are available for all variants of Latin. Note
@@ -465,7 +465,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    Note the incompatibilities described in section \ref{incompatibilities}.
 %
 %    \section{Incompatibilities with other packages\label{incompatibilities}}
-% \changes{4.0}{2021/06/26}{Document incompatibilities with other packages}
+% \changes{4.0}{2021/06/27}{Document incompatibilities with other packages}
 %    \subsection{\package{unicode-math}}
 %    Loading the Latin language together with the \modifier{activeacute}
 %    \babel{} option may cause error messages if the \package{unicode-math}
@@ -519,7 +519,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    Esperanto/Kurmanji/Slovak text part.
 %
 %    \section{Plain \TeX}
-% \changes{4.0}{2021/06/26}{Basic support for plain \TeX}
+% \changes{4.0}{2021/06/27}{Basic support for plain \TeX}
 %    According to the \babel{} manual, the recommended way to load the Latin
 %    language in plain \TeX{} is:
 %    \begin{quote}
@@ -544,14 +544,14 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %<*latin>
 % \fi
 %    \section{The code}
-% \changes{4.0}{2021/06/26}{Keep the default values of \cs{clubpenalty},
+% \changes{4.0}{2021/06/27}{Keep the default values of \cs{clubpenalty},
 %     \cs{@clubpenalty}, \cs{widowpenalty}, and \cs{finalhyphendemerits}
 %     for Latin}
-% \changes{4.0}{2021/06/26}{Remove commands \cs{LatinMarksOn} and
+% \changes{4.0}{2021/06/27}{Remove commands \cs{LatinMarksOn} and
 %     \cs{LatinMarksOff}}
 %    We identify the language definition file.
 %    \begin{macrocode}
-\ProvidesLanguage{latin}[2021-06-26 v4.0 Latin support from the babel system]
+\ProvidesLanguage{latin}[2021-06-27 v4.0 Latin support from the babel system]
 %    \end{macrocode}
 %    The macro |\LdfInit| takes care of preventing that this file is
 %    loaded more than once with the same option, checking the category
@@ -713,7 +713,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    \subsection{The Latin date}
 % \changes{2.0k}{2011/02/06}{Inserted the various `November' Latin
 %     spellings to the proper `extras' macros}
-% \changes{4.0}{2021/06/26}{Do not use small caps for the day of month}
+% \changes{4.0}{2021/06/27}{Do not use small caps for the day of month}
 %    We need three conditionals governing the spelling of the month names.
 %    Ecclesiastic and modern Latin use the character v, classical and medieval
 %    Latin use only u. This affects the month of November. The user may demand
@@ -1658,7 +1658,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 }%
 %    \end{macrocode}
 %    \subsection{Legacy modifiers and commands}
-% \changes{4.0}{2021/06/26}{Do not load the \package{ecclesiastic} package for
+% \changes{4.0}{2021/06/27}{Do not load the \package{ecclesiastic} package for
 %     the \modifier{ecclesiastic} modifier, use an internal implementation
 %     instead}
 %    We keep the modifiers \modifier{classic}, \modifier{medieval}, and
@@ -1728,7 +1728,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    \cs{SetLatinLigatures} command and a \cs{ProsodicMarks} command have been
 %    defined. We retain them for backwards compatiblity, but they do nothing
 %    except issuing a warning.
-% \changes{4.0}{2021/06/26}{Declare \cs{SetLatinLigatures} and
+% \changes{4.0}{2021/06/27}{Declare \cs{SetLatinLigatures} and
 %     \cs{ProsodicMarks} obsolete}
 %    \begin{macrocode}
 \providecommand\SetLatinLigatures{%
@@ -1743,7 +1743,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    We retain some legacy commands concerning guillemets from the
 %    \package{ecclesiastic} package, which is now outdated, but we deprecate
 %    them.
-% \changes{4.0}{2021/06/26}{Declare \cs{FrenchGuillemetsFrom},
+% \changes{4.0}{2021/06/27}{Declare \cs{FrenchGuillemetsFrom},
 %     \cs{ToneGuillemets}, \cs{og}, and \cs{fg} (defined by the
 %     \package{ecclesiastic} package) obsolete}%
 %    \begin{macrocode}
@@ -1818,7 +1818,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    \begin{macrocode}
 luatexbase.provides_module({
     name        = "ecclesiasticlatin",
-    date        = "2021-06-26",
+    date        = "2021-06-27",
     version     = "4.0",
     description = "babel-latin punctuation spacing for ecclesiastic Latin"
 })

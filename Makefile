@@ -5,6 +5,7 @@ ctan: manual
 	cp latin.dtx babel-latin/
 	cp latin.ins babel-latin/
 	cp latin.pdf babel-latin/
+	cp README.ctan babel-latin/README
 	zip -r babel-latin.zip babel-latin
 	rm -r babel-latin
 
