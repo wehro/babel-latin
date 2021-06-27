@@ -1,12 +1,12 @@
 .PHONY: ctan manual tex
 
 ctan: manual
-	mkdir latin
-	cp latin.dtx latin/
-	cp latin.ins latin/
-	cp latin.pdf latin/
-	zip -r latin.zip latin
-	rm -r latin
+	mkdir babel-latin
+	cp latin.dtx babel-latin/
+	cp latin.ins babel-latin/
+	cp latin.pdf babel-latin/
+	zip -r babel-latin.zip babel-latin
+	rm -r babel-latin
 
 manual:
 	lualatex latin.dtx
