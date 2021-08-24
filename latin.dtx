@@ -2118,7 +2118,7 @@ local function activate()
     tex.setattribute(punct_attr, 1)
     for _, callback_name in ipairs{ "pre_linebreak_filter", "hpack_filter" } do
         if not in_callback(callback_name, "ecclesiasticlatin-punct.process") then
-            add_to_callback(callback_name, process, "ecclesiasticlatin-punct.process", 1)
+            add_to_callback(callback_name, process, "ecclesiasticlatin-punct.process")
         end
     end
 end
