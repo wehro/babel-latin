@@ -1564,11 +1564,6 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    definition of this command.
 %    \begin{macrocode}
       \bbl@shorthandoff\z@{=}%
-%    \end{macrocode}
-%    The following line is currently uncommented because switching |^| off and
-%    on does not work as expected.\footnote{See
-%    \url{https://github.com/latex3/babel/issues/126}.}
-%    \begin{macrocode}
       \bbl@shorthandoff\tw@{^}%
     }%
     \babellatin@declare@prosodic@shorthands
@@ -1585,18 +1580,10 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    \begin{macrocode}
       \def\ProsodicMarksOn{%
         \shorthandon{=}%
-%    \end{macrocode}
-%    The following line is currently uncommented because switching |^| off and
-%    on does not work as expected.
-%    \begin{macrocode}
         \shorthandon{^}%
       }%
       \def\ProsodicMarksOff{%
         \shorthandoff{=}%
-%    \end{macrocode}
-%    The following line is currently uncommented because switching |^| off and
-%    on does not work as expected.
-%    \begin{macrocode}
         \shorthandoff*{^}%
       }%
     }%
