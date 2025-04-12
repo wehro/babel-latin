@@ -8,7 +8,7 @@
 %
 % Copyright (C) 1989-2008 by Johannes L. Braams
 % Copyright (C) 2009-2020 by Claudio Beccari
-% Copyright (C) 2021      by Keno Wehr
+% Copyright (C) 2021-2025 by Keno Wehr
 % All rights reserved.
 %
 % This file is part of the babel-latin package.
@@ -18,7 +18,7 @@
 % conditions of the LaTeX Project Public License, either version 1.3
 % of this license or (at your option) any later version.
 % The latest version of this license is in
-%   http://www.latex-project.org/lppl.txt
+%   https://www.latex-project.org/lppl.txt
 % and version 1.3 or later is part of all distributions of LaTeX
 % version 2003/12/01 or later.
 %
@@ -27,7 +27,7 @@
 % The Current Maintainer of this work is Keno Wehr.
 %
 % \fi
-% \CheckSum{1023}
+% \CheckSum{1084}
 % \iffalse
 %    Tell the LaTeX system who we are and write an entry on the transcript.
 %<*driver>
@@ -72,7 +72,7 @@
 \title{Babel support for the Latin language}
 \author{Claudio Beccari\and Keno Wehr\thanks{Current maintainer. Please report
 errors to \url{https://github.com/wehro/babel-latin/issues}.}}
-\date{v.\,4.0\quad\today}
+\date{v.\,4.1-dev\quad\today}
 \begin{document}
 \DocInput{latin.dtx}
 \end{document}
@@ -86,14 +86,15 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %     Konrad \.Zelechowski (CB)}
 % \changes{2.0a}{2000/10/15}{Revised by JB}
 % \changes{4.0}{2021/06/27}{Complete revision by KW}
-% \changes{4.0}{2021/06/27}{Make ecclesiastic Latin work with \XeLaTeX{} and
+% \changes{4.0}{2021/06/27}{Make ecclesiastical Latin work with \XeLaTeX{} and
 %     \LuaLaTeX}
 %
 %    \maketitle
 %    \begin{abstract}
 %      \noindent This manual documents the \babellatin{} package, which defines
 %      all language-specific macros for the \babel{} languages \lang{latin},
-%      \lang{classiclatin}, \lang{medievallatin}, and \lang{ecclesiasticlatin}.
+%      \lang{classicallatin}, \lang{medievallatin}, and\linebreak
+%      \lang{ecclesiasticallatin}.
 %      These languages are usable with pdf\LaTeX, \XeLaTeX, and \LuaLaTeX. The
 %      \lang{latin} language is even usable with plain \TeX{} (with some
 %      restrictions).
@@ -107,6 +108,11 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 % \changes{4.0}{2021/06/27}{New \babel{} languages \lang{classiclatin},
 %     \lang{medievallatin}, and \lang{ecclesiasticlatin}, replacing the
 %     respective modifiers}
+% \changes{4.1}{2025/04/12}{Renaming \lang{classiclatin} and
+%     \lang{ecclesiasticlatin} to \lang{classicallatin} and
+%     \lang{ecclesiasticallatin} for the sake of philological correctness, but
+%     also keeping \file{ldf} files with the old names for backwards
+%     compatibility}
 %    Latin has been the most important language of European intellectual life
 %    for a long time. Throughout the centuries, many different styles of Latin
 %    have been in use concerning wording, spelling, punctuation, and
@@ -125,8 +131,8 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %      \centering
 %      \begin{tabular}{llll}
 %      \toprule
-%      \lang{latin} & \lang{classiclatin} & \lang{medievallatin} &
-%      \lang{ecclesiasticlatin} \\
+%      \lang{latin} & \lang{classicallatin} & \lang{medievallatin} &
+%      \lang{ecclesiasticallatin} \\
 %      \midrule
 %      Novembris & Nouembris & Nouembris & Novembris \\
 %      Praefatio & Praefatio & Præfatio & Præfatio \\
@@ -141,7 +147,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    It is no problem to use different variants of Latin within the same
 %    document. If you need classical and modern Latin, just say
 %    \begin{quote}
-%      |\usepackage[classiclatin,latin]{babel}|
+%      |\usepackage[classicallatin,latin]{babel}|
 %    \end{quote}
 %    and switch the language using the commands described in the \babel{}
 %    manual.
@@ -157,7 +163,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %        A&B&C&D&E&F&G&H&I&K&L&M&N&O&P&Q&R&S&T&U&V&X&Y&Z
 %      \end{tabular}
 %    \end{center}
-%    \paragraph{The \lang{classiclatin} language -- classical Latin}
+%    \paragraph{The \lang{classicallatin} language -- classical Latin}
 %    This language variant is intended for typesetting Latin texts more or less
 %    according to the ancient usage of Latin. However, the use of lower-case
 %    letters, which are not of ancient origin, is not excluded. The following
@@ -196,8 +202,8 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    language variant rather reflects the Latin of the humanist/Renaissance
 %    period than that of the Middle Ages. However, we stick to the
 %    \emph{medieval} name chosen in earlier versions of \babellatin.
-%    \paragraph{The \lang{ecclesiasticlatin} language -- ecclesiastic Latin}
-%    Ecclesiastic Latin is a spelling variety of modern Latin, which is used
+%    \paragraph{The \lang{ecclesiasticallatin} language -- ecclesiastical Latin}
+%    Ecclesiastical Latin is a spelling variety of modern Latin, which is used
 %    above all in liturgical books of the Roman Catholic Church, where the
 %    ligatures \ae{} and \oe{} are widely used and where acute accents are used
 %    in order to mark the tonic vowel of words with more than two syllables to
@@ -241,7 +247,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    To apply a modifier you have to append it (prefixed with a dot) to the
 %    language name when loading \babel:
 %    \begin{quote}
-%      |\usepackage[ecclesiasticlatin.lowercasemonth]{babel}|
+%      |\usepackage[ecclesiasticallatin.lowercasemonth]{babel}|
 %    \end{quote}
 %    If you need two modifiers or more, just concatenate them in arbitrary
 %    order:
@@ -307,22 +313,22 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %        displayed if your font supports the Unicode character \unicode{0304}
 %        (\emph{combining macron}).
 %      \item[|=ae|] for a͞e (ae diphthong with macron, for \lang{latin} and
-%        \lang{classiclatin}) or \={\ae} (ae ligature with macron, for
-%        \lang{medievallatin} and \lang{ecclesiasticlatin}), respectively; also
-%        available for a͞u, e͞u, and o͞e/\=\oe. Note that macrons above diphthongs
-%        are only displayed if your font supports the Unicode character
-%        \unicode{035E} (\emph{combining double macron}), which always requires
-%        \XeLaTeX{} or \LuaLaTeX.\footnote{A good choice for a font supporting
-%        the combining double macron might be \emph{Libertinus Serif}, the font
-%        of this manual.}
+%        \lang{classicallatin}) or \={\ae} (ae ligature with macron, for
+%        \lang{medievallatin} and \lang{ecclesiasticallatin}), respectively;
+%        also available for a͞u, e͞u, and o͞e/\=\oe. Note that macrons above
+%        diphthongs are only displayed if your font supports the Unicode
+%        character \unicode{035E} (\emph{combining double macron}), which
+%        always requires \XeLaTeX{} or \LuaLaTeX.\footnote{A good choice for a
+%        font supporting the combining double macron might be \emph{Libertinus
+%        Serif}, the font of this manual.}
 %      \item[|=Ae|] for A͞e (Ae diphthong with macron, for \lang{latin} and
-%        \lang{classiclatin}) or \={\AE} (AE ligature with macron, for
-%        \lang{medievallatin} and \lang{ecclesiasticlatin}), respectively; also
-%        available for A͞u, E͞u, and O͞e/\=\OE.
+%        \lang{classicallatin}) or \={\AE} (AE ligature with macron, for
+%        \lang{medievallatin} and \lang{ecclesiasticallatin}), respectively;
+%        also available for A͞u, E͞u, and O͞e/\=\OE.
 %      \item[|=AE|] for A͞E (AE diphthong with macron, for \lang{latin} and
-%        \lang{classiclatin}) or \={\AE} (AE ligature with macron, for
-%        \lang{medievallatin} and \lang{ecclesiasticlatin}), respectively; also
-%        available for A͞U, E͞U, and O͞E/\=\OE.
+%        \lang{classicallatin}) or \={\AE} (AE ligature with macron, for
+%        \lang{medievallatin} and \lang{ecclesiasticallatin}), respectively;
+%        also available for A͞U, E͞U, and O͞E/\=\OE.
 %      \item[|\textasciicircum a|] for ă (a with breve), also available for
 %        ĕ, ĭ, ŏ, ŭ, and y̆. Note that a breve above the letter y is only
 %        displayed if your font supports the Unicode character \unicode{0306}
@@ -334,21 +340,21 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    \end{shorthands}
 %    Note the incompatibilities described in section \ref{incompatibilities}.
 %
-%    \subsection{Ecclesiastic footnotes}
+%    \subsection{Ecclesiastical footnotes}
 %    The \package{ecclesiastic} package, an outdated extension of former
 %    versions of \babellatin, typeset footnotes with ordinary instead of
 %    superior numbers and without indentation.
 %
-%    As many ecclesiastic documents and liturgical books use footnotes that are
-%    very similar to the ordinary \LaTeX{} ones, we do not use this footnote
-%    style as default even for the \lang{ecclesiasticlatin} language variant.
-%    But you may use the \modifier{ecclesiasticfootnotes} modifier (with any
-%    variant of Latin) if you prefer that footnote style.
+%    As many ecclesiastical documents and liturgical books use footnotes that
+%    are very similar to the ordinary \LaTeX{} ones, we do not use this
+%    footnote style as default even for the \lang{ecclesiasticallatin} language
+%    variant. But you may use the \modifier{ecclesiasticfootnotes} modifier
+%    (with any variant of Latin) if you prefer that footnote style.
 %
 %    Note that this modifier affects the entire document. It can only be
 %    applied to the document's main language.
 %
-%    \subsection{Legacy modifiers\label{legacymodifiers}}
+%    \subsection{Legacy modifiers and language options\label{legacymodifiers}}
 % \changes{2.0b}{2000/12/13}{Language attribute medieval declared}
 % \changes{3.0}{2014/06/01}{Added modifier for classical spelling
 %     and hyphenation}
@@ -361,21 +367,30 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    proved to be disadvantageous concerning compatibility with other
 %    language-specific packages like \package{biblatex}. That's why v.\,4.0
 %    introduced the \lang{classiclatin}, \lang{medievallatin}, and
-%    \lang{ecclesiasticlatin} languages.
+%    \lang{ecclesiasticlatin} languages. \lang{classiclatin} and
+%    \lang{ecclesiasticlatin} have been renamed to \lang{classicallatin} and
+%    \lang{ecclesiasticallatin} in v.\,4.1 for the sake of philological
+%    correctness.
 %
 %    The legacy modifiers \modifier{classic}, \modifier{medieval}, and
-%    \modifier{ecclesiastic} are still available and backwards compatibility is
-%    made sure. However, a warning is issued if you use one of these modifiers.
+%    \modifier{ecclesiastic} as well as the language options
+%    \lang{classiclatin} and \lang{ecclesiasticlatin} are still available and
+%    backwards compatibility is made sure. However, a warning is issued if you
+%    use one of these modifiers or language options.
 %    They may be dropped from \babellatin{} in a future version.
 %
 %    For maximum compatibility, replace
 %    \begin{itemize}
+%      \item |\usepackage[classiclatin]{babel}| by
+%        |\usepackage[classicallatin]{babel}|,
+%      \item |\usepackage[ecclesiasticlatin]{babel}| by
+%        |\usepackage[ecclesiasticallatin]{babel}|,
 %      \item |\usepackage[latin.classic]{babel}| by
-%        |\usepackage[classiclatin]{babel}|,
+%        |\usepackage[classicallatin]{babel}|,
 %      \item |\usepackage[latin.medieval]{babel}| by
 %        |\usepackage[medievallatin]{babel}|,
 %      \item |\usepackage[latin.ecclesiastic]{babel}| by\\
-%        |\usepackage[ecclesiasticlatin.ecclesiasticfootnotes,activeacute]{babel}|.
+%        |\usepackage[ecclesiasticallatin.ecclesiasticfootnotes,activeacute]{babel}|.
 %    \end{itemize}
 %
 %    The last replacement is also recommended if you have been loading the
@@ -402,9 +417,9 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %      \emph{Name of patterns} \\
 %      \midrule
 %      \lang{latin} & modern & \hyphpat{latin} \\
-%      \lang{classiclatin} & classical & \hyphpat{classiclatin} \\
+%      \lang{classicallatin} & classical & \hyphpat{classiclatin} \\
 %      \lang{medievallatin} & modern & \hyphpat{latin} \\
-%      \lang{ecclesiasticlatin} & modern & \hyphpat{latin} \\
+%      \lang{ecclesiasticallatin} & modern & \hyphpat{latin} \\
 %      -- & liturgical & \hyphpat{liturgicallatin} \\
 %      \bottomrule
 %      \end{tabular}
@@ -413,8 +428,8 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %
 %    To typeset a liturgical book in the recent “Solesmes style” say
 %    \begin{quote}
-%      |\usepackage[ecclesiasticlatin.lowercasemonth]{babel}| \\
-%      |\babelprovide[hyphenrules=liturgicallatin]{ecclesiasticlatin}|
+%      |\usepackage[ecclesiasticallatin.lowercasemonth]{babel}| \\
+%      |\babelprovide[hyphenrules=liturgicallatin]{ecclesiasticallatin}|
 %    \end{quote}
 %    The typical commands for a Latin text edition in the German-speaking
 %    world will be
@@ -432,7 +447,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %     etymological hyphenation}
 % \changes{4.0}{2021/06/27}{Additional shorthands for guillemets and accented
 %     letters for all language variants; additional shorthands for ligatures
-%     for medieval and ecclesiastic Latin}
+%     for medieval and ecclesiastical Latin}
 %    The following shorthands are available for all variants of Latin. Note
 %    that shorthands beginning with |'| are only available if you load \babel{}
 %    with the \modifier{activeacute} option.
@@ -450,7 +465,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %        Ǽ, and \'Œ
 %    \end{shorthands}
 %    The following shorthands are only available for the \lang{medievallatin}
-%    and the \lang{ecclesiasticlatin} languages. Again, the shorthands
+%    and the \lang{ecclesiasticallatin} languages. Again, the shorthands
 %    beginning with |'| only work with \babel's \modifier{activeacute} option.
 %    \begin{shorthands}
 %      \item[|"ae|] for æ (ae ligature), also available for œ
@@ -534,9 +549,9 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %      |\begindocument|
 %    \end{quote}
 %
-%    \babel{} does not provide |sty| files for \lang{classiclatin},
-%    \lang{medievallatin}, and \lang{ecclesiasticlatin}. It should be possible
-%    to create them locally if needed.
+%    \babel{} does not provide |sty| files for \lang{classicallatin},
+%    \lang{medievallatin}, and \lang{ecclesiasticallatin}. It should be
+%    possible to create them locally if needed.
 %
 %    Note that no Latin shorthands are available in plain \TeX.
 % \StopEventually{}
@@ -551,22 +566,25 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %     \cs{LatinMarksOff}}
 %    We identify the language definition file.
 %    \begin{macrocode}
-\ProvidesLanguage{latin}[2021-06-27 v4.0 Latin support from the babel system]
+\ProvidesLanguage{latin}[2025-04-12 v4.1-dev Latin support from the babel system]
 %    \end{macrocode}
 %    The macro |\LdfInit| takes care of preventing that this file is
 %    loaded more than once with the same option, checking the category
 %    code of the \texttt{@} sign, etc.
 %    \cs{CurrentOption} is the language requested by the user, i.\,e.,
-%    \lang{latin}, \lang{classiclatin}, \lang{medievallatin}, or
-%    \lang{ecclesiasticlatin}.
+%    \lang{latin}, \lang{classicallatin}, \lang{medievallatin}, or
+%    \lang{ecclesiasticallatin}.
 %    \begin{macrocode}
 \LdfInit\CurrentOption{captions\CurrentOption}
 %    \end{macrocode}
-%    For tests, we need variables containing three possible values of the
-%    language name.
+%    For tests, we need variables containing several possible values of the
+%    language name (including \lang{classiclatin} and \lang{ecclesiasticlatin},
+%    which are outdated, but still supported).
 %    \begin{macrocode}
+\def\babellatin@classical{classicallatin}
 \def\babellatin@classic{classiclatin}
 \def\babellatin@medieval{medievallatin}
+\def\babellatin@ecclesiastical{ecclesiasticallatin}
 \def\babellatin@ecclesiastic{ecclesiasticlatin}
 %    \end{macrocode}
 %    \subsection{Hyphenation patterns}
@@ -583,11 +601,11 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
     \@nopatterns{latin}%
     \adddialect\l@latin0
   \fi}%
-\def\babellatin@test@classic@patterns{%
+\def\babellatin@test@classical@patterns{%
   \ifx\l@classiclatin\undefined
     \PackageWarningNoLine{babel-latin}{%
       No hyphenation patterns were found for the\MessageBreak
-      classiclatin language. Now I will use the\MessageBreak
+      classicallatin language. Now I will use the\MessageBreak
       patterns for modern Latin instead}%
     \babellatin@test@modern@patterns
     \adddialect\l@classiclatin\l@latin
@@ -597,30 +615,42 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    and the (modern) \lang{latin} hyphenation patterns for all other varieties
 %    of Latin.
 %    \begin{macrocode}
-\ifx\CurrentOption\babellatin@classic
-  \babellatin@test@classic@patterns
+\ifx\CurrentOption\babellatin@classical
+  \babellatin@test@classical@patterns
+  \adddialect\l@classicallatin\l@classiclatin
 \else
-  \ifx\CurrentOption\babellatin@ecclesiastic
-    \babellatin@test@modern@patterns
-    \adddialect\l@ecclesiasticlatin\l@latin
+  \ifx\CurrentOption\babellatin@classic
+    \babellatin@test@classical@patterns
   \else
-    \ifx\CurrentOption\babellatin@medieval
+    \ifx\CurrentOption\babellatin@ecclesiastical
       \babellatin@test@modern@patterns
-      \adddialect\l@medievallatin\l@latin
+      \adddialect\l@ecclesiasticallatin\l@latin
     \else
-      \babellatin@test@modern@patterns
+      \ifx\CurrentOption\babellatin@ecclesiastic
+        \babellatin@test@modern@patterns
+        \adddialect\l@ecclesiasticlatin\l@latin
+      \else
+        \ifx\CurrentOption\babellatin@medieval
+          \babellatin@test@modern@patterns
+          \adddialect\l@medievallatin\l@latin
+        \else
+          \babellatin@test@modern@patterns
+        \fi
+      \fi
     \fi
   \fi
 \fi
 %    \end{macrocode}
 %    \subsection{Latin captions}
 %    We need a conditional governing the spelling of the captions. Medieval
-%    and ecclesiastic Latin use the ligatures \ae{} and \oe, classical and
+%    and ecclesiastical Latin use the ligatures \ae{} and \oe, classical and
 %    modern Latin do not.
 %    \begin{macrocode}
 \newif\ifbabellatin@useligatures
 \addto\extrasmedievallatin{\babellatin@useligaturestrue}%
 \addto\noextrasmedievallatin{\babellatin@useligaturesfalse}%
+\addto\extrasecclesiasticallatin{\babellatin@useligaturestrue}%
+\addto\noextrasecclesiasticallatin{\babellatin@useligaturesfalse}%
 \addto\extrasecclesiasticlatin{\babellatin@useligaturestrue}%
 \addto\noextrasecclesiasticlatin{\babellatin@useligaturesfalse}%
 %    \end{macrocode}
@@ -650,6 +680,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
   \SetString\alsoname{cfr.}% Tabacco never saw "cfr" + "atque" or similar forms
   \SetString\proofname{Demonstratio}
   \SetString\glossaryname{Glossarium}
+\EndBabelCommands
 %    \end{macrocode}
 %    In the above definitions there are some points that might change
 %    in the future or that require a minimum of attention from the
@@ -681,33 +712,46 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    only one letter for the vowel and the consonant, and the u shape is an
 %    (uncial) variant of the capital V.
 %
-%    We use the commands recommended by the \babel{} manual.
-%    \begin{macrocode}
-\StartBabelCommands*{classiclatin,medievallatin}{}
-%    \end{macrocode}
-%    The following command takes care for the correct behaviour of the
-%    \cs{MakeUppercase} and the \cs{MakeLowercase} command. It makes sure that
+%    We set the mapping only if the \LaTeX{} format is used because we need
+%    commands for it that are not available in plain \TeX.
+%    The following commands take care for the correct behaviour of the
+%    \cs{MakeUppercase} and the \cs{MakeLowercase} command. They make sure that
 %    |\MakeUppercase{Heluetia}| yields ``HELVETIA'' and that
 %    |\MakeLowercase{LVDVS}| yields ``ludus''.
 %    \begin{macrocode}
-  \SetCase{\uccode`u=`V}{\lccode`V=`u}
+\def\babellatin@latex{LaTeX2e}%
+\ifx\fmtname\babellatin@latex
+  \DeclareUppercaseMapping[la-x-classic]{`u}{V}
+  \DeclareLowercaseMapping[la-x-classic]{`V}{u}
 %    \end{macrocode}
-%    The following command takes care for the correct hyphenation of words
-%    written in capital letters. It makes sure that “LVDVS” is hyphenated the
-%    same way as “ludus”.
-%    \begin{macrocode}
-  \SetHyphenMap{\BabelLower{`V}{`u}}
-%    \end{macrocode}
+%    The mapping for medieval Latin is part of the \package{l3text} module,
+%    which is part of the \LaTeX\ format (see \file{source3.pdf}).
+%
 %    For Unicode-based engines, we also have to take into account characters
-%    with diacritics. We map ú, ū, and ŭ to V because Unicode does not define a
-%    single-character V with the respective diacritic.
+%    with diacritics. We map ú, ū, and ŭ to V with the respective diacritic.
+% \changes{4.1}{2025/04/12}{Mapping ú, ū, and ŭ to \'{V}, V^^^^0304, and \u{V},
+%    respectively, instead of just V, for \lang{classicallatin} and
+%    \lang{medievallatin} if a Unicode engine is used}
 %    \begin{macrocode}
-\StartBabelCommands{classiclatin,medievallatin}{}[unicode,fontenc=TU,charset=utf8]
-  \SetCase{\uccode`u=`V \uccode`ú=`V \uccode`ū=`V \uccode`ŭ=`V}{\lccode`V=`u}
+  \ExplSyntaxOn
+  \sys_if_engine_opentype:T
+    {
+      \DeclareUppercaseMapping[la-x-classic]{`ú}{\a'{V}}
+      \DeclareUppercaseMapping[la-x-classic]{`ū}{\a={V}}
+      \DeclareUppercaseMapping[la-x-classic]{`ŭ}{\u{V}}
+      \DeclareUppercaseMapping[la-x-medieval]{`ú}{\a'{V}}
+      \DeclareUppercaseMapping[la-x-medieval]{`ū}{\a={V}}
+      \DeclareUppercaseMapping[la-x-medieval]{`ŭ}{\u{V}}
+    }
+  \ExplSyntaxOff
+\fi
 %    \end{macrocode}
-%    According to the \babel{} manual, the last \cs{StartBabelCommands} block
-%    has to be finished by the following command.
+%    The following \cs{BabelLower} command takes care for the correct
+%    hyphenation of words written in capital letters. It makes sure that
+%    “LVDVS” is hyphenated the same way as “ludus”.
 %    \begin{macrocode}
+\StartBabelCommands*{classicallatin,classiclatin,medievallatin}{}
+  \SetHyphenMap{\BabelLower{`V}{`u}}
 \EndBabelCommands
 %    \end{macrocode}
 %    \subsection{The Latin date}
@@ -715,15 +759,17 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %     spellings to the proper `extras' macros}
 % \changes{4.0}{2021/06/27}{Do not use small caps for the day of month}
 %    We need three conditionals governing the spelling of the month names.
-%    Ecclesiastic and modern Latin use the character v, classical and medieval
-%    Latin use only u. This affects the month of November. The user may demand
-%    to use the letter j where suitable or to lowercase month names using the
-%    respective modifiers.
+%    Ecclesiastical and modern Latin use the character v, classical and
+%    medieval Latin use only u. This affects the month of November. The user
+%    may demand to use the letter j where suitable or to lowercase month names
+%    using the respective modifiers.
 %    \begin{macrocode}
 \newif\ifbabellatin@usev
 \newif\ifbabellatin@usej
 \newif\ifbabellatin@lowercasemonth
 \babellatin@usevtrue
+\addto\extrasclassicallatin{\babellatin@usevfalse}%
+\addto\noextrasclassicallatin{\babellatin@usevtrue}%
 \addto\extrasclassiclatin{\babellatin@usevfalse}%
 \addto\noextrasclassiclatin{\babellatin@usevtrue}%
 \addto\extrasmedievallatin{\babellatin@usevfalse}%
@@ -747,8 +793,8 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
   \fi}%
 %    \end{macrocode}
 %    Depending on the chosen language, we have to define a \cs{latindate},
-%    \cs{classiclatindate}, \cs{medievallatindate}, or
-%    \cs{ecclesiasticlatindate} command. The date format is “XXXI Decembris
+%    \cs{classicallatindate}, \cs{medievallatindate}, or
+%    \cs{ecclesiasticallatindate} command. The date format is “XXXI Decembris
 %    MMXXI”.
 %    \begin{macrocode}
 \expandafter\def\csname date\CurrentOption\endcsname{%
@@ -768,7 +814,6 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    We define shorthands only if the \LaTeX{} format is used because we need
 %    commands for them that are not available in plain \TeX.
 %    \begin{macrocode}
-\def\babellatin@latex{LaTeX2e}%
 \ifx\fmtname\babellatin@latex
 %    \end{macrocode}
 %    Every shorthand character needs an \cs{initiate@active@char} command,
@@ -787,7 +832,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    A peculiarity of the \babellatin{} package are shorthands of different
 %    lengths. |"| before a letter character defines an additional hyphenation
 %    point, but |"ae| is a shorthand for the ligature `æ' in medieval and
-%    ecclesiastic Latin. So the shorthands definitions are rather complex and
+%    ecclesiastical Latin. So the shorthands definitions are rather complex and
 %    we need expl3 syntax for them.
 %    \begin{macrocode}
   \ExplSyntaxOn
@@ -1187,7 +1232,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    For the |"<| and the |">| shorthands we have to define the meaning of the
 %    macros used for their definition. The commands \cs{guillemetleft} and
 %    \cs{guillemetright} are provided by \babel. We will have to change this
-%    definition later on for \lang{ecclesiasticlatin} if pdf\TeX{} is used.
+%    definition later on for \lang{ecclesiasticallatin} if pdf\TeX{} is used.
 %    \begin{macrocode}
   \let\babellatin@guillemetleft\guillemetleft
   \let\babellatin@guillemetright\guillemetright
@@ -1213,7 +1258,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
   }{}%
 \fi
 %    \end{macrocode}
-%    \subsection{Ecclesiastic punctuation spacing}
+%    \subsection{Ecclesiastical punctuation spacing}
 %    We define some conditionals concerning the engine used.
 %    \begin{macrocode}
 \newif\ifbabellatin@luatex
@@ -1235,7 +1280,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    file is documented in section \ref{luamodule}.
 %    \begin{macrocode}
   \ifbabellatin@luatex
-    \directlua{require('ecclesiasticlatin')}%
+    \directlua{ecclesiasticallatin=require('ecclesiasticallatin')}%
   \else
 %    \end{macrocode}
 %    The following command inserts a kern of 1/12 of a quad. This is the only
@@ -1412,10 +1457,14 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
   \fi
 }%
 %    \end{macrocode}
-%    We call the previously defined command for ecclesiastic Latin.
+%    We call the previously defined command for ecclesiastical Latin.
 %    \begin{macrocode}
-\ifx\CurrentOption\babellatin@ecclesiastic
+\ifx\CurrentOption\babellatin@ecclesiastical
   \babellatin@prepare@punctuation@spacing
+\else
+  \ifx\CurrentOption\babellatin@ecclesiastic
+    \babellatin@prepare@punctuation@spacing
+  \fi
 \fi
 %    \end{macrocode}
 %    The following function actually enables the spacing of punctuation.
@@ -1425,7 +1474,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    For \LuaTeX{} we just have to call a function of the Lua module.
 %    \begin{macrocode}
   \ifbabellatin@luatex
-    \directlua{ecclesiasticlatin.activate_spacing()}%
+    \directlua{ecclesiasticallatin.activate_spacing()}%
   \else
 %    \end{macrocode}
 %    For \XeTeX{} we have to enable the character classes functionality and
@@ -1477,7 +1526,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    \begin{macrocode}
 \def\babellatin@no@punctuation@spacing{%
   \ifbabellatin@luatex
-    \directlua{ecclesiasticlatin.deactivate_spacing()}%
+    \directlua{ecclesiasticallatin.deactivate_spacing()}%
   \else
     \ifbabellatin@xetex
       \XeTeXcharclass `\! \z@
@@ -1509,8 +1558,10 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
   \fi
 }%
 %    \end{macrocode}
-%    Punctuation is spaced in ecclesiastic Latin only.
+%    Punctuation is spaced in ecclesiastical Latin only.
 %    \begin{macrocode}
+\addto\extrasecclesiasticallatin{\babellatin@punctuation@spacing}%
+\addto\noextrasecclesiasticallatin{\babellatin@no@punctuation@spacing}%
 \addto\extrasecclesiasticlatin{\babellatin@punctuation@spacing}%
 \addto\noextrasecclesiasticlatin{\babellatin@no@punctuation@spacing}%
 %    \end{macrocode}
@@ -1613,7 +1664,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
   }%
 \fi
 %    \end{macrocode}
-%    \subsubsection{Ecclesiastic footnotes}
+%    \subsubsection{Ecclesiastical footnotes}
 %    The \modifier{ecclesiasticfootnotes} option sets the footnotes globally to
 %    the style defined by the (now outdated) \package{ecclesiastic} package.
 %    The definition takes place at the end of the package to be able to check
@@ -1652,25 +1703,30 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    \modifier{ecclesiastic} for backwards compatibility. We issue a warning if
 %    they are used.
 %    \begin{macrocode}
-\def\babellatin@outdated@modifier#1{%
+\def\babellatin@outdated@modifier#1#2{%
   \PackageWarningNoLine{babel-latin}{%
     The `#1' modifier is outdated. Please\MessageBreak
     consult the babel-latin manual and consider\MessageBreak
-    to load the language `#1latin' instead\MessageBreak
-    of `latin.#1'}%
+    to load the language `#2'\MessageBreak
+    instead of `latin.#1'}%
+}%
+\def\babellatin@outdated@language#1#2{%
+  \PackageWarningNoLine{babel-latin}{%
+    The `#1' language is outdated.\MessageBreak
+    Please load the language `#2'\MessageBreak
+    instead}%
 }%
 \bbl@declare@ttribute{latin}{classic}{%
-  \babellatin@outdated@modifier{classic}%
+  \babellatin@outdated@modifier{classic}{classicallatin}%
   \addto\extraslatin{\babellatin@usevfalse}%
   \addto\noextraslatin{\babellatin@usevtrue}%
-  \babellatin@test@classic@patterns
+  \babellatin@test@classical@patterns
   \let\l@latin\l@classiclatin
-  \StartBabelCommands*{latin}{}%
-  \SetCase{\uccode `u=`V}{\lccode `V=`u}%
-  \EndBabelCommands
+  \DeclareUppercaseMapping[la]{`u}{V}%
+  \DeclareLowercaseMapping[la]{`V}{u}%
 }%
 \bbl@declare@ttribute{latin}{medieval}{%
-  \babellatin@outdated@modifier{medieval}%
+  \babellatin@outdated@modifier{medieval}{medievallatin}%
   \addto\extraslatin{%
     \babellatin@usevfalse
     \def\prefacename{Pr\ae fatio}%
@@ -1678,12 +1734,11 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
   \addto\noextraslatin{%
     \babellatin@usevtrue
   }%
-  \StartBabelCommands*{latin}{}%
-  \SetCase{\uccode `u=`V}{\lccode `V=`u}%
-  \EndBabelCommands%
+  \DeclareUppercaseMapping[la]{`u}{V}%
+  \DeclareLowercaseMapping[la]{`V}{u}%
 }%
 \bbl@declare@ttribute{latin}{ecclesiastic}{%
-  \babellatin@outdated@modifier{ecclesiastic}%
+  \babellatin@outdated@modifier{ecclesiastic}{ecclesiasticallatin}%
   \babellatin@prepare@punctuation@spacing
   \babellatin@ecclesiastic@outdated@commands
 %    \end{macrocode}
@@ -1774,27 +1829,35 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 % \iffalse
 %</latin>
 % \fi
-%    \babel{} expects \file{ldf} files for \lang{classiclatin},
-%    \lang{medievallatin} and \lang{ecclesiasticlatin}. These files themselves
-%    only load \file{latin.ldf}, which does the real work:
+%    \babel{} expects \file{ldf} files for \lang{classicallatin},
+%    \lang{medievallatin} and \lang{ecclesiasticallatin}. These files
+%    themselves only load \file{latin.ldf}, which does the real work:
 %    \begin{macrocode}
 %<classic>\ProvidesLanguage{classiclatin}
+%<classical>\ProvidesLanguage{classicallatin}
 %<ecclesiastic>\ProvidesLanguage{ecclesiasticlatin}
+%<ecclesiastical>\ProvidesLanguage{ecclesiasticallatin}
 %<medieval>\ProvidesLanguage{medievallatin}
 %    \end{macrocode}
 % \iffalse
-%<*classic|ecclesiastic|medieval>
+%<*classic|classical|ecclesiastic|ecclesiastical|medieval>
 % \fi
 %    \begin{macrocode}
 \input latin.ldf\relax
 %    \end{macrocode}
 % \iffalse
-%</classic|ecclesiastic|medieval>
+%</classic|classical|ecclesiastic|ecclesiastical|medieval>
 % \fi
+%    We issue a warning if the outdated languages \lang{classiclatin} and
+%    \lang{ecclesiasticlatin} are called:
+%    \begin{macrocode}
+%<classic>\babellatin@outdated@language{classiclatin}{classicallatin}%
+%<ecclesiastic>\babellatin@outdated@language{ecclesiasticlatin}{ecclesiasticallatin}%
+%    \end{macrocode}
 %    \subsection{The Lua module\label{luamodule}}
 %    In case \LuaTeX{} is used for compilation, the spacing of punctuation for
-%    ecclesiastic Latin requires some Lua code, which is stored in
-%    \file{ecclesiasticlatin.lua}. The original version of this code has been
+%    ecclesiastical Latin requires some Lua code, which is stored in
+%    \file{ecclesiasticallatin.lua}. The original version of this code has been
 %    written for the \package{polyglossia} package by É. Roux and others.
 %
 % \iffalse
@@ -1804,10 +1867,10 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    \package{ltluatex}.
 %    \begin{macrocode}
 luatexbase.provides_module({
-    name        = "ecclesiasticlatin",
-    date        = "2021-06-27",
-    version     = "4.0",
-    description = "babel-latin punctuation spacing for ecclesiastic Latin"
+    name        = "ecclesiasticallatin",
+    date        = "2025-04-12",
+    version     = "4.1-dev",
+    description = "babel-latin punctuation spacing for ecclesiastical Latin"
 })
 local add_to_callback     = luatexbase.add_to_callback
 local in_callback         = luatexbase.in_callback
@@ -1976,7 +2039,7 @@ end
 %    \end{macrocode}
 %    \LuaTeX{} attribute determining whether to space punctuation or not:
 %    \begin{macrocode}
-local punct_attr = new_attribute("ecclesiasticlatin_punct")
+local punct_attr = new_attribute("ecclesiasticallatin_punct")
 %    \end{macrocode}
 %    Tables containing the left and right space amount (in units of a quad) of
 %    every character:
@@ -2071,7 +2134,7 @@ local function process(head)
 end
 %    \end{macrocode}
 %    Now we define the actual amount of space for the relevant punctuation
-%    characters. For ecclesiastic Latin (and sometimes for Italian) a very
+%    characters. For ecclesiastical Latin (and sometimes for Italian) a very
 %    small space is used for the punctuation. The ecclesiastic package, a
 %    predecessor of the current \babellatin{}, used a space of
 %    0.3|\fontdimen2|, where |\fontdimen2| is an interword space, which is
@@ -2104,8 +2167,8 @@ space_right('‹')
 local function activate()
     tex.setattribute(punct_attr, 1)
     for _, callback_name in ipairs{ "pre_linebreak_filter", "hpack_filter" } do
-        if not in_callback(callback_name, "ecclesiasticlatin-punct.process") then
-            add_to_callback(callback_name, process, "ecclesiasticlatin-punct.process")
+        if not in_callback(callback_name, "ecclesiasticallatin-punct.process") then
+            add_to_callback(callback_name, process, "ecclesiasticallatin-punct.process")
         end
     end
 end
@@ -2123,11 +2186,13 @@ local function deactivate()
 end
 %    \end{macrocode}
 %    For external access to the activation and deactivation of the punctuation
-%    spacing, we define two functions with the prefix |ecclesiasticlatin|.
+%    spacing, we define a table |ecclesiasticallatin| containing two functions.
+%    We return this table.
 %    \begin{macrocode}
-ecclesiasticlatin = ecclesiasticlatin or {}
-ecclesiasticlatin.activate_spacing   = activate
-ecclesiasticlatin.deactivate_spacing = deactivate
+ecclesiasticallatin = ecclesiasticallatin or {}
+ecclesiasticallatin.activate_spacing   = activate
+ecclesiasticallatin.deactivate_spacing = deactivate
+return ecclesiasticallatin
 %    \end{macrocode}
 % \iffalse
 %</lua>

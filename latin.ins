@@ -5,7 +5,7 @@
 %%
 %% Copyright (C) 1989-2008 by Johannes L. Braams
 %% Copyright (C) 2009-2020 by Claudio Beccari
-%% Copyright (C) 2021      by Keno Wehr
+%% Copyright (C) 2021-2025 by Keno Wehr
 %% All rights reserved.
 %%
 %% This file is part of the babel-latin package.
@@ -25,7 +25,7 @@
 %%
 %% --------------- start of docstrip commands ------------------
 %%
-\def\filedate{2021/05/02}
+\def\filedate{2025-04-12}
 \def\batchfile{latin.ins}
 \input docstrip.tex
 
@@ -48,7 +48,7 @@
 
 Copyright (C) 1989-2008 by Johannes L. Braams
 Copyright (C) 2009-2020 by Claudio Beccari
-Copyright (C) 2021      by Keno Wehr
+Copyright (C) 2021-2025 by Keno Wehr
 All rights reserved.
 
 This file is part of the babel-latin package.
@@ -75,7 +75,9 @@ Please report errors to: https://github.com/wehro/babel-latin/issues
 \usedir{tex/generic/babel-latin}
 \usepreamble\mainpreamble
 
-\generate{\file{classiclatin.ldf}{\from{latin.dtx}{classic}}
+\generate{\file{classicallatin.ldf}{\from{latin.dtx}{classical}}
+          \file{classiclatin.ldf}{\from{latin.dtx}{classic}}
+          \file{ecclesiasticallatin.ldf}{\from{latin.dtx}{ecclesiastical}}
           \file{ecclesiasticlatin.ldf}{\from{latin.dtx}{ecclesiastic}}
           \file{latin.ldf}{\from{latin.dtx}{latin}}
           \file{medievallatin.ldf}{\from{latin.dtx}{medieval}}
@@ -89,7 +91,7 @@ The original version of the following Lua code has been written for the
 polyglossia package by É. Roux and others. The code has been adapted for
 the babel-latin package by K. Wehr.
 
-Copyright (C) 2021      by Keno Wehr
+Copyright (C) 2021-2025 by Keno Wehr
 All rights reserved.
 
 This file is part of the babel-latin package.
@@ -114,7 +116,7 @@ Please report errors to: https://github.com/wehro/babel-latin/issues
 \usepreamble\luapreamble
 \nopostamble
 
-\generate{\file{ecclesiasticlatin.lua}{\from{latin.dtx}{lua}}}
+\generate{\file{ecclesiasticallatin.lua}{\from{latin.dtx}{lua}}}
 
 \ifToplevel{
 \Msg{***********************************************************}
@@ -122,8 +124,9 @@ Please report errors to: https://github.com/wehro/babel-latin/issues
 \Msg{* To finish the installation you have to move the following}
 \Msg{* files into a directory searched by TeX:}
 \Msg{*}
-\Msg{* \space\space classiclatin.ldf, ecclesiasticlatin.ldf,}
-\Msg{* \space\space ecclesiasticlatin.lua, latin.ldf, medievallatin.ldf}
+\Msg{* \space\space classicallatin.ldf, classiclatin.ldf,}
+\Msg{* \space\space ecclesiasticallatin.ldf, ecclesiasticallatin.lua,}
+\Msg{* \space\space ecclesiasticlatin.ldf, latin.ldf, medievallatin.ldf}
 \Msg{*}
 \Msg{* To produce the documentation run the file latin.dtx}
 \Msg{* through LaTeX.}
