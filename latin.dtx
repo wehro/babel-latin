@@ -72,7 +72,7 @@
 \title{Babel support for the Latin language}
 \author{Claudio Beccari\and Keno Wehr\thanks{Current maintainer. Please report
 errors to \url{https://github.com/wehro/babel-latin/issues}.}}
-\date{v.\,4.1-dev\quad\today}
+\date{v.\,4.1\quad\today}
 \begin{document}
 \DocInput{latin.dtx}
 \end{document}
@@ -108,7 +108,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 % \changes{4.0}{2021/06/27}{New \babel{} languages \lang{classiclatin},
 %     \lang{medievallatin}, and \lang{ecclesiasticlatin}, replacing the
 %     respective modifiers}
-% \changes{4.1}{2025/04/13}{Renaming \lang{classiclatin} and
+% \changes{4.1}{2025/04/29}{Renaming \lang{classiclatin} and
 %     \lang{ecclesiasticlatin} to \lang{classicallatin} and
 %     \lang{ecclesiasticallatin} for the sake of philological correctness, but
 %     also keeping \file{ldf} files with the old names for backwards
@@ -448,8 +448,6 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 % \changes{4.0}{2021/06/27}{Additional shorthands for guillemets and accented
 %     letters for all language variants; additional shorthands for ligatures
 %     for medieval and ecclesiastical Latin}
-% \changes{4.1}{2025/04/13}{Improved shorthand implementation also working
-%     within tabbing environments}
 %    The following shorthands are available for all variants of Latin. Note
 %    that shorthands beginning with |'| are only available if you load \babel{}
 %    with the \modifier{activeacute} option.
@@ -568,7 +566,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %     \cs{LatinMarksOff}}
 %    We identify the language definition file.
 %    \begin{macrocode}
-\ProvidesLanguage{latin}[2025-04-13 v4.1-dev Latin support from the babel system]
+\ProvidesLanguage{latin}[2025-04-29 v4.1 Latin support from the babel system]
 %    \end{macrocode}
 %    The macro |\LdfInit| takes care of preventing that this file is
 %    loaded more than once with the same option, checking the category
@@ -731,7 +729,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %
 %    For Unicode-based engines, we also have to take into account characters
 %    with diacritics. We map ú, ū, and ŭ to V with the respective diacritic.
-% \changes{4.1}{2025/04/13}{Mapping ú, ū, and ŭ to \'{V}, V^^^^0304, and \u{V},
+% \changes{4.1}{2025/04/29}{Mapping ú, ū, and ŭ to \'{V}, V^^^^0304, and \u{V},
 %    respectively, instead of just V, for \lang{classicallatin} and
 %    \lang{medievallatin} if a Unicode engine is used}
 %    \begin{macrocode}
@@ -813,6 +811,8 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 }%
 %    \end{macrocode}
 %    \subsection{Shorthands}
+% \changes{4.1}{2025/04/29}{Improved shorthand implementation also working
+%     within tabbing environments}
 %    We define shorthands only if the \LaTeX{} format is used because we need
 %    commands for them that are not available in plain \TeX.
 %    \begin{macrocode}
@@ -1870,8 +1870,8 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    \begin{macrocode}
 luatexbase.provides_module({
     name        = "ecclesiasticallatin",
-    date        = "2025-04-13",
-    version     = "4.1-dev",
+    date        = "2025-04-29",
+    version     = "4.1",
     description = "babel-latin punctuation spacing for ecclesiastical Latin"
 })
 local add_to_callback     = luatexbase.add_to_callback
