@@ -27,13 +27,12 @@
 % The Current Maintainer of this work is Keno Wehr.
 %
 % \fi
-% \CheckSum{1084}
+% \CheckSum{1085}
 % \iffalse
 %    Tell the LaTeX system who we are and write an entry on the transcript.
 %<*driver>
 \ProvidesFile{latin.dtx}
 \documentclass{ltxdoc}
-\usepackage[british]{babel}
 \usepackage{fontspec}
 \usepackage{booktabs}
 \usepackage{metalogo}
@@ -532,6 +531,13 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    with active |^| character in one document, you have to say
 %    |\shorthandon{^}| before the first occurence of |^| in each
 %    Esperanto/Kurmanji/Slovak text part.
+%
+% \changes{4.2}{2025/07/04}{Document incompatibility with
+%     \package{ucharclasses} package}
+%    \subsection{\package{ucharclasses}}
+%    The \XeTeX\ package \package{ucharclasses} can be used with \babellatin,
+%    but the punctuation spacing for ecclesiastical Latin does not work with
+%    this package.
 %
 %    \section{Plain \TeX}
 % \changes{4.0}{2021/06/27}{Basic support for plain \TeX}
@@ -1313,7 +1319,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    For \XeTeX{} the punctuation spacing will be defined based on five
 %    different character classes: one for question and exclamation marks, one
 %    for colons and semicolons, one for opening and closing guillemets,
-%    respectiveley, and one for opening brackets. Concerning spacing, brackets
+%    respectively, and one for opening brackets. Concerning spacing, brackets
 %    are treated the same way as letter characters in most cases. However, in
 %    strings like “(?)” no spacing is desired before the question mark. So we
 %    need a dedicated character class for opening brackets.
@@ -1480,9 +1486,31 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
   \else
 %    \end{macrocode}
 %    For \XeTeX{} we have to enable the character classes functionality and
-%    assign the punctuation characters to the character classes.
+%    assign the punctuation characters to the character classes. The character
+%    classes of the punctuation characters are saved because they have to be
+%    restored when changing to another language.
+% \changes{4.2}{2025/07/04}{Save \XeTeX\ character classes when changing to
+%     ecclesiastical Latin}
 %    \begin{macrocode}
     \ifbabellatin@xetex
+      \babel@savevariable\XeTeXinterchartokenstate
+      \babel@savevariable{\XeTeXcharclass`\!}
+      \babel@savevariable{\XeTeXcharclass`\?}
+      \babel@savevariable{\XeTeXcharclass`\‼}
+      \babel@savevariable{\XeTeXcharclass`\⁇}
+      \babel@savevariable{\XeTeXcharclass`\⁈}
+      \babel@savevariable{\XeTeXcharclass`\⁉}
+      \babel@savevariable{\XeTeXcharclass`\‽}
+      \babel@savevariable{\XeTeXcharclass`\;}
+      \babel@savevariable{\XeTeXcharclass`\:}
+      \babel@savevariable{\XeTeXcharclass`\«}
+      \babel@savevariable{\XeTeXcharclass`\»}
+      \babel@savevariable{\XeTeXcharclass`\‹}
+      \babel@savevariable{\XeTeXcharclass`\›}
+      \babel@savevariable{\XeTeXcharclass`\(}
+      \babel@savevariable{\XeTeXcharclass`\[}
+      \babel@savevariable{\XeTeXcharclass`\{}
+      \babel@savevariable{\XeTeXcharclass`\⟨}
       \XeTeXinterchartokenstate = 1
       \XeTeXcharclass `\! \babellatin@qmark@class
       \XeTeXcharclass `\? \babellatin@qmark@class
@@ -1531,24 +1559,6 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
     \directlua{ecclesiasticallatin.deactivate_spacing()}%
   \else
     \ifbabellatin@xetex
-      \XeTeXcharclass `\! \z@
-      \XeTeXcharclass `\? \z@
-      \XeTeXcharclass `\‼ \z@
-      \XeTeXcharclass `\⁇ \z@
-      \XeTeXcharclass `\⁈ \z@
-      \XeTeXcharclass `\⁉ \z@
-      \XeTeXcharclass `\‽ \z@
-      \XeTeXcharclass `\; \z@
-      \XeTeXcharclass `\: \z@
-      \XeTeXcharclass `\« \z@
-      \XeTeXcharclass `\» \z@
-      \XeTeXcharclass `\‹ \z@
-      \XeTeXcharclass `\› \z@
-      \XeTeXcharclass `\( \z@
-      \XeTeXcharclass `\[ \z@
-      \XeTeXcharclass `\{ \z@
-      \XeTeXcharclass `\⟨ \z@
-      \XeTeXinterchartokenstate = 0
     \else
       \bbl@deactivate{;}%
       \bbl@deactivate{:}%
