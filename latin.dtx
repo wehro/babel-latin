@@ -27,7 +27,7 @@
 % The Current Maintainer of this work is Keno Wehr.
 %
 % \fi
-% \CheckSum{1085}
+% \CheckSum{1092}
 % \iffalse
 %    Tell the LaTeX system who we are and write an entry on the transcript.
 %<*driver>
@@ -735,21 +735,25 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %
 %    For Unicode-based engines, we also have to take into account characters
 %    with diacritics. We map ú, ū, and ŭ to V with the respective diacritic.
+%    It's not enough to test for \XeLaTeX\ or \LuaLaTeX, because \LuaLaTeX\ 
+%    might be used with the \package{luainputenc} package. We test for Unicode
+%    input the same way the packages \package{hyph-utf8} and
+%    \package{dehyph-exptl} do in their hyphenation pattern loader files.
 % \changes{4.1}{2025/04/29}{Mapping ú, ū, and ŭ to \'{V}, V^^^^0304, and \u{V},
 %    respectively, instead of just V, for \lang{classicallatin} and
 %    \lang{medievallatin} if a Unicode engine is used}
+% \changes{4.2}{2025/08/06}{Ensure compatibility with \package{luainputenc}}
 %    \begin{macrocode}
-  \ExplSyntaxOn
-  \sys_if_engine_opentype:T
-    {
-      \DeclareUppercaseMapping[la-x-classic]{`ú}{\a'{V}}
-      \DeclareUppercaseMapping[la-x-classic]{`ū}{\a={V}}
-      \DeclareUppercaseMapping[la-x-classic]{`ŭ}{\u{V}}
-      \DeclareUppercaseMapping[la-x-medieval]{`ú}{\a'{V}}
-      \DeclareUppercaseMapping[la-x-medieval]{`ū}{\a={V}}
-      \DeclareUppercaseMapping[la-x-medieval]{`ŭ}{\u{V}}
-    }
-  \ExplSyntaxOff
+  \def\babellatin@testengine#1#2!{\def\babellatin@secondarg{#2}}%
+  \babellatin@testengine χ!\relax % that's chi, a 2-byte UTF-8 sequence
+  \ifx\babellatin@secondarg\empty
+    \DeclareUppercaseMapping[la-x-classic]{`ú}{\a'{V}}
+    \DeclareUppercaseMapping[la-x-classic]{`ū}{\a={V}}
+    \DeclareUppercaseMapping[la-x-classic]{`ŭ}{\u{V}}
+    \DeclareUppercaseMapping[la-x-medieval]{`ú}{\a'{V}}
+    \DeclareUppercaseMapping[la-x-medieval]{`ū}{\a={V}}
+    \DeclareUppercaseMapping[la-x-medieval]{`ŭ}{\u{V}}
+  \fi
 \fi
 %    \end{macrocode}
 %    The following \cs{BabelLower} command takes care for the correct
