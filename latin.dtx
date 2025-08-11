@@ -71,7 +71,7 @@
 \title{Babel support for the Latin language}
 \author{Claudio Beccari\and Keno Wehr\thanks{Current maintainer. Please report
 errors to \url{https://github.com/wehro/babel-latin/issues}.}}
-\date{v.\,4.1\quad\today}
+\date{v.\,4.2\quad\today}
 \begin{document}
 \DocInput{latin.dtx}
 \end{document}
@@ -532,7 +532,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    |\shorthandon{^}| before the first occurence of |^| in each
 %    Esperanto/Kurmanji/Slovak text part.
 %
-% \changes{4.2}{2025/07/04}{Document incompatibility with
+% \changes{4.2}{2025/08/11}{Document incompatibility with
 %     \package{ucharclasses} package}
 %    \subsection{\package{ucharclasses}}
 %    The \XeTeX\ package \package{ucharclasses} can be used with \babellatin,
@@ -572,7 +572,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %     \cs{LatinMarksOff}}
 %    We identify the language definition file.
 %    \begin{macrocode}
-\ProvidesLanguage{latin}[2025-04-29 v4.1 Latin support from the babel system]
+\ProvidesLanguage{latin}[2025-08-11 v4.2 Latin support from the babel system]
 %    \end{macrocode}
 %    The macro |\LdfInit| takes care of preventing that this file is
 %    loaded more than once with the same option, checking the category
@@ -742,7 +742,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 % \changes{4.1}{2025/04/29}{Mapping ú, ū, and ŭ to \'{V}, V^^^^0304, and \u{V},
 %    respectively, instead of just V, for \lang{classicallatin} and
 %    \lang{medievallatin} if a Unicode engine is used}
-% \changes{4.2}{2025/08/06}{Ensure compatibility with \package{luainputenc}}
+% \changes{4.2}{2025/08/11}{Ensure compatibility with \package{luainputenc}}
 %    \begin{macrocode}
   \def\babellatin@testengine#1#2!{\def\babellatin@secondarg{#2}}%
   \babellatin@testengine χ!\relax % that's chi, a 2-byte UTF-8 sequence
@@ -1493,7 +1493,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    assign the punctuation characters to the character classes. The character
 %    classes of the punctuation characters are saved because they have to be
 %    restored when changing to another language.
-% \changes{4.2}{2025/07/04}{Save \XeTeX\ character classes when changing to
+% \changes{4.2}{2025/08/11}{Save \XeTeX\ character classes when changing to
 %     ecclesiastical Latin}
 %    \begin{macrocode}
     \ifbabellatin@xetex
@@ -1884,8 +1884,8 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    \begin{macrocode}
 luatexbase.provides_module({
     name        = "ecclesiasticallatin",
-    date        = "2025-04-29",
-    version     = "4.1",
+    date        = "2025-08-11",
+    version     = "4.2",
     description = "babel-latin punctuation spacing for ecclesiastical Latin"
 })
 local add_to_callback     = luatexbase.add_to_callback
