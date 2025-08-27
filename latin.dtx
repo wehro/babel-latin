@@ -27,7 +27,7 @@
 % The Current Maintainer of this work is Keno Wehr.
 %
 % \fi
-% \CheckSum{1092}
+% \CheckSum{1095}
 % \iffalse
 %    Tell the LaTeX system who we are and write an entry on the transcript.
 %<*driver>
@@ -71,7 +71,7 @@
 \title{Babel support for the Latin language}
 \author{Claudio Beccari\and Keno Wehr\thanks{Current maintainer. Please report
 errors to \url{https://github.com/wehro/babel-latin/issues}.}}
-\date{v.\,4.2\quad\today}
+\date{v.\,4.3\quad\today}
 \begin{document}
 \DocInput{latin.dtx}
 \end{document}
@@ -572,7 +572,7 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %     \cs{LatinMarksOff}}
 %    We identify the language definition file.
 %    \begin{macrocode}
-\ProvidesLanguage{latin}[2025-08-11 v4.2 Latin support from the babel system]
+\ProvidesLanguage{latin}[2025-08-27 v4.3 Latin support from the babel system]
 %    \end{macrocode}
 %    The macro |\LdfInit| takes care of preventing that this file is
 %    loaded more than once with the same option, checking the category
@@ -743,17 +743,23 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    respectively, instead of just V, for \lang{classicallatin} and
 %    \lang{medievallatin} if a Unicode engine is used}
 % \changes{4.2}{2025/08/11}{Ensure compatibility with \package{luainputenc}}
+% \changes{4.3}{2025/08/27}{Ensure compatibility with up\LaTeX}
 %    \begin{macrocode}
-  \def\babellatin@testengine#1#2!{\def\babellatin@secondarg{#2}}%
-  \babellatin@testengine χ!\relax % that's chi, a 2-byte UTF-8 sequence
-  \ifx\babellatin@secondarg\empty
-    \DeclareUppercaseMapping[la-x-classic]{`ú}{\a'{V}}
-    \DeclareUppercaseMapping[la-x-classic]{`ū}{\a={V}}
-    \DeclareUppercaseMapping[la-x-classic]{`ŭ}{\u{V}}
-    \DeclareUppercaseMapping[la-x-medieval]{`ú}{\a'{V}}
-    \DeclareUppercaseMapping[la-x-medieval]{`ū}{\a={V}}
-    \DeclareUppercaseMapping[la-x-medieval]{`ŭ}{\u{V}}
-  \fi
+  \ExplSyntaxOn
+  \sys_if_engine_opentype:T
+    {
+      \def\babellatin@testengine#1#2!{\def\babellatin@secondarg{#2}}%
+      \babellatin@testengine χ!\relax % that's chi, a 2-byte UTF-8 sequence
+      \ifx\babellatin@secondarg\empty
+        \DeclareUppercaseMapping[la-x-classic]{`ú}{\a'{V}}
+        \DeclareUppercaseMapping[la-x-classic]{`ū}{\a={V}}
+        \DeclareUppercaseMapping[la-x-classic]{`ŭ}{\u{V}}
+        \DeclareUppercaseMapping[la-x-medieval]{`ú}{\a'{V}}
+        \DeclareUppercaseMapping[la-x-medieval]{`ū}{\a={V}}
+        \DeclareUppercaseMapping[la-x-medieval]{`ŭ}{\u{V}}
+      \fi
+    }
+  \ExplSyntaxOff
 \fi
 %    \end{macrocode}
 %    The following \cs{BabelLower} command takes care for the correct
@@ -1884,8 +1890,8 @@ errors to \url{https://github.com/wehro/babel-latin/issues}.}}
 %    \begin{macrocode}
 luatexbase.provides_module({
     name        = "ecclesiasticallatin",
-    date        = "2025-08-11",
-    version     = "4.2",
+    date        = "2025-08-27",
+    version     = "4.3",
     description = "babel-latin punctuation spacing for ecclesiastical Latin"
 })
 local add_to_callback     = luatexbase.add_to_callback
